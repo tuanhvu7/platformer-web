@@ -1,10 +1,20 @@
 import * as p5 from 'p5';
 import { CONSTANTS } from './const/constants';
 
-function setup() {
-  createCanvas(CONSTANTS.SCREEN_WIDTH, CONSTANTS.SCREEN_HEIGHT);
+const sketch = (s: p5): void => {
+
+  s.preload = () => {
+    // preload code
+  }
+
+  s.setup = () => {
+    s.createCanvas(CONSTANTS.SCREEN_WIDTH, CONSTANTS.SCREEN_HEIGHT);
+  };
+
+  s.draw = () => {
+    s.fill(s.color(CONSTANTS.ENEMY_COLOR));
+    s.ellipse(CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE);
+  };
 }
 
-function draw() {
-  ellipse(50, 50, 80, 80);
-}
+new p5(sketch);
