@@ -1,20 +1,29 @@
 import * as p5 from 'p5';
-import { CONSTANTS } from './const/constants';
+import { Constants } from './const/constants';
+import { ResourceUtils } from './utils/resource-utils';
+import { IDrawable } from './drawable/drawable.interface';
 
-const sketch = (s: p5): void => {
+/**
+ * Contains controls for running app
+ */
+class Platformer {
+  public drawable: IDrawable[] = [];
 
-  s.preload = () => {
-    // preload code
+  public sketch = (mainSketch: p5): void => {
+    mainSketch.preload = () => {
+      ResourceUtils.DEFAULT_MENU_IMAGE = mainSketch.loadImage(ResourceUtils.DEFAULT_MENU_IMAGE_PATH);
+    }
+
+    mainSketch.setup = () => {
+      mainSketch.createCanvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+    };
+
+    mainSketch.draw = () => {
+      this.drawable.forEach((curDrawable: IDrawable) => {
+        curDrawable.draw();
+      });
+    }
   }
-
-  s.setup = () => {
-    s.createCanvas(CONSTANTS.SCREEN_WIDTH, CONSTANTS.SCREEN_HEIGHT);
-  };
-
-  s.draw = () => {
-    s.fill(s.color(CONSTANTS.ENEMY_COLOR));
-    s.ellipse(CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE, CONSTANTS.ELLIPSE);
-  };
 }
 
-new p5(sketch);
+export const platformer = new Platformer();
