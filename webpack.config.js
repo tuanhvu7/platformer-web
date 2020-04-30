@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/platformer.ts',
+  entry: './src/main.ts',
   module: {
     rules: [
       {
@@ -20,7 +20,7 @@ module.exports = {
     extensions: [ '.ts', '.js' ],
   },
   output: {
-    filename: 'platformer.js',
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   }
 };
