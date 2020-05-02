@@ -1,6 +1,5 @@
 /**
- * Required methods for drawable classes;
- * implement this in classes that use registerMethod("draw", ...)
+ * Required methods for drawable classes
  */
 export interface IDrawable {
   draw(): void;
