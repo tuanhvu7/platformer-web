@@ -3,10 +3,12 @@ import {
 } from '../../drawable.interface';
 import { Constants } from '../../../const/constants';
 import { mainSketch } from '../../../main';
+import { IMouseControllable } from '../../mouse-controllable.interface';
+import { platformer } from '../../../platformer';
 /**
  * Common for panels
  */
-export abstract class APanel implements IDrawable {;
+export abstract class APanel implements IDrawable, IMouseControllable {
 
   readonly leftX: number;
   readonly rightX: number;
@@ -47,16 +49,16 @@ export abstract class APanel implements IDrawable {;
    * active and add this to game
    */
   makeActive(): void {
-    mainSketch.registerMethod("draw", this); // connect this draw() from main draw()
-    mainSketch.registerMethod("mouseEvent", this); // connect this mouseEvent() from main mouseEvent()
+    platformer.addToAllDrawables(this); // connect this draw() from main draw()
+    platformer.addToAllMouseControllables(this); // connect this mouseEvent() from main mouseEvent()
   }
 
   /**
    * deactivate and remove this from game
    */
   public makeNotActive(): void {
-    mainSketch.unregisterMethod("draw", this); // disconnect this draw() from main draw()
-    mainSketch.unregisterMethod("mouseEvent", this); // connect this mouseEvent() from main mouseEvent()
+    platformer.deleteFromAllDrawables(this); // disconnect this draw() from main draw()
+    platformer.deleteFromAllMouseControllables(this); // connect this mouseEvent() from main mouseEvent()
   }
 
   /**
@@ -69,14 +71,14 @@ export abstract class APanel implements IDrawable {;
     mainSketch.fill(0);
     mainSketch.textAlign(mainSketch.CENTER, mainSketch.CENTER);
     mainSketch.textSize(Constants.TEXT_SIZE);
-    mainSketch.text(this.panelText + "", this.leftX, this.topY, this.width, this.height);
+    mainSketch.text(this.panelText + '', this.leftX, this.topY, this.width, this.height);
   }
 
   /**
    * Execute appropriate method (executeWhenClicked) when this is clicked
    */
-  public mousePressed(): void {
-    if (this.isMouseIn()) {
+  public mouseClicked(event: MouseEvent): void {
+    if (this.isMouseIn(event)) {
       this.executeWhenClicked();
     }
   }
@@ -89,11 +91,11 @@ export abstract class APanel implements IDrawable {;
   /**
    * return if mouse position inside this panel
    */
-  isMouseIn(): boolean {
-    return mainSketch.mouseX > this.leftX &&
-      mainSketch.mouseX < this.rightX &&
-      mainSketch.mouseY > this.topY &&
-      mainSketch.mouseY < this.bottomY;
+  isMouseIn(event: MouseEvent): boolean {
+    return event.x > this.leftX &&
+      event.x < this.rightX &&
+      event.y > this.topY &&
+      event.y < this.bottomY;
   }
 
 }

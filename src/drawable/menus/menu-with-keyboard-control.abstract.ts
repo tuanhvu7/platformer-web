@@ -1,11 +1,14 @@
 import { AMenu } from './menu.abstract';
 import { APanel } from './panels/panel.abstract';
-import { mainSketch } from '../../main';
+import { platformer } from '../../platformer';
+import { IKeyControllable } from '../key-controllable.interface';
 
-export abstract class AMenuWithKeyboardControl extends AMenu {
+export abstract class AMenuWithKeyboardControl extends AMenu implements IKeyControllable {
   constructor(isActive: boolean) {
     super(isActive);
   }
+
+  public abstract keyPressed(): void;
 
   public deactivateMenu(): void {
     this.panelsList.forEach((curPanel: APanel) => {
@@ -14,7 +17,7 @@ export abstract class AMenuWithKeyboardControl extends AMenu {
 
     this.panelsList = [];
     // make this not active
-    mainSketch.unregisterMethod("draw", this); // disconnect this draw() from main draw()
-    mainSketch.unregisterMethod("keyEvent", this); // disconnect this keyEvent() from main keyEvent()
+    platformer.deleteFromAllDrawables(this); // disconnect this draw() from main draw()
+    platformer.deleteFromAllKeyControllables(this); // disconnect this keyEvent() from main keyEvent()
   }
 }

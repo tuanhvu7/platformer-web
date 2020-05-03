@@ -1,6 +1,6 @@
 import { IDrawable } from '../drawable.interface';
 import { APanel } from './panels/panel.abstract';
-import { mainSketch } from '../../main';
+import { platformer } from '../../platformer';
 
 export abstract class AMenu implements IDrawable {
   readonly horizontalOffset: number;
@@ -22,7 +22,7 @@ export abstract class AMenu implements IDrawable {
     }
   }
 
-  draw(): void {}
+  public abstract draw(): void;
 
   /**
    * activate and setup this; to override in extended classes
@@ -40,6 +40,6 @@ export abstract class AMenu implements IDrawable {
 
     this.panelsList = [];
     // make this not active
-    mainSketch.unregisterMethod("draw", this); // disconnect this draw() from main draw()
+    platformer.addToAllDrawables(this); // disconnect this draw() from main draw()
   }
 }
