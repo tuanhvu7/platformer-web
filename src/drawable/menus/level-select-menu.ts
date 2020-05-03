@@ -1,9 +1,9 @@
 import { AMenuWithKeyboardControl } from './menu-with-keyboard-control.abstract';
-import * as p5 from 'p5';
 import { Constants } from '../../const/constants';
 import { ResourceUtils } from '../../utils/resource-utils';
 import { LevelSelectMenuPanel } from './panels/level-select-menu-panel';
 import { mainSketch } from '../../main';
+import { platformer } from '../../platformer';
 
 export class LevelSelectMenu extends AMenuWithKeyboardControl {
   /**
@@ -18,8 +18,8 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
    */
   public setupActivateMenu(): void {
     // make this active
-    mainSketch.registerMethod("draw", this); // connect this draw() from main draw()
-    mainSketch.registerMethod("keyEvent", this); // connect this keyEvent() from main keyEvent()
+    platformer.addToAllDrawables(this); // connect this draw() from main draw()
+    platformer.addToAllKeyControllables(this); // connect this keyEvent() from main keyEvent()
 
     let leftXPanelPosition: number = 100;
     let topYPanelPosition: number = 100;
@@ -54,7 +54,15 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
    * handle keypress
    */
   public keyPressed(): void {
-    console.log(p5.key);
+    const keyPressed = mainSketch.key;
+    // if (ReservedControlUtils.EReservedControlKeys.c.toString().equalsIgnoreCase(keyPressed)) {  // toggle checkpoint start
+    //     for (APanel curPanel : this.panelsList) {
+    //         ((LevelSelectMenuPanel) curPanel).toggleLoadLevelFromCheckpoint();
+    //     }
+    // } else if (ReservedControlUtils.EReservedControlKeys.u.toString().equalsIgnoreCase(keyPressed)) {   // switch to user control menu
+    //     mainSketch.getLevelSelectMenu().deactivateMenu();
+    //     mainSketch.getChangePlayerControlMenu().setupActivateMenu();
+    // }
   }
 
 }
