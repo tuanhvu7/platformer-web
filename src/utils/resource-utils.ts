@@ -8,37 +8,37 @@ export class ResourceUtils {
   public static readonly DEFAULT_MENU_IMAGE_PATH = '/assets/sky-blue-bg.png';
   public static DEFAULT_MENU_IMAGE: Image;
 
-  public static readonly LEVEL_BACKGROUND_IMAGE_NAME = "sky-bg.png";
+  public static readonly LEVEL_BACKGROUND_IMAGE_NAME = "/assets/sky-bg.png";
   public static readonly LEVEL_BACKGROUND_IMAGE: Image;
 
   // out-of-level menu song
-  private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "level-select-menu-song.mp3";
+  private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "/assets/level-select-menu-song.mp3";
   // private static readonly Media OUT_OF_LEVEL_MENU_SONG = new Media(
   //     getResourcePathUri(OUT_OF_LEVEL_MENU_SONG_PATH));
   private static readonly OUT_OF_LEVEL_MENU_SONG_PLAYER;
 
   // level song
-  private static readonly LEVEL_SONG_PATH = "level-song.mp3";
+  private static readonly LEVEL_SONG_PATH = "/assets/level-song.mp3";
   private static readonly LEVEL_SONG_PLAYER;
 
   // player damage song
-  private static readonly PLAYER_DAMAGE_SONG_PATH = "player-damage-song.mp3";
+  private static readonly PLAYER_DAMAGE_SONG_PATH = "/assets/player-damage-song.mp3";
   private static readonly PLAYER_DAMAGE_SONG_PLAYER;
 
   // player death song
-  private static readonly PLAYER_DEATH_SONG_PATH = "player-death-song.mp3";;
+  private static readonly PLAYER_DEATH_SONG_PATH = "/assets/player-death-song.mp3";;
   private static readonly PLAYER_DEATH_SONG_PLAYER;
 
   // level complete song
-  private static readonly LEVEL_COMPLETE_SONG_PATH = "level-complete-song.mp3";
+  private static readonly LEVEL_COMPLETE_SONG_PATH = "/assets/level-complete-song.mp3";
   private static readonly LEVEL_COMPLETION_SONG_PLAYER;
 
   // player action song
-  private static readonly PLAYER_ACTION_SONG_PATH = "player-action-song.mp3";
+  private static readonly PLAYER_ACTION_SONG_PATH = "/assets/player-action-song.mp3";
   private static readonly PLAYER_ACTION_SONG_PLAYER;
 
   // event block descent song
-  private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "event-block-descent-song.mp3";
+  private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "/assets/event-block-descent-song.mp3";
   private static readonly EVENT_BLOCK_DESCENT_SONG_PLAYER;
 
   /**
