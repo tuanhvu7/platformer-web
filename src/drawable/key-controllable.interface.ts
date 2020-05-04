@@ -3,4 +3,5 @@
  */
 export interface IKeyControllable {
   keyPressed(): void;
+  keyReleased?(): void;
 }

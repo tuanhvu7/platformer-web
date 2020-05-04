@@ -7,6 +7,7 @@ import { IMouseControllable } from './drawable/mouse-controllable.interface';
 import { MockMenu } from './drawable/menus/mock-menu';
 import { LevelSelectMenu } from './drawable/menus/level-select-menu';
 import { LevelDrawableCollection } from './drawable/levels/level-drawable-collection';
+import { ALevel } from './drawable/levels/level.abstract';
 
 /**
  * Contains controls for running app
@@ -56,6 +57,14 @@ class Platformer {
     mainSketch.keyPressed = () => {
       this.allKeyControllables.forEach((curKeyControllable: IKeyControllable) => {
         curKeyControllable.keyPressed();
+      });
+    }
+
+    mainSketch.keyReleased = () => {
+      this.allKeyControllables.forEach((curKeyControllable: IKeyControllable) => {
+        if (curKeyControllable.keyReleased) {
+          curKeyControllable.keyReleased();
+        }
       });
     }
 
@@ -177,7 +186,7 @@ class Platformer {
   }
 
   // Drawables
-  public getAllDrawables(): Set < IDrawable > {
+  public getAllDrawables(): Set<IDrawable> {
     return this.allDrawables;
   }
 
@@ -190,7 +199,7 @@ class Platformer {
   }
 
   // Key Controllables
-  public getAllKeyControllables(): Set < IKeyControllable > {
+  public getAllKeyControllables(): Set <IKeyControllable> {
     return this.allKeyControllables;
   }
 
@@ -203,7 +212,7 @@ class Platformer {
   }
 
   // Mouse Controllables
-  public getAllMouseControllables(): Set < IMouseControllable > {
+  public getAllMouseControllables(): Set<IMouseControllable> {
     return this.allMouseControllables;
   }
 
