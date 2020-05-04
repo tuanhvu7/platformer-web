@@ -1,4 +1,5 @@
 import { platformer } from '../../platformer';
+import { VerticalBoundary } from './vertical-boundary';
 /**
  * boundary to add enemies upon player contact
  */
