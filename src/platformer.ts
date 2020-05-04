@@ -92,7 +92,7 @@ class Platformer {
     ResourceUtils.stopSong();
     ResourceUtils.playSong(ESongType.PLAYER_DEATH);
 
-    this.levelCompleteTimer = setTimeout(
+    setTimeout(
       () => {
         // const loadPlayerFromCheckPoint = this.getCurrentActiveLevel().isLoadPlayerFromCheckPoint();
         // this.getCurrentActiveLevel().deactivateLevel();
