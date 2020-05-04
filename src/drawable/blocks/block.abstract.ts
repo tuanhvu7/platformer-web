@@ -1,5 +1,7 @@
 import { IDrawable } from "../drawable.interface";
 import { mainSketch } from '../../main';
+import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
+import { VerticalBoundary } from "../boundaries/vertical-boundary";
 
 /**
  * common for blocks
@@ -12,9 +14,9 @@ export abstract class ABlock implements IDrawable {
 
   // position and dimensions
   readonly leftX: number;
-  readonly topY;
-  readonly width;
-  readonly height;
+  readonly topY: number;
+  readonly width: number;
+  readonly height: number;
 
   // boundaries that make up block
   topSide: HorizontalBoundary;

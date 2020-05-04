@@ -1,5 +1,6 @@
 import { platformer } from '../../platformer';
 import { VerticalBoundary } from './vertical-boundary';
+import { Enemy } from '../characters/enemy';
 /**
  * boundary to add enemies upon player contact
  */
@@ -15,7 +16,7 @@ export class EnemyTriggerVerticalBoundary extends VerticalBoundary {
               isActive: boolean, enemy: Enemy) {
     super(startXPoint, startYPoint, y2Offset, boundaryLineThickness,
       false, isActive);
-    const set = new Set();
+    const set: Set<Enemy> = new Set();
     set.add(enemy);
     this.enemiesToAddSet = set;
   }

@@ -2,6 +2,7 @@ import { Block } from "./block";
 import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
 import { Constants } from "../../const/constants";
+import { ACollectable } from "../collectables/collectable.abstract";
 
 /**
  * Block with item that appears when hit from below by player
@@ -101,7 +102,7 @@ export class ItemBlock extends Block {
    * active and add this to game
    */
   makeActive(): void {
-    mainSketch.registerMethod(EProcessingMethods.DRAW.toString(), this); // connect this draw() from main draw()
+    platformer.addToAllDrawables(this); // connect this draw() from main draw()
 
     // make horizontal boundaries first since their detection takes precedence
     this.bottomSide.makeActive();

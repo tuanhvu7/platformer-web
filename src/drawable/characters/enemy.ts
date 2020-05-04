@@ -120,7 +120,7 @@ export class Enemy extends ACharacter {
    */
   handleDeath(isOffscreenDeath: boolean): void {
     this.makeNotActive();
-    mainSketch.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
+    platformer.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
     if (!isOffscreenDeath) {
       ResourceUtils.playSong(ESongType.PLAYER_ACTION);
       platformer.getCurrentActivePlayer().handleJumpKillEnemyPhysics();

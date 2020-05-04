@@ -1,8 +1,9 @@
 import { IDrawable } from "../drawable.interface";
-import * as p5 from 'p5';
+import { Vector } from 'p5';
 import { platformer } from '../../platformer';
 import { mainSketch } from "../../main";
 import { Constants } from "../../const/constants";
+import { ACharacter } from "../characters/character.abstract";
 
 /**
  * Common for line boundaries
@@ -10,9 +11,9 @@ import { Constants } from "../../const/constants";
 export abstract class ABoundary implements IDrawable {
 
   // start point (smaller x and smaller y) coordinate for boundary
-  readonly startPoint: p5.PVector;
+  readonly startPoint: Vector;
   // end point (larger x and larger y) coordinate for boundary
-  readonly endPoint: p5.PVector;
+  readonly endPoint: Vector;
 
   // stoke thickness of boundary
   private readonly boundaryLineThickness: number;
@@ -42,12 +43,12 @@ export abstract class ABoundary implements IDrawable {
               isActive: boolean) {
 
     // set start points to be smaller of given values
-    this.startPoint = new p5.PVector(
+    this.startPoint = mainSketch.createVector(
       Math.min(x1Point, x1Point + x2Offset),
       Math.min(y1Point, y1Point + y2Offset));
 
     // set end points to be larger of given values
-    this.endPoint = new p5.PVector(
+    this.endPoint = mainSketch.createVector(
       Math.max(x1Point, x1Point + x2Offset),
       Math.max(y1Point, y1Point + y2Offset));
 
@@ -112,11 +113,11 @@ export abstract class ABoundary implements IDrawable {
   }
 
   /*** getters and setters ***/
-  public getStartPoint(): p5.PVector {
+  public getStartPoint(): Vector {
     return this.startPoint;
   }
 
-  public getEndPoint(): p5.PVector {
+  public getEndPoint(): Vector {
     return this.endPoint;
   }
 

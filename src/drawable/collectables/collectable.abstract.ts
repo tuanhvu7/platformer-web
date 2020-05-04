@@ -41,7 +41,7 @@ export abstract class ACollectable implements IDrawable {
    */
   public draw(): void {
     this.show();
-    if (mainSketch.getCurrentActivePlayer() != null) {
+    if (platformer.getCurrentActivePlayer() != null) {
       this.checkHandleContactWithPlayer();
     }
   }

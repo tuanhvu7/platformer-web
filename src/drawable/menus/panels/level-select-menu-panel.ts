@@ -1,6 +1,5 @@
 import { APanel } from './panel.abstract';
 import { Constants } from '../../../const/constants';
-import { mainSketch } from '../../../main';
 import { platformer } from '../../../platformer';
 import { levelFactory } from '../../levels/level.factory';
 

@@ -5,13 +5,13 @@ import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
 import { Constants } from "../../const/constants";
 import { mainSketch } from "../../main";
 import { platformer } from '../../platformer';
-import * as p5 from 'p5';
+import { Vector } from 'p5';
 import { ResourceUtils } from "../../utils/resource-utils";
 
 /**
  * player controllable character in game
  */
-public class Player extends ACharacter implements IKeyControllable {
+export class Player extends ACharacter implements IKeyControllable {
 
   // health of this, 0 means dead
   private health: number;
@@ -180,7 +180,7 @@ public class Player extends ACharacter implements IKeyControllable {
       this.handleEventBlockDescent();
     } else {
       // this is NOT controllable horizontally when level is finished
-      if (!mainSketch.getCurrentActiveLevel().isHandlingLevelComplete()) {
+      if (!platformer.getCurrentActiveLevel().isHandlingLevelComplete()) {
         this.handleHorizontalMovement();
       }
       this.handleVerticalMovement();
@@ -235,7 +235,7 @@ public class Player extends ACharacter implements IKeyControllable {
    * null endWarpPosition means launch event, non-null endWarpPosition means warp event
    */
   public handleContactWithEventBoundary(eventBlockTopBoundary: EventBlockTopBoundary,
-                                        launchEventVerticalVelocity: number, endWarpPosition: p5.PVector) {
+                                        launchEventVerticalVelocity: number, endWarpPosition: Vector) {
     this.isDescendingDownEventBlock = false;
     if (endWarpPosition == null) {
       this.vel.y = launchEventVerticalVelocity;
@@ -243,7 +243,7 @@ public class Player extends ACharacter implements IKeyControllable {
       this.pos.x = endWarpPosition.x;
       this.pos.y = endWarpPosition.y;
 
-      mainSketch.getCurrentActiveViewBox().setViewBoxHorizontalPosition(this.pos.x);
+      platformer.getCurrentActiveViewBox().setViewBoxHorizontalPosition(this.pos.x);
       this.vel.y = Constants.CHARACTER_WARP_EVENT_VERTICAL_VELOCITY;
     }
 
