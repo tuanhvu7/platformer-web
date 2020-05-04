@@ -10,19 +10,19 @@ import { Enemy } from "./enemy";
 export class ControllableEnemy extends Enemy implements IKeyControllable {
 
   // true means left and right button controls affect this
-  readonly private isHorizontalControllable: boolean;
+  private readonly isHorizontalControllable: boolean;
   private moveLeftPressed: boolean;
   private moveRightPressed: boolean;
 
 
   // true means jump button controls affect this
-  readonly private isJumpControllable: boolean;
+  private readonly isJumpControllable: boolean;
   private jumpPressed: boolean;
 
   private ableToMoveRight: boolean;
   private ableToMoveLeft: boolean;
 
-  readonly private horizontalMoveSpeed: number;
+  private readonly horizontalMoveSpeed: number;
 
   /**
    * set properties of this;

@@ -1,5 +1,5 @@
 import { IDrawable } from "../drawable.interface";
-import * as p5 from 'p5';
+import { Vector } from 'p5';
 import { mainSketch } from "../../main";
 import { Constants } from "../../const/constants";
 import { platformer } from '../../platformer';
@@ -10,9 +10,9 @@ import { platformer } from '../../platformer';
 export abstract class ACharacter implements IDrawable {
 
   // (x, y) coordinates of center of character (x, y)
-  readonly pos: p5.PVector;
+  readonly pos: Vector;
   // (x, y) velocity of character (x, y)
-  vel: p5.PVector;
+  vel: Vector;
 
   readonly diameter: number;
 
@@ -25,8 +25,8 @@ export abstract class ACharacter implements IDrawable {
    * set properties of this
    */
   constructor(x: number, y: number, diameter: number, isActive: boolean) {
-    this.pos = new p5.PVector(x, y);
-    this.vel = new p5.PVector();
+    this.pos = mainSketch.createVector(x, y);
+    this.vel = mainSketch.createVector();
     this.diameter = diameter;
 
     this.numberOfFloorBoundaryContacts = 0;
@@ -130,15 +130,15 @@ export abstract class ACharacter implements IDrawable {
   abstract handleDeath(isOffscreenDeath: boolean): void;
 
   /*** getters and setters ***/
-  public getPos(): p5.PVector {
+  public getPos(): Vector {
     return this.pos;
   }
 
-  public getVel(): p5.PVector {
+  public getVel(): Vector {
     return this.vel;
   }
 
-  public setVel(vel: p5.PVector): void {
+  public setVel(vel: Vector): void {
     this.vel = vel;
   }
 

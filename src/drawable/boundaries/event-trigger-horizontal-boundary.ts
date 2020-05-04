@@ -1,5 +1,5 @@
 import { EventBlockTopBoundary } from "./event-block-top-boundary";
-import * as p5 from 'p5';
+import { Vector } from 'p5';
 import { platformer } from '../../platformer';
 import { HorizontalBoundary } from "./horizontal-boundary";
 
@@ -11,7 +11,7 @@ export class EventTriggerHorizontalBoundary extends HorizontalBoundary {
   private readonly eventBlockTopBoundary: EventBlockTopBoundary;
 
   // if not null, end location of warp event; else, launch event
-  private readonly endWarpPosition: p5.PVector;
+  private readonly endWarpPosition: Vector;
 
   // set character vel to this on character contact with this
   private readonly launchEventVerticalVelocity: number;

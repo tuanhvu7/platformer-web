@@ -5,6 +5,10 @@ import { platformer } from '../../platformer';
 import { Constants } from "../../const/constants";
 import { ResourceUtils } from "../../utils/resource-utils";
 import { LevelDrawableCollection } from "./level-drawable-collection";
+import { LevelGoal } from "../collectables/level-goal";
+import { VerticalBoundary } from "../boundaries/vertical-boundary";
+import { Player } from "../characters/player";
+import { ViewBox } from "../viewbox/viewbox";
 
 /**
  * common for levels

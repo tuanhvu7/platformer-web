@@ -1,5 +1,6 @@
 import { ABoundary } from "./boundary.abstract";
 import { platformer } from '../../platformer';
+import { ACharacter } from "../characters/character.abstract";
 
 /**
  * horizontal line boundaries; floors or ceilings
@@ -166,6 +167,6 @@ export class HorizontalBoundary extends ABoundary {
   isPreviousContactWithPlayer(): boolean {
     const curPlayer = platformer.getCurrentActivePlayer();
     return curPlayer.getPreviousFloorBoundaryContact() != null &&
-      curPlayer.getPreviousFloorBoundaryContact().equals(this);
+      curPlayer.getPreviousFloorBoundaryContact() === this; // .equals()
   }
 }

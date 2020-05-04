@@ -1,4 +1,3 @@
-import * as p5 from 'p5';
 import { Constants } from './const/constants';
 import { ResourceUtils } from './utils/resource-utils';
 import { IDrawable } from './drawable/drawable.interface';
@@ -8,6 +7,10 @@ import { MockMenu } from './drawable/menus/mock-menu';
 import { LevelSelectMenu } from './drawable/menus/level-select-menu';
 import { LevelDrawableCollection } from './drawable/levels/level-drawable-collection';
 import { ALevel } from './drawable/levels/level.abstract';
+import { Player } from './drawable/characters/player';
+import { ViewBox } from './drawable/viewbox/viewbox';
+import { ConfigurePlayerControlMenu } from './drawable/menus/configure-player-control-menu';
+import p5 from 'p5';
 
 /**
  * Contains controls for running app
@@ -17,7 +20,7 @@ class Platformer {
   private levelSelectMenu: LevelSelectMenu;
 
   // set control menu
-  // private configurePlayerControlMenu: ConfigurePlayerControlMenu;
+  private configurePlayerControlMenu: ConfigurePlayerControlMenu;
 
   // stores current active level
   private currentActiveLevel: ALevel;
@@ -44,7 +47,7 @@ class Platformer {
     mainSketch.setup = () => {
       mainSketch.createCanvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
       this.levelSelectMenu = new LevelSelectMenu(true);
-      // this.configurePlayerControlMenu = new ConfigurePlayerControlMenu(false);
+      this.configurePlayerControlMenu = new ConfigurePlayerControlMenu(false);
       // new MockMenu();
     };
 
@@ -129,9 +132,9 @@ class Platformer {
     return this.levelSelectMenu;
   }
 
-  // public getChangePlayerControlMenu(): ConfigurePlayerControlMenu {
-  //   return this.configurePlayerControlMenu;
-  // }
+  public getChangePlayerControlMenu(): ConfigurePlayerControlMenu {
+    return this.configurePlayerControlMenu;
+  }
 
   public getCurrentActiveLevel(): ALevel {
     return this.currentActiveLevel;

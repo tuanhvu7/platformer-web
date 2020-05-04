@@ -1,5 +1,7 @@
 import { ABoundary } from "./boundary.abstract";
 import { platformer } from '../../platformer';
+import { ACharacter } from "../characters/character.abstract";
+import { ControllableEnemy } from "../characters/controllable-enemy";
 
 /**
  * vertical line boundaries; walls

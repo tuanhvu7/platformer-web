@@ -1,4 +1,8 @@
 import { IDrawable } from '../drawable.interface';
+import { ACharacter } from '../characters/character.abstract';
+import { ABoundary } from '../boundaries/boundary.abstract';
+import { ABlock } from '../blocks/block.abstract';
+import { ACollectable } from '../collectables/collectable.abstract';
 
 /**
  * For storing and managing drawables in levels

@@ -1,6 +1,8 @@
 import { ABlock } from "./block.abstract";
 import { Constants } from "../../const/constants";
 import { platformer } from '../../platformer';
+import { EventBlockTopBoundary } from "../boundaries/event-block-top-boundary";
+import { EventTriggerHorizontalBoundary } from "../boundaries/event-trigger-horizontal-boundary";
 
 /**
  * event block;

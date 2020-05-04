@@ -2,6 +2,17 @@ import { ALevel } from "./level.abstract";
 import { Constants } from "../../const/constants";
 import { ResourceUtils } from "../../utils/resource-utils";
 import { mainSketch } from '../../main';
+import { Player } from "../characters/player";
+import { Checkpoint } from "../collectables/checkpoint";
+import { Enemy } from "../characters/enemy";
+import { EnemyTriggerVerticalBoundary } from "../boundaries/enemy-trigger-vertical-boundary";
+import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
+import { Block } from "../blocks/block";
+import { EventBlock } from "../blocks/event-block";
+import { ControllableEnemy } from "../characters/controllable-enemy";
+import { FlyingEnemy } from "../characters/flying-enemy";
+import { platformer } from '../../platformer';
+import { ViewBox } from "../viewbox/viewbox";
 
 /**
  * Level one
@@ -271,7 +282,7 @@ export class LevelOne extends ALevel {
       ));
 
       // flying enemies
-      const triggerEnemySet: Set<Enemy> = new Set<>();
+      const triggerEnemySet: Set<Enemy> = new Set();
       for (let i = 1; i <= 2; i++) {
           enemyToAdd = new FlyingEnemy(
               startXPos + 1600 + (4 * i) * Constants.PLAYER_DIAMETER,
@@ -317,7 +328,7 @@ export class LevelOne extends ALevel {
   private setupActivateEndSection(startXPos: number): void {
       this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
           startXPos,
-          mainSketch.getCurrentActiveLevelHeight(),
+          platformer.getCurrentActiveLevelHeight(),
           250,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
@@ -343,7 +354,7 @@ export class LevelOne extends ALevel {
       this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
           endStageFloorPosition,
           Constants.LEVEL_FLOOR_Y_POSITION,
-          mainSketch.getCurrentActiveLevelWidth() - startXPos,
+          platformer.getCurrentActiveLevelWidth() - startXPos,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
           true
@@ -446,7 +457,7 @@ export class LevelOne extends ALevel {
 
       // invincible enemy at end of level
       const triggerEnemy: Enemy = new Enemy(
-          mainSketch.getCurrentActiveLevelWidth() - (Constants.BIG_ENEMY_DIAMETER / 2),
+          platformer.getCurrentActiveLevelWidth() - (Constants.BIG_ENEMY_DIAMETER / 2),
           Constants.LEVEL_FLOOR_Y_POSITION - (Constants.BIG_ENEMY_DIAMETER / 2),
           Constants.BIG_ENEMY_DIAMETER,
           0,

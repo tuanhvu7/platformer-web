@@ -1,6 +1,7 @@
 import { ACollectable } from "./collectable.abstract";
 import { Constants } from "../../const/constants";
 import { mainSketch } from '../../main';
+import { platformer } from '../../platformer';
 /**
  * health item for player
  */
@@ -43,9 +44,9 @@ export class HealthItem extends ACollectable {
 
   checkHandleContactWithPlayer(): void {
     if (this.contactWithPlayer()) {
-      mainSketch.getCurrentActivePlayer().changeHealth(this.healthChangeAmount);
+      platformer.getCurrentActivePlayer().changeHealth(this.healthChangeAmount);
       this.makeNotActive();
-      mainSketch.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
+      platformer.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
     }
   }
 }
