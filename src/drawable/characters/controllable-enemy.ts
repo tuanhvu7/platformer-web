@@ -3,6 +3,7 @@ import { platformer } from '../../platformer';
 import { mainSketch } from "../../main";
 import { Constants } from "../../const/constants";
 import { Enemy } from "./enemy";
+import { PlayerControlSettings } from "../../utils/player-control-settings";
 
 /**
  * controllable enemy
@@ -99,27 +100,27 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
    * handle character keypress controls
    */
   public keyPressed(): void {
-    const lowercaseKeyCode = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowercaseKeyCode) { //left
+    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == lowercaseKey) { //left
       this.moveLeftPressed = true;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowercaseKeyCode) { //right
+    if (PlayerControlSettings.getPlayerRight() == lowercaseKey) { //right
       this.moveRightPressed = true;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowercaseKeyCode) {
+    if (PlayerControlSettings.getPlayerUp() == lowercaseKey) {
       this.jumpPressed = true;
     }
   }
 
   public keyReleased(): void {
-    const lowercaseKeyCode = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowercaseKeyCode) { //left
+    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == lowercaseKey) { //left
       this.moveLeftPressed = false;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowercaseKeyCode) { //right
+    if (PlayerControlSettings.getPlayerRight() == lowercaseKey) { //right
       this.moveRightPressed = false;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowercaseKeyCode) {
+    if (PlayerControlSettings.getPlayerUp() == lowercaseKey) {
       this.jumpPressed = false;
     }
   }

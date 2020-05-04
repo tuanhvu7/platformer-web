@@ -3,6 +3,8 @@ import { Constants } from "../../../const/constants";
 import { ResourceUtils } from "../../../utils/resource-utils";
 import { platformer } from '../../../platformer';
 import { mainSketch } from '../../../main';
+import { EPauseMenuButtonType } from "../../../enums/pause-menu-button-type.enum";
+import { ESongType } from "../../../enums/song-type.enum";
 
 /**
  * panels in pause menu
@@ -21,7 +23,7 @@ export class PauseMenuPanel extends APanel {
   constructor(panelType: EPauseMenuButtonType,
               leftX: number, topY: number, width: number, height: number,
               horizontalOffset: number, isActive: boolean) {
-    super(Constants.DEFAULT_PANEL_COLOR, panelType.name(), leftX, topY, width, height, isActive);
+    super(Constants.DEFAULT_PANEL_COLOR, panelType.toString(), leftX, topY, width, height, isActive);
     this.horizontalOffset = horizontalOffset;
     this.panelType = panelType;
   }
