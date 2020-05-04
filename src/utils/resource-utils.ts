@@ -47,12 +47,12 @@ export class ResourceUtils {
   public static loopSong(songType: ESongType): void {
     switch (songType) {
       case ESongType.OUT_OF_LEVEL_MENU:
-        ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.setCycleCount(Integer.MAX_VALUE);
+        ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.setCycleCount(Number.MAX_VALUE);
         ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.play();
         break;
 
       case ESongType.LEVEL:
-        ResourceUtils.LEVEL_SONG_PLAYER.setCycleCount(Integer.MAX_VALUE);
+        ResourceUtils.LEVEL_SONG_PLAYER.setCycleCount(Number.MAX_VALUE);
         ResourceUtils.LEVEL_SONG_PLAYER.play();
         break;
 
