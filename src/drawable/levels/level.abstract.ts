@@ -9,6 +9,8 @@ import { LevelGoal } from "../collectables/level-goal";
 import { VerticalBoundary } from "../boundaries/vertical-boundary";
 import { Player } from "../characters/player";
 import { ViewBox } from "../viewbox/viewbox";
+import { PauseMenu } from "../menus/pause-menu";
+import { ESongType } from "../../enums/song-type.enum";
 
 /**
  * common for levels

@@ -2,6 +2,10 @@ import { APanel } from "./panel.abstract";
 import { IKeyControllable } from "../../key-controllable.interface";
 import { Constants } from "../../../const/constants";
 import { platformer } from '../../../platformer';
+import { EConfigurablePlayerControls } from "../../../enums/configurable-player-controls.enum";
+import { PlayerControlSettings } from "../../../utils/player-control-settings";
+import { mainSketch } from "../../../main";
+import { ReservedControlUtils } from "../../../utils/reserved-control-utils";
 
 /**
  * Used to display and change player control settings
@@ -18,16 +22,16 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
     super(Constants.DEFAULT_PANEL_COLOR, "", leftX, topY, width, height, isActive);
     this.configurablePlayerControlType = configurableControlPanelText;
     switch (this.configurablePlayerControlType) {
-      case UP:
+      case EConfigurablePlayerControls.UP:
         this.panelText = this.createFormattedPanelText(PlayerControlSettings.getPlayerUp());
         break;
-      case DOWN:
+      case EConfigurablePlayerControls.DOWN:
         this.panelText = this.createFormattedPanelText(PlayerControlSettings.getPlayerDown());
         break;
-      case LEFT:
+      case EConfigurablePlayerControls.LEFT:
         this.panelText = this.createFormattedPanelText(PlayerControlSettings.getPlayerLeft());
         break;
-      case RIGHT:
+      case EConfigurablePlayerControls.RIGHT:
         this.panelText = this.createFormattedPanelText(PlayerControlSettings.getPlayerRight());
         break;
       default:
@@ -54,26 +58,26 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
    * handle panel keypress controls
    */
   public keyPressed(): void {
-    const lowercaseKeyCode = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
     // check valid input is given (not a reserved or already-taken keyCode)
-    if (!ReservedControlUtils.isKeyCodeReserved(lowercaseKeyCode) && PlayerControlSettings.isKeyCodeAvailable(lowercaseKeyCode)) {
+    if (!ReservedControlUtils.isKeyCodeReserved(lowercaseKey) && PlayerControlSettings.isKeyAvailable(lowercaseKey)) {
       switch (this.configurablePlayerControlType) {
-        case UP:
-          PlayerControlSettings.setPlayerUp(lowercaseKeyCode);
+        case EConfigurablePlayerControls.UP:
+          PlayerControlSettings.setPlayerUp(lowercaseKey);
           break;
-        case DOWN:
-          PlayerControlSettings.setPlayerDown(lowercaseKeyCode);
+        case EConfigurablePlayerControls.DOWN:
+          PlayerControlSettings.setPlayerDown(lowercaseKey);
           break;
-        case LEFT:
-          PlayerControlSettings.setPlayerLeft(lowercaseKeyCode);
+        case EConfigurablePlayerControls.LEFT:
+          PlayerControlSettings.setPlayerLeft(lowercaseKey);
           break;
-        case RIGHT:
-          PlayerControlSettings.setPlayerRight(lowercaseKeyCode);
+        case EConfigurablePlayerControls.RIGHT:
+          PlayerControlSettings.setPlayerRight(lowercaseKey);
           break;
         default:
           break;
       }
-      this.panelText = this.createFormattedPanelText(keyCode);
+      this.panelText = this.createFormattedPanelText(lowercaseKey);
     }
 
     // unselect panel after key is inputted; to avoid registerMethod again

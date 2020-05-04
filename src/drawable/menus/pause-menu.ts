@@ -2,6 +2,7 @@ import { AMenu } from "./menu.abstract";
 import { platformer } from '../../platformer';
 import { PauseMenuPanel } from "./panels/pause-menu-panel";
 import { Constants } from "../../const/constants";
+import { EPauseMenuButtonType } from "../../enums/pause-menu-button-type.enum";
 
 /**
  * pause menu

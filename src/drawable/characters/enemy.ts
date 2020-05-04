@@ -3,6 +3,7 @@ import { Constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
 import { ResourceUtils } from "../../utils/resource-utils";
+import { ESongType } from "../../enums/song-type.enum";
 
 /**
  * enemy

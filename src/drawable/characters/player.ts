@@ -7,6 +7,8 @@ import { mainSketch } from "../../main";
 import { platformer } from '../../platformer';
 import { Vector } from 'p5';
 import { ResourceUtils } from "../../utils/resource-utils";
+import { PlayerControlSettings } from "../../utils/player-control-settings";
+import { ESongType } from "../../enums/song-type.enum";
 
 /**
  * player controllable character in game
@@ -104,31 +106,31 @@ export class Player extends ACharacter implements IKeyControllable {
    * handle character keypress controls
    */
   public keyPressed(): void {
-    const lowercaseKeyCode = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowercaseKeyCode) { //left
+    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == lowercaseKey) { //left
       this.moveLeftPressed = true;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowercaseKeyCode) { //right
+    if (PlayerControlSettings.getPlayerRight() == lowercaseKey) { //right
       this.moveRightPressed = true;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowercaseKeyCode) {
+    if (PlayerControlSettings.getPlayerUp() == lowercaseKey) {
       this.jumpPressed = true;
     }
-    if ((PlayerControlSettings.getPlayerDown() == lowercaseKeyCode) &&
+    if ((PlayerControlSettings.getPlayerDown() == lowercaseKey) &&
       this.eventBlockTopBoundaryContacts.size == 1 && !this.isDescendingDownEventBlock) {
       this.isDescendingDownEventBlock = true;
     }
   }
 
   public keyReleased(): void {
-    const lowercaseKeyCode = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == (lowercaseKeyCode)) { //left
+    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == (lowercaseKey)) { //left
       this.moveLeftPressed = false;
     }
-    if (PlayerControlSettings.getPlayerRight() == (lowercaseKeyCode)) { //right
+    if (PlayerControlSettings.getPlayerRight() == (lowercaseKey)) { //right
       this.moveRightPressed = false;
     }
-    if (PlayerControlSettings.getPlayerUp() == (lowercaseKeyCode)) {
+    if (PlayerControlSettings.getPlayerUp() == (lowercaseKey)) {
       this.jumpPressed = false;
     }
   }

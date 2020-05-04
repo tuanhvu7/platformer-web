@@ -5,6 +5,9 @@ import { ResourceUtils } from "../../utils/resource-utils";
 import { mainSketch } from '../../main';
 import { APanel } from "./panels/panel.abstract";
 import { ConfigurePlayerControlPanel } from "./panels/configure-player-control-panel";
+import { EConfigurablePlayerControls } from "../../enums/configurable-player-controls.enum";
+import { ESongType } from "../../enums/song-type.enum";
+import { EReservedControlKeys } from "../../utils/reserved-control-utils";
 
 /**
  * Menu to change player controls
@@ -28,14 +31,14 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
     let leftXPanelPosition = 100;
     let topYPanelPosition = 100;
 
-    EConfigurablePlayerControls.values().forEach((curConfigurablePlayerControls: EConfigurablePlayerControls) => {
+    for (let curConfigurablePlayerControls in EConfigurablePlayerControls) {
       if (leftXPanelPosition + Constants.PANEL_SIZE > ResourceUtils.DEFAULT_MENU_IMAGE.width) {
         leftXPanelPosition = 100;
         topYPanelPosition += (100 + Constants.PANEL_SIZE);
       }
 
-      this.panelsList.add(new ConfigurePlayerControlPanel(
-        curConfigurablePlayerControls,
+      this.panelsList.push(new ConfigurePlayerControlPanel(
+        curConfigurablePlayerControls as any, // any for enum
         leftXPanelPosition,
         topYPanelPosition,
         Constants.PANEL_SIZE,
@@ -45,7 +48,7 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
 
       leftXPanelPosition += Constants.PANEL_SIZE + 100;
       ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
-    });
+    }
   }
 
   /**
@@ -60,7 +63,7 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
    */
   public keyPressed(): void {
     const keyPressed = mainSketch.key;
-    if (ReservedControlUtils.EReservedControlKeys.u.toString().equalsIgnoreCase(keyPressed)) { // switch to level select
+    if (EReservedControlKeys.u.toString().toLowerCase() == keyPressed.toLowerCase()) { // switch to level select
       this.deactivateMenu();
       platformer.getLevelSelectMenu().setupActivateMenu();
     }

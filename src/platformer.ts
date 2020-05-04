@@ -11,6 +11,7 @@ import { Player } from './drawable/characters/player';
 import { ViewBox } from './drawable/viewbox/viewbox';
 import { ConfigurePlayerControlMenu } from './drawable/menus/configure-player-control-menu';
 import p5 from 'p5';
+import { ESongType } from './enums/song-type.enum';
 
 /**
  * Contains controls for running app

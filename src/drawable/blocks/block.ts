@@ -3,6 +3,7 @@ import { Constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
+import { ESongType } from "../../enums/song-type.enum";
 
 /**
  * Block;
