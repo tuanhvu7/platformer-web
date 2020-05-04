@@ -292,16 +292,15 @@ public class Player extends ACharacter implements IKeyControllable {
     } else if (healthChangeAmount < 0) {
       this.canHaveContactWithEnemies = false;
       this.fillColor = Constants.PLAYER_DAMAGED_COLOR;
+      ResourceUtils.playSong(ESongType.PLAYER_DAMAGE);
 
-      // make this unaffected by enemies for a duration
-      new Thread(() - > {
-        try {
-          ResourceUtils.playSong(ESongType.PLAYER_DAMAGE);
-          Thread.sleep((long) ResourceUtils.getSongDurationMilliSec(ESongType.PLAYER_DAMAGE)); // wait for song duration
+      setTimeout(
+        () => {
           this.canHaveContactWithEnemies = true;
           this.fillColor = Constants.PLAYER_DEFAULT_COLOR;
-        } catch (InterruptedException ie) {}
-      }).start();
+        },
+        ResourceUtils.getSongDurationMilliSec(ESongType.PLAYER_DAMAGE) // wait for song duration
+      );
     }
   }
 
@@ -314,7 +313,7 @@ public class Player extends ACharacter implements IKeyControllable {
       platformer.deleteFromAllKeyControllables(this); // disconnect this keyEvent() from main keyEvent()
 
       const firstEventTopBoundaryContacts: EventBlockTopBoundary =
-        this.eventBlockTopBoundaryContacts.stream().findFirst().get();
+        this.eventBlockTopBoundaryContacts.values().next().value; // get only value in set
 
       const middleOfBoundary = Math.round(
         (firstEventTopBoundaryContacts.getEndPoint().x + firstEventTopBoundaryContacts.getStartPoint().x) / 2);
