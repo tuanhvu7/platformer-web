@@ -4,6 +4,7 @@ import { IDrawable } from '../drawable.interface';
 import { platformer } from '../../platformer';
 import { IKeyControllable } from '../key-controllable.interface';
 import { IMouseControllable } from '../mouse-controllable.interface';
+import { EMock } from './mock-enum';
 
 export class MockMenu implements IDrawable, IKeyControllable, IMouseControllable {
 
@@ -26,6 +27,11 @@ export class MockMenu implements IDrawable, IKeyControllable, IMouseControllable
    * runs continuously; draws background of this
    */
   public keyPressed(): void {
+    // ArrowUp
+    // ArrowDown
+    // ArrowLeft
+    // ArrowRight
+
     console.log(mainSketch.key);
     console.log(mainSketch.keyCode);
     this.background = 'red';
@@ -38,9 +44,33 @@ export class MockMenu implements IDrawable, IKeyControllable, IMouseControllable
   }
 
   public mouseClicked(event: MouseEvent): void {
-    console.log(event);
-    platformer.deleteFromAllDrawables(this);
-    platformer.deleteFromAllKeyControllables(this);
-    platformer.deleteFromAllMouseControllables(this);
+    console.log(event.x, event.y);
+    console.log('mouseClicked', EMock.FOO, EMock.BAR, EMock.BAZ);
+    for (const curMock in EMock) {
+      console.log('curMock', curMock);
+      console.log('EMock[curMock] as any', EMock[curMock] as any); // use this
+      this.enumTest(EMock[curMock] as any);
+      console.log('*******');
+    }
+    // platformer.deleteFromAllDrawables(this);
+    // platformer.deleteFromAllKeyControllables(this);
+    // platformer.deleteFromAllMouseControllables(this);
+  }
+
+  private enumTest(mockEnum: EMock): void {
+    switch (mockEnum) {
+      case EMock.FOO:
+        // this prints when; curMock = FOO & EMock[curMock] as any = 0
+        console.log('FOO', mockEnum);
+        break;
+      case EMock.BAR:
+        console.log('BAR',mockEnum);
+        break;
+      case EMock.BAZ:
+        console.log('BAZ',mockEnum);
+        break;
+      default:
+        break;
+    }
   }
 }

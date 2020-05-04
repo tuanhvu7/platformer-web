@@ -1,10 +1,10 @@
-import * as p5 from 'p5';
+import p5 from 'p5';
 import { Constants } from './const/constants';
-import { ResourceUtils } from './utils/resource-utils';
 import { IDrawable } from './drawable/drawable.interface';
 import { IKeyControllable } from './drawable/key-controllable.interface';
 import { IMouseControllable } from './drawable/mouse-controllable.interface';
 import { MockMenu } from './drawable/menus/mock-menu';
+import { ResourceUtils } from './utils/resource-utils';
 
 /**
  * Contains controls for running app
