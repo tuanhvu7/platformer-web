@@ -63,7 +63,7 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
    */
   public keyPressed(): void {
     const keyPressed = mainSketch.key;
-    if (EReservedControlKeys.u.toString().toLowerCase() == keyPressed.toLowerCase()) { // switch to level select
+    if (EReservedControlKeys.u.toString().toLowerCase() == keyPressed.toLowerCase()) { // switch to level select equalsIgnoreCase
       this.deactivateMenu();
       platformer.getLevelSelectMenu().setupActivateMenu();
     }
