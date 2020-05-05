@@ -5,5 +5,8 @@ export class ResourceUtils {
   public static DEFAULT_MENU_IMAGE: Image;
 
   public static readonly TEST_SOUND_PATH = '/assets/test.mp3';
-  public static TEST_SOUND: Response;
+  public static TEST_SOUND: AudioBuffer;
+
+  public static readonly TEST_SOUND_2_PATH = '/assets/test-2.mp3';
+  public static TEST_SOUND_2: AudioBuffer;
 }

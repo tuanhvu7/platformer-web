@@ -5,12 +5,12 @@ import { IKeyControllable } from './drawable/key-controllable.interface';
 import { IMouseControllable } from './drawable/mouse-controllable.interface';
 import { MockMenu } from './drawable/menus/mock-menu';
 import { ResourceUtils } from './utils/resource-utils';
+import { SoundUtils } from './utils/sound-utils';
 
 /**
  * Contains controls for running app
  */
 class Platformer {
-  private audioContext: AudioContext = new window.AudioContext();;
   private allDrawables: Set<IDrawable> = new Set();
   private allKeyControllables: Set<IKeyControllable> = new Set();
   private allMouseControllables: Set<IMouseControllable> = new Set();
@@ -26,17 +26,10 @@ class Platformer {
     mainSketch.setup = async () => {
       mainSketch.createCanvas(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
       new MockMenu();
-
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/octet-stream');
-      ResourceUtils.TEST_SOUND = await fetch(ResourceUtils.TEST_SOUND_PATH, {
-        method: 'GET',
-        headers: headers
-      });
-      const source = this.audioContext.createBufferSource();
-      source.buffer = await this.audioContext.decodeAudioData((await ResourceUtils.TEST_SOUND.arrayBuffer()));
-      source.connect(this.audioContext.destination);
-      source.start(0);
+      ResourceUtils.TEST_SOUND = await SoundUtils.getSoundFile(ResourceUtils.TEST_SOUND_PATH);
+      ResourceUtils.TEST_SOUND_2 = await SoundUtils.getSoundFile(ResourceUtils.TEST_SOUND_2_PATH);
+      SoundUtils.playSong(ResourceUtils.TEST_SOUND);
+      SoundUtils.playSong(ResourceUtils.TEST_SOUND_2);
       // ResourceUtils.TEST_SOUND.play();
     };
 
