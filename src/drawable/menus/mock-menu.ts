@@ -27,13 +27,15 @@ export class MockMenu implements IDrawable, IKeyControllable, IMouseControllable
    * runs continuously; draws background of this
    */
   public keyPressed(): void {
-    // ArrowUp
-    // ArrowDown
-    // ArrowLeft
-    // ArrowRight
+    // ArrowUp -> & 38
+    // ArrowDown -> ( 40
+    // ArrowLeft -> % 37
+    // ArrowRight -> ' 39
 
     console.log(mainSketch.key);
     console.log(mainSketch.keyCode);
+    console.log(String.fromCharCode(mainSketch.keyCode), String.fromCharCode(mainSketch.keyCode).toLowerCase());
+    console.log(String.fromCharCode(mainSketch.keyCode).toLowerCase() == '%');
     this.background = 'red';
     setTimeout(
       () => {
