@@ -11,6 +11,7 @@ import { Player } from "../characters/player";
 import { ViewBox } from "../viewbox/viewbox";
 import { PauseMenu } from "../menus/pause-menu";
 import { ESongType } from "../../enums/song-type.enum";
+import { EReservedControlKeys } from "../../utils/reserved-control-utils";
 
 /**
  * common for levels
@@ -168,7 +169,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   public keyPressed(): void {
     if (this.player != null && !this.handlingLevelComplete) { // only allow pause if player is active
       const keyPressed = mainSketch.key;
-      if (ReservedControlUtils.EReservedControlKeys.p.toString().equalsIgnoreCase(keyPressed)) { // pause
+      if (EReservedControlKeys.p.toString().equalsIgnoreCase(keyPressed)) { // pause
         this.isPaused = !this.isPaused;
 
         if (this.isPaused) {

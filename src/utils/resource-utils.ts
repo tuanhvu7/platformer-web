@@ -1,5 +1,6 @@
 import { Image } from 'p5';
 import { ESongType } from '../enums/song-type.enum';
+import { SoundUtils } from './sound-utils';
 
 /**
  * make this class "static"
@@ -15,31 +16,31 @@ export class ResourceUtils {
   private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "/assets/level-select-menu-song.mp3";
   // private static readonly Media OUT_OF_LEVEL_MENU_SONG = new Media(
   //     getResourcePathUri(OUT_OF_LEVEL_MENU_SONG_PATH));
-  private static readonly OUT_OF_LEVEL_MENU_SONG_PLAYER;
+  private static readonly OUT_OF_LEVEL_MENU_SONG: AudioBuffer;
 
   // level song
   private static readonly LEVEL_SONG_PATH = "/assets/level-song.mp3";
-  private static readonly LEVEL_SONG_PLAYER;
+  private static readonly LEVEL_SONG: AudioBuffer;
 
   // player damage song
   private static readonly PLAYER_DAMAGE_SONG_PATH = "/assets/player-damage-song.mp3";
-  private static readonly PLAYER_DAMAGE_SONG_PLAYER;
+  private static readonly PLAYER_DAMAGE_SONG: AudioBuffer;
 
   // player death song
   private static readonly PLAYER_DEATH_SONG_PATH = "/assets/player-death-song.mp3";;
-  private static readonly PLAYER_DEATH_SONG_PLAYER;
+  private static readonly PLAYER_DEATH_SONG: AudioBuffer;
 
   // level complete song
   private static readonly LEVEL_COMPLETE_SONG_PATH = "/assets/level-complete-song.mp3";
-  private static readonly LEVEL_COMPLETION_SONG_PLAYER;
+  private static readonly LEVEL_COMPLETE_SONG: AudioBuffer;
 
   // player action song
   private static readonly PLAYER_ACTION_SONG_PATH = "/assets/player-action-song.mp3";
-  private static readonly PLAYER_ACTION_SONG_PLAYER;
+  private static readonly PLAYER_ACTION_SONG: AudioBuffer;
 
   // event block descent song
   private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "/assets/event-block-descent-song.mp3";
-  private static readonly EVENT_BLOCK_DESCENT_SONG_PLAYER;
+  private static readonly EVENT_BLOCK_DESCENT_SONG: AudioBuffer;
 
   /**
    * loop song
@@ -47,13 +48,11 @@ export class ResourceUtils {
   public static loopSong(songType: ESongType): void {
     switch (songType) {
       case ESongType.OUT_OF_LEVEL_MENU:
-        ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.setCycleCount(Number.MAX_VALUE);
-        ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.play();
+        SoundUtils.loopSong(this.OUT_OF_LEVEL_MENU_SONG);
         break;
 
       case ESongType.LEVEL:
-        ResourceUtils.LEVEL_SONG_PLAYER.setCycleCount(Number.MAX_VALUE);
-        ResourceUtils.LEVEL_SONG_PLAYER.play();
+        SoundUtils.loopSong(this.LEVEL_SONG);
         break;
 
       default:
@@ -67,51 +66,43 @@ export class ResourceUtils {
   public static playSong(songType: ESongType): void {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        ResourceUtils.PLAYER_DEATH_SONG_PLAYER.setCycleCount(1);
-        ResourceUtils.PLAYER_DEATH_SONG_PLAYER.play();
+        SoundUtils.playSong(this.PLAYER_DEATH_SONG);
         break;
 
       case ESongType.LEVEL_COMPLETE:
-        ResourceUtils.LEVEL_COMPLETION_SONG_PLAYER.setCycleCount(1);
-        ResourceUtils.LEVEL_COMPLETION_SONG_PLAYER.play();
+        SoundUtils.playSong(this.LEVEL_COMPLETE_SONG);
         break;
 
       case ESongType.PLAYER_DAMAGE:
-        // to player damage song in parallel with level song
-        ResourceUtils.PLAYER_DAMAGE_SONG_PLAYER.setCycleCount(1);
-        ResourceUtils.PLAYER_DAMAGE_SONG_PLAYER.play();
-        setTimeout(
-          () => {
-            ResourceUtils.PLAYER_DAMAGE_SONG_PLAYER.stop();
-          },
-          ResourceUtils.PLAYER_DAMAGE_SONG.getDuration().toMillis() // wait for song duration
-        );
+        SoundUtils.playSong(this.PLAYER_DAMAGE_SONG);
+        // setTimeout(
+        //   () => {
+        //     this.PLAYER_DAMAGE_SONG.stop();
+        //   },
+        //   this.PLAYER_DAMAGE_SONG.duration // wait for song duration
+        // );
         break;
 
       case ESongType.PLAYER_ACTION:
         // to reset level after player death song finishes without freezing game
-        ResourceUtils.PLAYER_ACTION_SONG_PLAYER.setCycleCount(1);
-        ResourceUtils.PLAYER_ACTION_SONG_PLAYER.play();
-
-        setTimeout(
-          () => {
-            ResourceUtils.PLAYER_ACTION_SONG_PLAYER.stop();
-          },
-          ResourceUtils.PLAYER_ACTION_SONG.getDuration().toMillis() // wait for song duration
-        );
+        SoundUtils.playSong(this.PLAYER_ACTION_SONG);
+        // setTimeout(
+        //   () => {
+        //     this.PLAYER_ACTION_SONG.stop();
+        //   },
+        //   this.PLAYER_ACTION_SONG.duration // wait for song duration
+        // );
         break;
 
       case ESongType.EVENT_BLOCK_DESCENT:
         // to play event block descent song in parallel with level song
-        ResourceUtils.EVENT_BLOCK_DESCENT_SONG_PLAYER.setCycleCount(1);
-        ResourceUtils.EVENT_BLOCK_DESCENT_SONG_PLAYER.play();
-
-        setTimeout(
-          () => {
-            ResourceUtils.EVENT_BLOCK_DESCENT_SONG_PLAYER.stop();;
-          },
-          ResourceUtils.EVENT_BLOCK_DESCENT_SONG.getDuration().toMillis() // wait for song duration
-        );
+        SoundUtils.playSong(this.EVENT_BLOCK_DESCENT_SONG);
+        // setTimeout(
+        //   () => {
+        //     this.EVENT_BLOCK_DESCENT_SONG.stop();;
+        //   },
+        //   this.EVENT_BLOCK_DESCENT_SONG.getDuration().toMillis() // wait for song duration
+        // );
         break;
 
       default:
@@ -125,11 +116,11 @@ export class ResourceUtils {
   public static getSongDurationMilliSec(songType: ESongType): number {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        return ResourceUtils.PLAYER_DEATH_SONG.getDuration().toMillis();
+        return this.PLAYER_DEATH_SONG.duration;
       case ESongType.PLAYER_DAMAGE:
-        return ResourceUtils.PLAYER_DAMAGE_SONG.getDuration().toMillis();
+        return this.PLAYER_DAMAGE_SONG.duration;
       case ESongType.LEVEL_COMPLETE:
-        return ResourceUtils.LEVEL_COMPLETE_SONG_.getDuration().toMillis();
+        return this.LEVEL_COMPLETE_SONG.duration;
       default:
         return 0;
     }
@@ -139,13 +130,16 @@ export class ResourceUtils {
    * stop song
    */
   public static stopSong(): void {
-    ResourceUtils.OUT_OF_LEVEL_MENU_SONG_PLAYER.stop();
-    ResourceUtils.LEVEL_SONG_PLAYER.stop();
-    ResourceUtils.PLAYER_DEATH_SONG_PLAYER.stop();
-    ResourceUtils.LEVEL_COMPLETION_SONG_PLAYER.stop();
-    ResourceUtils.PLAYER_ACTION_SONG_PLAYER.stop();
-    ResourceUtils.EVENT_BLOCK_DESCENT_SONG_PLAYER.stop();
+    // this.OUT_OF_LEVEL_MENU_SONG.stop();
+    // this.LEVEL_SONG.stop();
+    // this.PLAYER_DEATH_SONG.stop();
+    // this.LEVEL_COMPLETION_SONG.stop();
+    // this.PLAYER_ACTION_SONG.stop();
+    // this.EVENT_BLOCK_DESCENT_SONG.stop();
   }
 
+  /**
+   * make class 'static'
+   */
   private constructor() {}
 }
