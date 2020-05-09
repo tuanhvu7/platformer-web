@@ -16,7 +16,7 @@ export abstract class ACharacter implements IDrawable {
 
   readonly diameter: number;
 
-  fillColor: number;
+  fillColor: string;
 
   // number of floor-like boundaries this is touching;
   numberOfFloorBoundaryContacts: number;

@@ -9,8 +9,8 @@ class Constants {
   /*** level panel config ***/
   public readonly TEXT_SIZE = 24;
   public readonly PANEL_SIZE = 200;
-  public readonly DEFAULT_PANEL_COLOR = 0x00FF00;
-  public readonly ALTERNATE_PANEL_COLOR = 0xFFDAB9;
+  public readonly DEFAULT_PANEL_COLOR = '#00FF00';
+  public readonly ALTERNATE_PANEL_COLOR = '#FFDAB9';
 
   // widths of all levels
   public readonly LEVELS_WIDTH_ARRAY = [
@@ -59,10 +59,10 @@ class Constants {
   public readonly PLAYER_MOVEMENT_SPEED = 3;
   public readonly PLAYER_LEVEL_COMPLETE_SPEED = 1;
   public readonly PLAYER_JUMP_KILL_ENEMY_HOP_VERTICAL_VELOCITY = -7;
-  public readonly PLAYER_DEFAULT_COLOR = 0x000000;
-  public readonly PLAYER_DAMAGED_COLOR = 0x888888;
+  public readonly PLAYER_DEFAULT_COLOR = '#000000';
+  public readonly PLAYER_DAMAGED_COLOR = '#888888';
   public readonly PLAYER_DIAMETER = 60;
-  public readonly PLAYER_HEALTH_TEXT_COLOR = 0xFFFFFF;
+  public readonly PLAYER_HEALTH_TEXT_COLOR = '#FFFFFF';
   // minimum angle (degrees) of collision between player and enemy
   // for player to kill enemy
   public readonly MIN_PLAYER_KILL_ENEMY_COLLISION_ANGLE = 20.0;
@@ -71,39 +71,39 @@ class Constants {
   public readonly ENEMY_SLOW_MOVEMENT_SPEED = 1;
   public readonly ENEMY_REGULAR_MOVEMENT_SPEED = 2.5;
   public readonly ENEMY_FAST_MOVEMENT_SPEED = 5;
-  public readonly ENEMY_COLOR = 0xFF0000;
+  public readonly ENEMY_COLOR = '#FF0000';
   public readonly SMALL_ENEMY_DIAMETER = 60;
   public readonly MEDIUM_ENEMY_DIAMETER = 250;
   public readonly BIG_ENEMY_DIAMETER = 500;
 
 
   /*** boundary and block config ***/
-  public readonly BOUNDARY_COLOR = 0x000000;
+  public readonly BOUNDARY_COLOR = '#000000';
   public readonly DEFAULT_BOUNDARY_LINE_THICKNESS = 1;
 
-  public readonly BREAKABLE_BLOCK_COLOR = 0x800000;
-  public readonly DEFAULT_BLOCK_COLOR = 0xCD853F;
+  public readonly BREAKABLE_BLOCK_COLOR = '#800000';
+  public readonly DEFAULT_BLOCK_COLOR = '#CD853F';
   public readonly DEFAULT_BLOCK_SIZE = 100;
 
-  public readonly ITEM_BLOCK_TEXT_COLOR = 0x000000;
+  public readonly ITEM_BLOCK_TEXT_COLOR = '#000000';
 
-  public readonly EVENT_BLOCK_COLOR = 0x00E500;
+  public readonly EVENT_BLOCK_COLOR = '#00E500';
   public readonly DEFAULT_EVENT_BLOCK_WIDTH = 125;
   public readonly DEFAULT_EVENT_BLOCK_HEIGHT = 200;
 
   /*** collectable config ***/
-  public readonly CHECKPOINT_COLOR = 0xFFD700;
+  public readonly CHECKPOINT_COLOR = '#FFD700';
   public readonly CHECKPOINT_WIDTH = 40;
   public readonly CHECKPOINT_HEIGHT = 100;
 
-  public readonly LEVEL_GOAL_COLOR = 0xDCDCDC;
+  public readonly LEVEL_GOAL_COLOR = '#DCDCDC';
   public readonly LEVEL_GOAL_WIDTH = 40;
   public readonly LEVEL_GOAL_HEIGHT = this.LEVEL_FLOOR_Y_POSITION;
 
-  public readonly HEALTH_ITEM_COLOR = 0xDCDCDC;
-  public readonly NEGATIVE_HEALTH_ITEM_TEXT_COLOR = 0xFF0000;
-  public readonly ZERO_HEALTH_ITEM_TEXT_COLOR = 0x888888;
-  public readonly POSITIVE_HEALTH_ITEM_TEXT_COLOR = 0x008000;
+  public readonly HEALTH_ITEM_COLOR = '#DCDCDC';
+  public readonly NEGATIVE_HEALTH_ITEM_TEXT_COLOR = '#FF0000';
+  public readonly ZERO_HEALTH_ITEM_TEXT_COLOR = '#888888';
+  public readonly POSITIVE_HEALTH_ITEM_TEXT_COLOR = '#008000';
   public readonly HEALTH_ITEM_SIZE = 60;
 
   constructor() {

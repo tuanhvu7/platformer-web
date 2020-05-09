@@ -10,7 +10,7 @@ export abstract class ABlock implements IDrawable {
 
   isVisible: boolean;
 
-  fillColor: number;
+  fillColor: string;
 
   // position and dimensions
   readonly leftX: number;
