@@ -53,7 +53,6 @@ class Platformer {
       ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
       this.levelSelectMenu = new LevelSelectMenu(true);
       this.configurePlayerControlMenu = new ConfigurePlayerControlMenu(false);
-      // new MockMenu();
     };
 
     mainSketch.draw = () => {
