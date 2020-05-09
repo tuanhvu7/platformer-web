@@ -42,9 +42,9 @@ class Constants {
 
 
   /*** velocity and acceleration physics ***/
-  public GRAVITY: Vector;
+  public readonly GRAVITY: Vector;
   // gravity multiplier for jumping higher when holding jump button
-  public WALL_SLIDE_ACCELERATION: Vector;
+  public readonly WALL_SLIDE_ACCELERATION: Vector;
   public readonly CHARACTER_JUMP_VERTICAL_VELOCITY = -12;
   public readonly VARIABLE_JUMP_GRAVITY_MULTIPLIER = 0.55;
   public readonly EVENT_BLOCK_DESCENT_VERTICAL_VELOCITY = 1.5;
@@ -114,8 +114,8 @@ class Constants {
    * To avoid undefined error mainSketch.createVector on app startup
    */
   public setVectorProperties(): void {
-    this.GRAVITY = mainSketch.createVector(0, 0.4);
-    this.WALL_SLIDE_ACCELERATION = mainSketch.createVector(0, 0.1);
+    (this.GRAVITY as any) = mainSketch.createVector(0, 0.4);
+    (this.WALL_SLIDE_ACCELERATION as any) = mainSketch.createVector(0, 0.1);
   }
 }
 

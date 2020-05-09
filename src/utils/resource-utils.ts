@@ -7,61 +7,66 @@ import { mainSketch } from '../main';
  * make this class "static"
  */
 export class ResourceUtils {
-  public static readonly DEFAULT_MENU_IMAGE_PATH = '/assets/sky-blue-bg.png';
-  public static DEFAULT_MENU_IMAGE: Image;
+  private static readonly DEFAULT_MENU_IMAGE_PATH = '/assets/sky-blue-bg.png';
+  public static readonly DEFAULT_MENU_IMAGE: Image;
 
-  public static readonly LEVEL_BACKGROUND_IMAGE_PATH = "/assets/sky-bg.png";
-  public static LEVEL_BACKGROUND_IMAGE: Image;
+  private static readonly LEVEL_BACKGROUND_IMAGE_PATH = "/assets/sky-bg.png";
+  public static readonly LEVEL_BACKGROUND_IMAGE: Image;
 
   // out-of-level menu song
   private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "/assets/level-select-menu-song.mp3";
-  // private static readonly Media OUT_OF_LEVEL_MENU_SONG = new Media(
-  //     getResourcePathUri(OUT_OF_LEVEL_MENU_SONG_PATH));
-  private static OUT_OF_LEVEL_MENU_SONG: AudioBufferSourceNode;
+  private static readonly OUT_OF_LEVEL_MENU_SONG: AudioBuffer;
+  private static OUT_OF_LEVEL_MENU_SONG_PLAYER: AudioBufferSourceNode;
 
   // level song
   private static readonly LEVEL_SONG_PATH = "/assets/level-song.mp3";
-  private static LEVEL_SONG: AudioBufferSourceNode;
+  private static readonly LEVEL_SONG: AudioBuffer;
+  private static LEVEL_SONG_PLAYER: AudioBufferSourceNode;
 
   // player damage song
   private static readonly PLAYER_DAMAGE_SONG_PATH = "/assets/player-damage-song.mp3";
-  private static PLAYER_DAMAGE_SONG: AudioBufferSourceNode;
+  private static readonly PLAYER_DAMAGE_SONG: AudioBuffer;
+  private static PLAYER_DAMAGE_SONG_PLAYER: AudioBufferSourceNode;
 
   // player death song
   private static readonly PLAYER_DEATH_SONG_PATH = "/assets/player-death-song.mp3";;
-  private static PLAYER_DEATH_SONG: AudioBufferSourceNode;
+  private static readonly PLAYER_DEATH_SONG: AudioBuffer;
+  private static PLAYER_DEATH_SONG_PLAYER: AudioBufferSourceNode;
 
   // level complete song
   private static readonly LEVEL_COMPLETE_SONG_PATH = "/assets/level-complete-song.mp3";
-  private static LEVEL_COMPLETE_SONG: AudioBufferSourceNode;
+  private static readonly LEVEL_COMPLETE_SONG: AudioBuffer;
+  private static LEVEL_COMPLETE_SONG_PLAYER: AudioBufferSourceNode;
 
   // player action song
   private static readonly PLAYER_ACTION_SONG_PATH = "/assets/player-action-song.mp3";
-  private static PLAYER_ACTION_SONG: AudioBufferSourceNode;
+  private static readonly PLAYER_ACTION_SONG: AudioBuffer;
+  private static PLAYER_ACTION_SONG_PLAYER: AudioBufferSourceNode;
 
   // event block descent song
   private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "/assets/event-block-descent-song.mp3";
-  private static EVENT_BLOCK_DESCENT_SONG: AudioBufferSourceNode;
+  private static readonly EVENT_BLOCK_DESCENT_SONG: AudioBuffer;
+  private static EVENT_BLOCK_DESCENT_SONG_PLAYER: AudioBufferSourceNode;
 
   /**
    * Fetch and set images used in app
    */
   public static fetchImages(): void {
-    ResourceUtils.DEFAULT_MENU_IMAGE = mainSketch.loadImage(ResourceUtils.DEFAULT_MENU_IMAGE_PATH);
-    ResourceUtils.LEVEL_BACKGROUND_IMAGE = mainSketch.loadImage(ResourceUtils.LEVEL_BACKGROUND_IMAGE_PATH);
+    (ResourceUtils.DEFAULT_MENU_IMAGE as any) = mainSketch.loadImage(ResourceUtils.DEFAULT_MENU_IMAGE_PATH);
+    (ResourceUtils.LEVEL_BACKGROUND_IMAGE as any) = mainSketch.loadImage(ResourceUtils.LEVEL_BACKGROUND_IMAGE_PATH);
   }
 
   /**
    * Fetch and set songs used in app
    */
   public static async fetchSongs(): Promise<void> {
-    ResourceUtils.OUT_OF_LEVEL_MENU_SONG = await SoundUtils.getSoundFile(this.OUT_OF_LEVEL_MENU_SONG_PATH);
-    ResourceUtils.LEVEL_SONG = await SoundUtils.getSoundFile(this.LEVEL_SONG_PATH);;
-    ResourceUtils.PLAYER_DAMAGE_SONG = await SoundUtils.getSoundFile(this.PLAYER_DAMAGE_SONG_PATH);;
-    ResourceUtils.PLAYER_DEATH_SONG = await SoundUtils.getSoundFile(this.PLAYER_DEATH_SONG_PATH);;
-    ResourceUtils.LEVEL_COMPLETE_SONG = await SoundUtils.getSoundFile(this.LEVEL_COMPLETE_SONG_PATH);;
-    ResourceUtils.PLAYER_ACTION_SONG = await SoundUtils.getSoundFile(this.PLAYER_ACTION_SONG_PATH);;
-    ResourceUtils.EVENT_BLOCK_DESCENT_SONG = await SoundUtils.getSoundFile(this.EVENT_BLOCK_DESCENT_SONG_PATH);;
+    (ResourceUtils.OUT_OF_LEVEL_MENU_SONG as any) = await SoundUtils.getSoundFile(this.OUT_OF_LEVEL_MENU_SONG_PATH);
+    (ResourceUtils.LEVEL_SONG as any) = await SoundUtils.getSoundFile(this.LEVEL_SONG_PATH);;
+    (ResourceUtils.PLAYER_DAMAGE_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_DAMAGE_SONG_PATH);;
+    (ResourceUtils.PLAYER_DEATH_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_DEATH_SONG_PATH);;
+    (ResourceUtils.LEVEL_COMPLETE_SONG as any) = await SoundUtils.getSoundFile(this.LEVEL_COMPLETE_SONG_PATH);;
+    (ResourceUtils.PLAYER_ACTION_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_ACTION_SONG_PATH);;
+    (ResourceUtils.EVENT_BLOCK_DESCENT_SONG as any) = await SoundUtils.getSoundFile(this.EVENT_BLOCK_DESCENT_SONG_PATH);;
   }
 
   /**
@@ -70,11 +75,13 @@ export class ResourceUtils {
   public static loopSong(songType: ESongType): void {
     switch (songType) {
       case ESongType.OUT_OF_LEVEL_MENU:
-        SoundUtils.loopSong(this.OUT_OF_LEVEL_MENU_SONG);
+        this.OUT_OF_LEVEL_MENU_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.OUT_OF_LEVEL_MENU_SONG);
+        SoundUtils.loopSong(this.OUT_OF_LEVEL_MENU_SONG_PLAYER);
         break;
 
       case ESongType.LEVEL:
-        SoundUtils.loopSong(this.LEVEL_SONG);
+        this.LEVEL_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.LEVEL_SONG);
+        SoundUtils.loopSong(this.LEVEL_SONG_PLAYER);
         break;
 
       default:
@@ -88,15 +95,18 @@ export class ResourceUtils {
   public static playSong(songType: ESongType): void {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        SoundUtils.playSong(this.PLAYER_DEATH_SONG);
+        this.PLAYER_DEATH_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.PLAYER_DEATH_SONG);
+        SoundUtils.playSong(this.PLAYER_DEATH_SONG_PLAYER);
         break;
 
       case ESongType.LEVEL_COMPLETE:
-        SoundUtils.playSong(this.LEVEL_COMPLETE_SONG);
+        this.LEVEL_COMPLETE_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.LEVEL_COMPLETE_SONG);
+        SoundUtils.playSong(this.LEVEL_COMPLETE_SONG_PLAYER);
         break;
 
       case ESongType.PLAYER_DAMAGE:
-        SoundUtils.playSong(this.PLAYER_DAMAGE_SONG);
+        this.PLAYER_DAMAGE_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.PLAYER_DAMAGE_SONG);
+        SoundUtils.playSong(this.PLAYER_DAMAGE_SONG_PLAYER);
         // setTimeout(
         //   () => {
         //     this.PLAYER_DAMAGE_SONG.stop();
@@ -107,7 +117,8 @@ export class ResourceUtils {
 
       case ESongType.PLAYER_ACTION:
         // to reset level after player death song finishes without freezing game
-        SoundUtils.playSong(this.PLAYER_ACTION_SONG);
+        this.PLAYER_ACTION_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.PLAYER_ACTION_SONG);
+        SoundUtils.playSong(this.PLAYER_ACTION_SONG_PLAYER);
         // setTimeout(
         //   () => {
         //     this.PLAYER_ACTION_SONG.stop();
@@ -118,7 +129,8 @@ export class ResourceUtils {
 
       case ESongType.EVENT_BLOCK_DESCENT:
         // to play event block descent song in parallel with level song
-        SoundUtils.playSong(this.EVENT_BLOCK_DESCENT_SONG);
+        this.EVENT_BLOCK_DESCENT_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.EVENT_BLOCK_DESCENT_SONG);
+        SoundUtils.playSong(this.EVENT_BLOCK_DESCENT_SONG_PLAYER);
         // setTimeout(
         //   () => {
         //     this.EVENT_BLOCK_DESCENT_SONG.stop();;
@@ -138,11 +150,11 @@ export class ResourceUtils {
   public static getSongDurationMilliSec(songType: ESongType): number {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        return this.PLAYER_DEATH_SONG.buffer.duration * 1000;
+        return this.PLAYER_DEATH_SONG_PLAYER.buffer.duration * 1000;
       case ESongType.PLAYER_DAMAGE:
-        return this.PLAYER_DAMAGE_SONG.buffer.duration * 1000;
+        return this.PLAYER_DAMAGE_SONG_PLAYER.buffer.duration * 1000;
       case ESongType.LEVEL_COMPLETE:
-        return this.LEVEL_COMPLETE_SONG.buffer.duration * 1000;
+        return this.LEVEL_COMPLETE_SONG_PLAYER.buffer.duration * 1000;
       default:
         return 0;
     }
@@ -152,12 +164,31 @@ export class ResourceUtils {
    * stop song
    */
   public static stopSong(): void {
-    this.OUT_OF_LEVEL_MENU_SONG.stop();
-    this.LEVEL_SONG.stop();
-    this.PLAYER_DEATH_SONG.stop();
-    this.LEVEL_COMPLETE_SONG.stop();
-    this.PLAYER_ACTION_SONG.stop();
-    this.EVENT_BLOCK_DESCENT_SONG.stop();
+    try {
+      this.OUT_OF_LEVEL_MENU_SONG_PLAYER.stop();
+    } catch (e) {
+    }
+    try {
+      this.LEVEL_SONG_PLAYER.stop();
+    } catch (e) {
+    }
+    try {
+      this.PLAYER_DEATH_SONG_PLAYER.stop();
+    } catch (e) {
+    }
+    try {
+      this.LEVEL_COMPLETE_SONG_PLAYER.stop();
+    } catch (e) {
+    }
+    try {
+      this.PLAYER_ACTION_SONG_PLAYER.stop();
+    } catch (e) {
+    }
+    try {
+      this.EVENT_BLOCK_DESCENT_SONG_PLAYER.stop();
+
+    } catch (e) {
+    }
   }
 
   /**

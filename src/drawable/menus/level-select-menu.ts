@@ -4,6 +4,9 @@ import { ResourceUtils } from '../../utils/resource-utils';
 import { LevelSelectMenuPanel } from './panels/level-select-menu-panel';
 import { mainSketch } from '../../main';
 import { platformer } from '../../platformer';
+import { APanel } from './panels/panel.abstract';
+import { EReservedControlKeys } from '../../utils/reserved-control-utils';
+import { ESongType } from '../../enums/song-type.enum';
 
 export class LevelSelectMenu extends AMenuWithKeyboardControl {
   /**
@@ -40,6 +43,8 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
 
       leftXPanelPosition += constants.PANEL_SIZE + 100;
     }
+
+    ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
   }
 
   /**
@@ -55,14 +60,14 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
    */
   public keyPressed(): void {
     const keyPressed = mainSketch.key;
-    // if (ReservedControlUtils.EReservedControlKeys.c.toString().equalsIgnoreCase(keyPressed)) {  // toggle checkpoint start
-    //     for (APanel curPanel : this.panelsList) {
-    //         ((LevelSelectMenuPanel) curPanel).toggleLoadLevelFromCheckpoint();
-    //     }
-    // } else if (ReservedControlUtils.EReservedControlKeys.u.toString().equalsIgnoreCase(keyPressed)) {   // switch to user control menu
-    //     mainSketch.getLevelSelectMenu().deactivateMenu();
-    //     mainSketch.getChangePlayerControlMenu().setupActivateMenu();
-    // }
+    if (EReservedControlKeys.c.toString().toLowerCase() === (keyPressed.toLowerCase())) {  // toggle checkpoint start
+      this.panelsList.forEach((curPanel: APanel) => {
+        (<LevelSelectMenuPanel>curPanel).toggleLoadLevelFromCheckpoint();
+      });
+    } else if (EReservedControlKeys.u.toString().toLowerCase() === (keyPressed.toLowerCase())) {   // switch to user control menu
+        platformer.getLevelSelectMenu().deactivateMenu();
+        platformer.getChangePlayerControlMenu().setupActivateMenu();
+    }
   }
 
 }
