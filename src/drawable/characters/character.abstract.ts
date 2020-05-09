@@ -24,7 +24,10 @@ export abstract class ACharacter implements IDrawable {
   /**
    * set properties of this
    */
-  constructor(x: number, y: number, diameter: number, isActive: boolean) {
+  constructor(x: number,
+              y: number,
+              diameter: number,
+              isActive: boolean) {
     this.pos = mainSketch.createVector(x, y);
     this.vel = mainSketch.createVector();
     this.diameter = diameter;
