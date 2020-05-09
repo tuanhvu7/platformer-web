@@ -58,26 +58,26 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
    * handle panel keypress controls
    */
   public keyPressed(): void {
-    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
+    const lowerCaseKey = mainSketch.key.toLowerCase();
     // check valid input is given (not a reserved or already-taken keyCode)
-    if (!ReservedControlUtils.isKeyCodeReserved(lowercaseKey) && PlayerControlSettings.isKeyAvailable(lowercaseKey)) {
+    if (!ReservedControlUtils.isKeyCodeReserved(lowerCaseKey) && PlayerControlSettings.isKeyAvailable(lowerCaseKey)) {
       switch (this.configurablePlayerControlType) {
         case EConfigurablePlayerControls.UP:
-          PlayerControlSettings.setPlayerUp(lowercaseKey);
+          PlayerControlSettings.setPlayerUp(lowerCaseKey);
           break;
         case EConfigurablePlayerControls.DOWN:
-          PlayerControlSettings.setPlayerDown(lowercaseKey);
+          PlayerControlSettings.setPlayerDown(lowerCaseKey);
           break;
         case EConfigurablePlayerControls.LEFT:
-          PlayerControlSettings.setPlayerLeft(lowercaseKey);
+          PlayerControlSettings.setPlayerLeft(lowerCaseKey);
           break;
         case EConfigurablePlayerControls.RIGHT:
-          PlayerControlSettings.setPlayerRight(lowercaseKey);
+          PlayerControlSettings.setPlayerRight(lowerCaseKey);
           break;
         default:
           break;
       }
-      this.panelText = this.createFormattedPanelText(lowercaseKey);
+      this.panelText = this.createFormattedPanelText(lowerCaseKey);
     }
 
     // unselect panel after key is inputted; to avoid registerMethod again

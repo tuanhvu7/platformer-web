@@ -2,8 +2,8 @@
  * Configurable player controls
  */
 export enum EConfigurablePlayerControls {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
+  UP = "UP",
+  DOWN = "DOWN",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
 }

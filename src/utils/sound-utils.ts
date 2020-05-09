@@ -41,7 +41,6 @@ export class SoundUtils {
     audioBufferSourceNode.connect(this.audioContext.destination);
     audioBufferSourceNode.loop = true;
     audioBufferSourceNode.start();
-    console.log(audioBufferSourceNode.buffer.duration);
   }
 
   /**
@@ -49,8 +48,7 @@ export class SoundUtils {
    */
   public static playSong(audioBufferSourceNode: AudioBufferSourceNode): void {
     audioBufferSourceNode.connect(this.audioContext.destination);
-    audioBufferSourceNode.loop = true;
+    audioBufferSourceNode.loop = false;
     audioBufferSourceNode.start();
-    console.log(audioBufferSourceNode.buffer.duration);
   }
 }

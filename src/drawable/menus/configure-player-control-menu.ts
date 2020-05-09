@@ -6,8 +6,7 @@ import { mainSketch } from '../../main';
 import { APanel } from "./panels/panel.abstract";
 import { ConfigurePlayerControlPanel } from "./panels/configure-player-control-panel";
 import { EConfigurablePlayerControls } from "../../enums/configurable-player-controls.enum";
-import { ESongType } from "../../enums/song-type.enum";
-import { EReservedControlKeys } from "../../utils/reserved-control-utils";
+import { EReservedControlKeys } from "../../enums/reserved-control-keys.enum";
 
 /**
  * Menu to change player controls
@@ -27,18 +26,18 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
   public setupActivateMenu() {
     // make this active
     platformer.addToAllDrawables(this); // connect this draw() from main draw()
-    platformer.addToAllKeyControllables(this); // connect this draw() from main draw()
+    platformer.addToAllKeyControllables(this); // connect this key events from main key events
     let leftXPanelPosition = 100;
     let topYPanelPosition = 100;
 
-    for (let curConfigurablePlayerControls in EConfigurablePlayerControls) {
+    Object.keys(EConfigurablePlayerControls).forEach((curConfigControl: string) => {
       if (leftXPanelPosition + constants.PANEL_SIZE > ResourceUtils.DEFAULT_MENU_IMAGE.width) {
         leftXPanelPosition = 100;
         topYPanelPosition += (100 + constants.PANEL_SIZE);
       }
 
       this.panelsList.push(new ConfigurePlayerControlPanel(
-        curConfigurablePlayerControls as any, // any for enum
+        curConfigControl as any, // any for enum
         leftXPanelPosition,
         topYPanelPosition,
         constants.PANEL_SIZE,
@@ -47,8 +46,7 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
       ));
 
       leftXPanelPosition += constants.PANEL_SIZE + 100;
-      ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
-    }
+    });
   }
 
   /**
@@ -63,7 +61,8 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
    */
   public keyPressed(): void {
     const keyPressed = mainSketch.key;
-    if (EReservedControlKeys.u.toString().toLowerCase() == keyPressed.toLowerCase()) { // switch to level select equalsIgnoreCase
+    console.log('ConfigurePlayerControlMenu', keyPressed);
+    if (EReservedControlKeys.l.toLowerCase() == keyPressed.toLowerCase()) { // switch to level select equalsIgnoreCase
       this.deactivateMenu();
       platformer.getLevelSelectMenu().setupActivateMenu();
     }

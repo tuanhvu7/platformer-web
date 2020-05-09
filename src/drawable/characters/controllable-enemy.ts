@@ -105,27 +105,27 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
    * handle character keypress controls
    */
   public keyPressed(): void {
-    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowercaseKey) { //left
+    const lowerCaseKey = mainSketch.key.toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == lowerCaseKey) { //left
       this.moveLeftPressed = true;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowercaseKey) { //right
+    if (PlayerControlSettings.getPlayerRight() == lowerCaseKey) { //right
       this.moveRightPressed = true;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowercaseKey) {
+    if (PlayerControlSettings.getPlayerUp() == lowerCaseKey) {
       this.jumpPressed = true;
     }
   }
 
   public keyReleased(): void {
-    const lowercaseKey = String.fromCharCode(mainSketch.keyCode).toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowercaseKey) { //left
+    const lowerCaseKey = mainSketch.key.toLowerCase();
+    if (PlayerControlSettings.getPlayerLeft() == lowerCaseKey) { //left
       this.moveLeftPressed = false;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowercaseKey) { //right
+    if (PlayerControlSettings.getPlayerRight() == lowerCaseKey) { //right
       this.moveRightPressed = false;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowercaseKey) {
+    if (PlayerControlSettings.getPlayerUp() == lowerCaseKey) {
       this.jumpPressed = false;
     }
   }

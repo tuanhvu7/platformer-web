@@ -107,36 +107,18 @@ export class ResourceUtils {
       case ESongType.PLAYER_DAMAGE:
         this.PLAYER_DAMAGE_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.PLAYER_DAMAGE_SONG);
         SoundUtils.playSong(this.PLAYER_DAMAGE_SONG_PLAYER);
-        // setTimeout(
-        //   () => {
-        //     this.PLAYER_DAMAGE_SONG.stop();
-        //   },
-        //   this.PLAYER_DAMAGE_SONG.duration // wait for song duration
-        // );
         break;
 
       case ESongType.PLAYER_ACTION:
         // to reset level after player death song finishes without freezing game
         this.PLAYER_ACTION_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.PLAYER_ACTION_SONG);
         SoundUtils.playSong(this.PLAYER_ACTION_SONG_PLAYER);
-        // setTimeout(
-        //   () => {
-        //     this.PLAYER_ACTION_SONG.stop();
-        //   },
-        //   this.PLAYER_ACTION_SONG.duration // wait for song duration
-        // );
         break;
 
       case ESongType.EVENT_BLOCK_DESCENT:
         // to play event block descent song in parallel with level song
         this.EVENT_BLOCK_DESCENT_SONG_PLAYER = SoundUtils.createAudioBufferSourceNode(this.EVENT_BLOCK_DESCENT_SONG);
         SoundUtils.playSong(this.EVENT_BLOCK_DESCENT_SONG_PLAYER);
-        // setTimeout(
-        //   () => {
-        //     this.EVENT_BLOCK_DESCENT_SONG.stop();;
-        //   },
-        //   this.EVENT_BLOCK_DESCENT_SONG.getDuration().toMillis() // wait for song duration
-        // );
         break;
 
       default:

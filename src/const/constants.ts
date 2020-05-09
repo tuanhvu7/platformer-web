@@ -16,16 +16,16 @@ class Constants {
   public readonly LEVELS_WIDTH_ARRAY = [
       0,          // non-existent level zero
       8750,
-      12000,
-      8500
+      // 12000,
+      // 8500
   ];
 
   // heights of all levels
   public readonly LEVELS_HEIGHT_ARRAY = [
       0,      // non-existent level zero
       900,    // level one
-      1300,
-      900
+      // 1300,
+      // 900
   ];
 
   /*** screen config ***/
@@ -105,10 +105,6 @@ class Constants {
   public readonly ZERO_HEALTH_ITEM_TEXT_COLOR = '#888888';
   public readonly POSITIVE_HEALTH_ITEM_TEXT_COLOR = '#008000';
   public readonly HEALTH_ITEM_SIZE = 60;
-
-  constructor() {
-    console.log('In constants.ts constructor');
-  }
 
   /**
    * To avoid undefined error mainSketch.createVector on app startup
