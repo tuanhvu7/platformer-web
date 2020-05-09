@@ -41,6 +41,7 @@ export class PauseMenuPanel extends APanel {
       platformer.getCurrentActiveLevel().closePauseMenu();
       platformer.getCurrentActiveLevel().deactivateLevel();
       platformer.setCurrentActiveLevelNumber(0);
+      ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
       platformer.getLevelSelectMenu().setupActivateMenu();
     }
 
