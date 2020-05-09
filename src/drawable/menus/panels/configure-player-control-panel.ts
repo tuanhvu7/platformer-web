@@ -96,8 +96,7 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
    * @return formatted panel text that contains player control type and player control key
    */
   private createFormattedPanelText(playerControlKey: string): string {
-    playerControlKey = playerControlKey.toLowerCase();
-    let finalPlayerControlKeyText;
+    let finalPlayerControlKeyText = playerControlKey.toLowerCase();
     // const playerControlKeyStr = (char) playerControlKey + "";
     // to handle display of up, down, left, right arrows text
     switch (playerControlKey) {

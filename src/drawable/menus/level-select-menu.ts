@@ -57,7 +57,6 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
    */
   public keyPressed(): void {
     const keyPressed = mainSketch.key;
-    console.log('LevelSelectMenu', keyPressed);
     if (EReservedControlKeys.c.toLowerCase() === (keyPressed.toLowerCase())) {  // toggle checkpoint start
       this.panelsList.forEach((curPanel: APanel) => {
         (<LevelSelectMenuPanel>curPanel).toggleLoadLevelFromCheckpoint();
