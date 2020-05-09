@@ -13,7 +13,7 @@ export class SoundUtils {
   /**
    * @param path path of sound file to fetch
    */
-  public static async getSoundFile(path: string): Promise<AudioBuffer> {
+  public static async getSoundFile(path: string): Promise<AudioBufferSourceNode> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/octet-stream');
     const soundFile = await fetch(path, {
@@ -21,29 +21,28 @@ export class SoundUtils {
       headers: headers
     });
 
-    return await this.audioContext.decodeAudioData((await soundFile.arrayBuffer()));
+    const audioBuffer = await this.audioContext.decodeAudioData((await soundFile.arrayBuffer()));
+    const source = this.audioContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(this.audioContext.destination);
+    return source;
   }
 
   /**
-   * @param audioBuffer audio buffer to loop
+   * @param audioBufferSourceNode audio buffer source node to loop
    */
-  public static loopSong(audioBuffer: AudioBuffer) {
-    const source = this.audioContext.createBufferSource();
-    source.buffer = audioBuffer
-    source.connect(this.audioContext.destination);
-    source.loop = true;
-    source.start();
-    console.log(source.buffer.duration);
+  public static loopSong(audioBufferSourceNode: AudioBufferSourceNode) {
+    audioBufferSourceNode.loop = true;
+    audioBufferSourceNode.start();
+    console.log(audioBufferSourceNode.buffer.duration);
   }
 
   /**
-   * @param audioBuffer audio buffer to play
+   * @param audioBufferSourceNode audio buffer source node to play
    */
-  public static playSong(audioBuffer: AudioBuffer) {
-    const source = this.audioContext.createBufferSource();
-    source.buffer = audioBuffer
-    source.connect(this.audioContext.destination);
-    source.start();
-    console.log(source.buffer.duration);
+  public static playSong(audioBufferSourceNode: AudioBufferSourceNode) {
+    audioBufferSourceNode.loop = false;
+    audioBufferSourceNode.start();
+    console.log(audioBufferSourceNode.buffer.duration);
   }
 }

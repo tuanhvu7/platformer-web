@@ -14,21 +14,29 @@ export class HorizontalBoundary extends ABoundary {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(startXPoint: number, startYPoint: number, x2Offset: number, boundaryLineThickness: number,
-              isFloorBoundary: boolean, isActive: boolean) {
-    super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
-      true, true, true, isActive);
+  // constructor(startXPoint: number,
+  //             startYPoint: number,
+  //             x2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isFloorBoundary: boolean,
+  //             isActive: boolean) {
+  //   super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
+  //     true, true, true, isActive);
 
-    this.isFloorBoundary = isFloorBoundary;
-  }
+  //   this.isFloorBoundary = isFloorBoundary;
+  // }
 
   /**
    * set properties of this
    * sets this to affect all characters
    */
-  // constructor(int startXPoint, int startYPoint, int x2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean isFloorBoundary,
-  //   boolean isActive) {
+  // constructor(startXPoint: number,
+  //             startYPoint: number,
+  //             x2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isVisible: boolean,
+  //             isFloorBoundary: boolean,
+  //             isActive: boolean) {
   //   super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
   //     isVisible, true, true, isActive);
 
@@ -38,14 +46,20 @@ export class HorizontalBoundary extends ABoundary {
   /**
    * set properties of this
    */
-  // constructor(int startXPoint, int startYPoint, int x2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean doesAffectPlayer, boolean doesAffectNonPlayers,
-  //   boolean isFloorBoundary, boolean isActive) {
-  //   super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
-  //     isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
+  constructor(startXPoint: number,
+              startYPoint: number,
+              x2Offset: number,
+              boundaryLineThickness: number,
+              isVisible: boolean,
+              doesAffectPlayer: boolean,
+              doesAffectNonPlayers: boolean,
+              isFloorBoundary: boolean,
+              isActive: boolean) {
+    super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
+      isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
 
-  //   this.isFloorBoundary = isFloorBoundary;
-  // }
+    this.isFloorBoundary = isFloorBoundary;
+  }
 
   /**
    * return true if valid collision with given character

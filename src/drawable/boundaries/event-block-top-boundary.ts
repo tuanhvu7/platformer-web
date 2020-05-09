@@ -9,30 +9,42 @@ export class EventBlockTopBoundary extends HorizontalBoundary {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(startXPoint: number, startYPoint: number, x2Offset: number, boundaryLineThickness: number,
-              isActive: boolean) {
-    super(startXPoint, startYPoint, x2Offset, boundaryLineThickness, true, isActive);
-  }
+  // constructor(startXPoint: number,
+  //             startYPoint: number,
+  //             x2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isActive: boolean) {
+  //   super(startXPoint, startYPoint, x2Offset, boundaryLineThickness, true, isActive);
+  // }
 
   /**
    * set properties of this
    * sets this to affect all characters
    */
-  // constructor(int startXPoint, int startYPoint, int x2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean isActive) {
+  // constructor(startXPoint: number,
+  //             startYPoint: number,
+  //             x2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isVisible: boolean,
+  //             isActive: boolean) {
   //   super(startXPoint, startYPoint, x2Offset, boundaryLineThickness, isVisible, true, isActive);
   // }
 
   /**
    * set properties of this
    */
-  // constructor(int startXPoint, int startYPoint, int x2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean doesAffectPlayer, boolean doesAffectNonPlayers,
-  //   boolean isActive) {
-  //   super(startXPoint, startYPoint, x2Offset, boundaryLineThickness,
-  //     isVisible, doesAffectPlayer, doesAffectNonPlayers,
-  //     true, isActive);
-  // }
+  constructor(startXPoint: number,
+              startYPoint: number,
+              x2Offset: number,
+              boundaryLineThickness: number,
+              isVisible: boolean,
+              doesAffectPlayer: boolean,
+              doesAffectNonPlayers: boolean,
+              isActive: boolean) {
+    super(startXPoint, startYPoint, x2Offset, boundaryLineThickness,
+      isVisible, doesAffectPlayer, doesAffectNonPlayers,
+      true, isActive);
+  }
 
   /**
    * check and handle contact with player

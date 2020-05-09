@@ -38,8 +38,14 @@ export abstract class ABoundary implements IDrawable {
    * @param x2Offset difference between first and second x coordinates (x2 - x1)
    * @param y2Offset difference between first and second y coordinates (y2 - y1)
    */
-  constructor(x1Point: number, y1Point: number, x2Offset: number, y2Offset: number, boundaryLineThickness: number,
-              isVisible: boolean, doesAffectPlayer: boolean, doesAffectNonPlayers: boolean,
+  constructor(x1Point: number,
+              y1Point: number,
+              x2Offset: number,
+              y2Offset: number,
+              boundaryLineThickness: number,
+              isVisible: boolean,
+              doesAffectPlayer: boolean,
+              doesAffectNonPlayers: boolean,
               isActive: boolean) {
 
     // set start points to be smaller of given values
