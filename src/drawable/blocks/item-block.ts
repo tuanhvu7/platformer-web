@@ -21,12 +21,45 @@ export class ItemBlock extends Block {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(leftX: number, topY: number,
-    width: number, height: number, item: ACollectable,
-    blockLineThickness: number, isBreakableFromBottom: boolean, isActive: boolean) {
+  // constructor(leftX: number,
+  //             topY: number,
+  //             width: number,
+  //             height: number,
+  //             item: ACollectable,
+  //             blockLineThickness: number,
+  //             isBreakableFromBottom: boolean,
+  //             isActive: boolean) {
 
-    super(leftX, topY, width, height,
-      blockLineThickness, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive()
+  //   super(leftX, topY, width, height,
+  //     blockLineThickness, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive()
+
+  //   this.blockText = "?";
+  //   this.itemAppeared = false;
+
+  //   this.item = item;
+  //   this.item.makeNotActive();
+  //   this.item.setLeftX((this.leftX + this.width / 2) - this.item.getWidth() / 2);
+  //   this.item.setTopY(this.topY - this.item.getHeight());
+  // }
+
+  /**
+   * set properties of this;
+   * sets this to be active for all characters;
+   * if given isVisible is false, only bottom boundary of block is active
+   * to all characters
+   */
+  constructor(leftX: number,
+              topY: number,
+              width: number,
+              height: number,
+              item: ACollectable,
+              blockLineThickness: number,
+              isVisible: boolean,
+              isBreakableFromBottom: boolean,
+              isActive: boolean) {
+
+    super(leftX, topY, width, height, blockLineThickness,
+      isVisible, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive(), isVisible
 
     this.blockText = "?";
     this.itemAppeared = false;
@@ -36,27 +69,6 @@ export class ItemBlock extends Block {
     this.item.setLeftX((this.leftX + this.width / 2) - this.item.getWidth() / 2);
     this.item.setTopY(this.topY - this.item.getHeight());
   }
-
-  /**
-   * set properties of this;
-   * sets this to be active for all characters;
-   * if given isVisible is false, only bottom boundary of block is active
-   * to all characters
-   */
-  // constructor(int leftX, int topY,
-  //   int width, int height, ACollectable item,
-  //   int blockLineThickness, boolean isVisible, boolean isBreakableFromBottom, boolean isActive) {
-
-  //   super(leftX, topY, width, height, blockLineThickness,
-  //     isVisible, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive(), isVisible
-
-  //   this.itemAppeared = false;
-
-  //   this.item = item;
-  //   this.item.makeNotActive();
-  //   this.item.setLeftX((this.leftX + this.width / 2) - this.item.getWidth() / 2);
-  //   this.item.setTopY(this.topY - this.item.getHeight());
-  // }
 
   /**
    * runs continuously

@@ -73,12 +73,12 @@ export class EventTriggerHorizontalBoundary extends HorizontalBoundary {
               eventProperties: number[],
               // endWarpXPosition: number, OR launchEventVerticalVelocity: number,
               // endWarpYPosition: number,
-              // isFloorBoundary: boolean,
+              isFloorBoundary: boolean,
               isActive: boolean,
-    eventBlockTopBoundary: EventBlockTopBoundary) {
+              eventBlockTopBoundary: EventBlockTopBoundary) {
     
     super(startXPoint, startYPoint, x2Offset, boundaryLineThickness,
-          false, true, false, true, isActive);
+          false, true, false, isFloorBoundary, isActive);
     
     if (eventProperties.length === 1) {
       this.endWarpPosition = null;

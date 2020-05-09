@@ -20,48 +20,14 @@ export class EventBlock extends ABlock {
    * set properties of this;
    * affect all characters and be visible
    */
-  constructor(leftX: number, topY: number, width: number, height: number, blockLineThickness: number,
-    launchEventVerticalVelocity: number,
-    isEventTriggerFloorBoundary: boolean, isActive: boolean) {
-
-    super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
-
-    this.fillColor = Constants.EVENT_BLOCK_COLOR;
-
-    this.topSide = new EventBlockTopBoundary(
-      leftX,
-      topY,
-      width,
-      blockLineThickness,
-      false // initially not active, to be set in makeActive()
-    );
-
-    this.launchEventVerticalVelocity = launchEventVerticalVelocity;
-
-    this.eventTriggerBoundary = new EventTriggerHorizontalBoundary(
-      leftX + 10,
-      topY + height - (height / 5),
-      width - 20,
-      blockLineThickness,
-      this.launchEventVerticalVelocity,
-      isEventTriggerFloorBoundary,
-      false, // initially not active, to be set in makeActive()
-      <EventBlockTopBoundary> this.topSide
-    );
-
-    if (isActive) {
-      this.makeActive();
-    }
-  }
-
-  /**
-   * Warp event;
-   * set properties of this;
-   * affect all characters and be visible
-   */
-  // constructor(int leftX, int topY, int width, int height, int blockLineThickness,
-  //   int endWarpXPosition, int endWarpYPosition,
-  //   boolean isEventTriggerFloorBoundary, boolean isActive) {
+  // constructor(leftX: number,
+  //             topY: number,
+  //             width: number,
+  //             height: number,
+  //             blockLineThickness: number,
+  //             launchEventVerticalVelocity: number,
+  //             isEventTriggerFloorBoundary: boolean,
+  //             isActive: boolean) {
 
   //   super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
 
@@ -75,24 +41,78 @@ export class EventBlock extends ABlock {
   //     false // initially not active, to be set in makeActive()
   //   );
 
-  //   this.launchEventVerticalVelocity = 0; // this value is not used for warp events
+  //   this.launchEventVerticalVelocity = launchEventVerticalVelocity;
 
   //   this.eventTriggerBoundary = new EventTriggerHorizontalBoundary(
   //     leftX + 10,
   //     topY + height - (height / 5),
   //     width - 20,
   //     blockLineThickness,
-  //     endWarpXPosition,
-  //     endWarpYPosition,
+  //     this.launchEventVerticalVelocity,
   //     isEventTriggerFloorBoundary,
   //     false, // initially not active, to be set in makeActive()
-  //     (EventBlockTopBoundary) this.topSide
+  //     <EventBlockTopBoundary> this.topSide
   //   );
 
   //   if (isActive) {
   //     this.makeActive();
   //   }
   // }
+
+  /**
+   * set properties of this;
+   * affect all characters and be visible;
+   * @param eventProperties determines launch vs warp event
+   * eventProperties.length = 1 means launch event
+   * ventProperties.length = 2 means warp event
+   */
+  constructor(leftX: number,
+              topY: number,
+              width: number,
+              height: number,
+              blockLineThickness: number,
+              eventProperties: number[],
+              // endWarpXPosition: number,
+              // endWarpYPosition: number,
+              isEventTriggerFloorBoundary: boolean,
+              isActive: boolean) {
+
+    super(leftX, topY, width, height, blockLineThickness, true, false); // initially not active, to be set in makeActive()
+
+    this.fillColor = Constants.EVENT_BLOCK_COLOR;
+
+    this.topSide = new EventBlockTopBoundary(
+      leftX,
+      topY,
+      width,
+      blockLineThickness,
+      true,
+      true,
+      true,
+      false // initially not active, to be set in makeActive()
+    );
+
+    if (eventProperties.length === 1) {
+      this.launchEventVerticalVelocity = eventProperties[0];
+    } else {
+      this.launchEventVerticalVelocity = 0; // this value is not used for warp events
+    }
+
+    this.eventTriggerBoundary = new EventTriggerHorizontalBoundary(
+      leftX + 10,
+      topY + height - (height / 5),
+      width - 20,
+      blockLineThickness,
+      eventProperties,
+      isEventTriggerFloorBoundary,
+      false, // initially not active, to be set in makeActive()
+      <EventBlockTopBoundary> this.topSide
+    );
+
+    if (isActive) {
+      this.makeActive();
+    }
+  }
 
   /**
    * runs continuously
