@@ -2,7 +2,7 @@ import { IDrawable } from "../drawable.interface";
 import { Vector } from "p5";
 import { mainSketch } from '../../main';
 import { platformer } from '../../platformer';
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 
 /**
  * viewbox that keeps track of screen position to display character;
@@ -60,9 +60,9 @@ export class ViewBox implements IDrawable {
     if (middleXPos - mainSketch.width / 2 < 0) {
       this.pos.x = 0;
     } else if (middleXPos + mainSketch.width / 2 > platformer.getCurrentActiveLevelWidth()) {
-      this.pos.x = platformer.getCurrentActiveLevelWidth() - Constants.SCREEN_WIDTH;
+      this.pos.x = platformer.getCurrentActiveLevelWidth() - constants.SCREEN_WIDTH;
     } else {
-      this.pos.x = middleXPos - (Constants.SCREEN_WIDTH / 2);
+      this.pos.x = middleXPos - (constants.SCREEN_WIDTH / 2);
     }
   }
 
@@ -72,14 +72,14 @@ export class ViewBox implements IDrawable {
   private handleHorizontalMovement(): void {
     const player = platformer.getCurrentActivePlayer();
     if (platformer.getCurrentActiveLevel().isHandlingLevelComplete() && this.playerAtHorizontalViewBoxBoundary(false)) { // viewbox movement during level completion
-      this.vel.x = Constants.PLAYER_LEVEL_COMPLETE_SPEED;
+      this.vel.x = constants.PLAYER_LEVEL_COMPLETE_SPEED;
 
     } else {
       if (player.isMoveLeftPressed()) {
         if (this.pos.x > 0 // left edge of viewbox not at left edge of level
           &&
           this.playerAtHorizontalViewBoxBoundary(true)) {
-          this.vel.x = -Constants.PLAYER_MOVEMENT_SPEED;
+          this.vel.x = -constants.PLAYER_MOVEMENT_SPEED;
         } else {
           this.vel.x = 0;
         }
@@ -88,7 +88,7 @@ export class ViewBox implements IDrawable {
         if (this.pos.x < platformer.getCurrentActiveLevelWidth() - mainSketch.width // right edge of viewbox not at right edge of level
           &&
           this.playerAtHorizontalViewBoxBoundary(false)) {
-          this.vel.x = Constants.PLAYER_MOVEMENT_SPEED;
+          this.vel.x = constants.PLAYER_MOVEMENT_SPEED;
         } else {
           this.vel.x = 0;
         }
@@ -130,7 +130,7 @@ export class ViewBox implements IDrawable {
 
     // fix viewbox level boundary overflows
     const isPlayerAtGroundLevel
-      = player.getPos().y + (Constants.PLAYER_DIAMETER / 2) == Constants.LEVEL_FLOOR_Y_POSITION;
+      = player.getPos().y + (constants.PLAYER_DIAMETER / 2) == constants.LEVEL_FLOOR_Y_POSITION;
     if (this.pos.y < mainSketch.height - platformer.getCurrentActiveLevelHeight()) { // top overflow
       this.pos.y = mainSketch.height - platformer.getCurrentActiveLevelHeight();
     } else if (this.pos.y > 0 || isPlayerAtGroundLevel) { // bottom overflow or player at ground level
@@ -144,9 +144,9 @@ export class ViewBox implements IDrawable {
   private playerAtHorizontalViewBoxBoundary(isLowerLeftBoundary: boolean): boolean {
     const playerXPos = platformer.getCurrentActivePlayer().getPos().x;
     if (isLowerLeftBoundary) {
-      return playerXPos <= this.pos.x + Constants.HORIZONTAL_VIEWBOX_BOUNDARY * mainSketch.width;
+      return playerXPos <= this.pos.x + constants.HORIZONTAL_VIEWBOX_BOUNDARY * mainSketch.width;
     } else {
-      return playerXPos >= this.pos.x + (1.00 - Constants.HORIZONTAL_VIEWBOX_BOUNDARY) * mainSketch.width;
+      return playerXPos >= this.pos.x + (1.00 - constants.HORIZONTAL_VIEWBOX_BOUNDARY) * mainSketch.width;
     }
   }
 
@@ -156,9 +156,9 @@ export class ViewBox implements IDrawable {
   private playerAtVerticalViewBoxBoundary(isBottomBoundary: boolean): boolean {
     const playerYPos = platformer.getCurrentActivePlayer().getPos().y;
     if (isBottomBoundary) {
-      return playerYPos <= this.pos.y + Constants.VERTICAL_VIEWBOX_BOUNDARY * mainSketch.height;
+      return playerYPos <= this.pos.y + constants.VERTICAL_VIEWBOX_BOUNDARY * mainSketch.height;
     } else {
-      return playerYPos >= this.pos.y + (1.00 - Constants.VERTICAL_VIEWBOX_BOUNDARY) * mainSketch.height;
+      return playerYPos >= this.pos.y + (1.00 - constants.VERTICAL_VIEWBOX_BOUNDARY) * mainSketch.height;
     }
   }
 

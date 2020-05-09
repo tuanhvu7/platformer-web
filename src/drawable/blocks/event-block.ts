@@ -1,5 +1,5 @@
 import { ABlock } from "./block.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { EventBlockTopBoundary } from "../boundaries/event-block-top-boundary";
 import { EventTriggerHorizontalBoundary } from "../boundaries/event-trigger-horizontal-boundary";
@@ -31,7 +31,7 @@ export class EventBlock extends ABlock {
 
   //   super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
 
-  //   this.fillColor = Constants.EVENT_BLOCK_COLOR;
+  //   this.fillColor = constants.EVENT_BLOCK_COLOR;
 
   //   this.topSide = new EventBlockTopBoundary(
   //     leftX,
@@ -79,7 +79,7 @@ export class EventBlock extends ABlock {
 
     super(leftX, topY, width, height, blockLineThickness, true, false); // initially not active, to be set in makeActive()
 
-    this.fillColor = Constants.EVENT_BLOCK_COLOR;
+    this.fillColor = constants.EVENT_BLOCK_COLOR;
 
     this.topSide = new EventBlockTopBoundary(
       leftX,

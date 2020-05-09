@@ -2,7 +2,7 @@ import { IDrawable } from "../drawable.interface";
 import { IKeyControllable } from "../key-controllable.interface";
 import { mainSketch } from "../../main";
 import { platformer } from '../../platformer';
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { ResourceUtils } from "../../utils/resource-utils";
 import { LevelDrawableCollection } from "./level-drawable-collection";
 import { LevelGoal } from "../collectables/level-goal";
@@ -113,38 +113,38 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
 
     let levelWidthLeftToDraw: number = platformer.getCurrentActiveLevelWidth();
     const numberHorizontalBackgroundIterations =
-      Math.ceil(platformer.getCurrentActiveLevelWidth() / Constants.SCREEN_WIDTH);
+      Math.ceil(platformer.getCurrentActiveLevelWidth() / constants.SCREEN_WIDTH);
     for (let curHorizontalItr = 0; curHorizontalItr < numberHorizontalBackgroundIterations; curHorizontalItr++) {
       const curIterationWidthToDraw =
         Math.min(
-          Constants.SCREEN_WIDTH,
+          constants.SCREEN_WIDTH,
           levelWidthLeftToDraw);
 
       // lazy load level background
-      const curItrLeftX = curHorizontalItr * Constants.SCREEN_WIDTH;
+      const curItrLeftX = curHorizontalItr * constants.SCREEN_WIDTH;
       const viewBoxInCurXRange =
         (curItrLeftX <= this.viewBox.getPos().x &&
-          curItrLeftX + Constants.SCREEN_WIDTH >= this.viewBox.getPos().x) ||
-        (curItrLeftX <= this.viewBox.getPos().x + Constants.SCREEN_WIDTH &&
-          curItrLeftX + Constants.SCREEN_WIDTH >= this.viewBox.getPos().x + Constants.SCREEN_WIDTH);
+          curItrLeftX + constants.SCREEN_WIDTH >= this.viewBox.getPos().x) ||
+        (curItrLeftX <= this.viewBox.getPos().x + constants.SCREEN_WIDTH &&
+          curItrLeftX + constants.SCREEN_WIDTH >= this.viewBox.getPos().x + constants.SCREEN_WIDTH);
 
       if (viewBoxInCurXRange) {
         let levelHeightLeftToDraw: number = platformer.getCurrentActiveLevelHeight();
         const numberVerticalBackgroundIterations =
-          Math.ceil(platformer.getCurrentActiveLevelHeight() / Constants.SCREEN_HEIGHT);
+          Math.ceil(platformer.getCurrentActiveLevelHeight() / constants.SCREEN_HEIGHT);
 
         for (let curVerticalItr = 0; curVerticalItr < numberVerticalBackgroundIterations; curVerticalItr++) {
           const curIterationHeightToDraw: number =
             Math.min(
-              Constants.SCREEN_HEIGHT,
+              constants.SCREEN_HEIGHT,
               levelHeightLeftToDraw);
 
-          const startYPosToDraw: number = -curVerticalItr * Constants.SCREEN_HEIGHT +
-            (Constants.SCREEN_HEIGHT - curIterationHeightToDraw);
+          const startYPosToDraw: number = -curVerticalItr * constants.SCREEN_HEIGHT +
+            (constants.SCREEN_HEIGHT - curIterationHeightToDraw);
 
           mainSketch.image(
             ResourceUtils.LEVEL_BACKGROUND_IMAGE,
-            (curHorizontalItr * Constants.SCREEN_WIDTH), // start x pos
+            (curHorizontalItr * constants.SCREEN_WIDTH), // start x pos
             startYPosToDraw, // start y pos
             curIterationWidthToDraw,
             curIterationHeightToDraw,
@@ -197,19 +197,19 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   private setUpActivateWallsGoal(goalRightSideOffsetWithStageWidth: number): void {
     // stage goal
     this.levelDrawableCollection.addDrawable(new LevelGoal(
-      platformer.getCurrentActiveLevelWidth() - Constants.LEVEL_GOAL_WIDTH - goalRightSideOffsetWithStageWidth,
-      Constants.LEVEL_FLOOR_Y_POSITION - Constants.LEVEL_GOAL_HEIGHT,
-      Constants.LEVEL_GOAL_WIDTH,
-      Constants.LEVEL_GOAL_HEIGHT,
-      Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      platformer.getCurrentActiveLevelWidth() - constants.LEVEL_GOAL_WIDTH - goalRightSideOffsetWithStageWidth,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.LEVEL_GOAL_HEIGHT,
+      constants.LEVEL_GOAL_WIDTH,
+      constants.LEVEL_GOAL_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
       true));
 
     // stage right and left walls
     this.levelDrawableCollection.addDrawable(new VerticalBoundary(
       0,
       0,
-      Constants.LEVEL_FLOOR_Y_POSITION,
-      Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
       true,
       true,
       true,
@@ -219,8 +219,8 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
     this.levelDrawableCollection.addDrawable(new VerticalBoundary(
       platformer.getCurrentActiveLevelWidth(),
       0,
-      Constants.LEVEL_FLOOR_Y_POSITION,
-      Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
       true,
       true,
       true,

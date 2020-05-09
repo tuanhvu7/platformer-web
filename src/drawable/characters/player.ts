@@ -2,7 +2,7 @@ import { ACharacter } from "./character.abstract";
 import { IKeyControllable } from "../key-controllable.interface";
 import { EventBlockTopBoundary } from "../boundaries/event-block-top-boundary";
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { mainSketch } from "../../main";
 import { platformer } from '../../platformer';
 import { Vector } from 'p5';
@@ -63,7 +63,7 @@ export class Player extends ACharacter implements IKeyControllable {
 
     this.health = health;
     this.canHaveContactWithEnemies = true;
-    this.fillColor = Constants.PLAYER_DEFAULT_COLOR;
+    this.fillColor = constants.PLAYER_DEFAULT_COLOR;
 
     this.numberOfVerticalBoundaryContacts = 0;
     this.numberOfFloorBoundaryContacts = 0;
@@ -127,7 +127,7 @@ export class Player extends ACharacter implements IKeyControllable {
     mainSketch.strokeWeight(0);
     mainSketch.ellipse(this.pos.x, this.pos.y, this.diameter, this.diameter);
 
-    mainSketch.fill(Constants.PLAYER_HEALTH_TEXT_COLOR);
+    mainSketch.fill(constants.PLAYER_HEALTH_TEXT_COLOR);
     mainSketch.textAlign(mainSketch.CENTER, mainSketch.CENTER);
     mainSketch.textSize(this.diameter / 2);
     mainSketch.text(
@@ -224,7 +224,7 @@ export class Player extends ACharacter implements IKeyControllable {
       this.pos.y = endWarpPosition.y;
 
       platformer.getCurrentActiveViewBox().setViewBoxHorizontalPosition(this.pos.x);
-      this.vel.y = Constants.CHARACTER_WARP_EVENT_VERTICAL_VELOCITY;
+      this.vel.y = constants.CHARACTER_WARP_EVENT_VERTICAL_VELOCITY;
     }
 
     this.previousFloorBoundaryContact = null; // to prevent this going through floor boundaries
@@ -248,14 +248,14 @@ export class Player extends ACharacter implements IKeyControllable {
    * handle wall sliding physics
    */
   private handleOnWallPhysics(): void {
-    this.vel.y = Math.min(this.vel.y + Constants.WALL_SLIDE_ACCELERATION.y, Constants.MAX_VERTICAL_VELOCITY);
+    this.vel.y = Math.min(this.vel.y + constants.WALL_SLIDE_ACCELERATION.y, constants.MAX_VERTICAL_VELOCITY);
   }
 
   /**
    * handle jump on enemy physics
    */
   handleJumpKillEnemyPhysics(): void {
-    this.vel.y = Constants.PLAYER_JUMP_KILL_ENEMY_HOP_VERTICAL_VELOCITY;
+    this.vel.y = constants.PLAYER_JUMP_KILL_ENEMY_HOP_VERTICAL_VELOCITY;
     //  prevent fall through floor after killing enemy while touching floor
     this.shouldSetPreviousFloorBoundaryContact = false;
     this.previousFloorBoundaryContact = null;
@@ -271,13 +271,13 @@ export class Player extends ACharacter implements IKeyControllable {
       this.handleDeath(false);
     } else if (healthChangeAmount < 0) {
       this.canHaveContactWithEnemies = false;
-      this.fillColor = Constants.PLAYER_DAMAGED_COLOR;
+      this.fillColor = constants.PLAYER_DAMAGED_COLOR;
       ResourceUtils.playSong(ESongType.PLAYER_DAMAGE);
 
       setTimeout(
         () => {
           this.canHaveContactWithEnemies = true;
-          this.fillColor = Constants.PLAYER_DEFAULT_COLOR;
+          this.fillColor = constants.PLAYER_DEFAULT_COLOR;
         },
         ResourceUtils.getSongDurationMilliSec(ESongType.PLAYER_DAMAGE) // wait for song duration
       );
@@ -301,7 +301,7 @@ export class Player extends ACharacter implements IKeyControllable {
       firstEventTopBoundaryContacts.setDoesAffectPlayer(false);
       this.pos.x = middleOfBoundary;
       this.vel.x = 0;
-      this.vel.y = Constants.EVENT_BLOCK_DESCENT_VERTICAL_VELOCITY;
+      this.vel.y = constants.EVENT_BLOCK_DESCENT_VERTICAL_VELOCITY;
       ResourceUtils.playSong(ESongType.EVENT_BLOCK_DESCENT);
     }
   }
@@ -311,10 +311,10 @@ export class Player extends ACharacter implements IKeyControllable {
    */
   private handleHorizontalMovement(): void {
     if (this.moveLeftPressed && this.ableToMoveLeft) {
-      this.vel.x = -Constants.PLAYER_MOVEMENT_SPEED;
+      this.vel.x = -constants.PLAYER_MOVEMENT_SPEED;
     }
     if (this.moveRightPressed && this.ableToMoveRight) {
-      this.vel.x = Constants.PLAYER_MOVEMENT_SPEED;
+      this.vel.x = constants.PLAYER_MOVEMENT_SPEED;
     }
     if (!this.moveLeftPressed && !this.moveRightPressed) {
       this.vel.x = 0;
@@ -329,15 +329,15 @@ export class Player extends ACharacter implements IKeyControllable {
       if (this.numberOfFloorBoundaryContacts > 0 ||
         (this.numberOfVerticalBoundaryContacts > 0 && this.numberOfCeilingBoundaryContacts == 0)) { // able to jump
         ResourceUtils.playSong(ESongType.PLAYER_ACTION);
-        this.vel.y = Constants.CHARACTER_JUMP_VERTICAL_VELOCITY;
+        this.vel.y = constants.CHARACTER_JUMP_VERTICAL_VELOCITY;
 
         this.shouldSetPreviousFloorBoundaryContact = false;
         this.previousFloorBoundaryContact = null;
       } else {
         // for jumping higher the longer jump button is held
         this.vel.y = Math.min(
-          this.vel.y + Constants.GRAVITY.y * Constants.VARIABLE_JUMP_GRAVITY_MULTIPLIER,
-          Constants.MAX_VERTICAL_VELOCITY);
+          this.vel.y + constants.GRAVITY.y * constants.VARIABLE_JUMP_GRAVITY_MULTIPLIER,
+          constants.MAX_VERTICAL_VELOCITY);
       }
 
     } else { // jump button not pressed

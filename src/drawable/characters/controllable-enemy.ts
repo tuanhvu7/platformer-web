@@ -1,7 +1,7 @@
 import { IKeyControllable } from "../key-controllable.interface";
 import { platformer } from '../../platformer';
 import { mainSketch } from "../../main";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { Enemy } from "./enemy";
 import { PlayerControlSettings } from "../../utils/player-control-settings";
 
@@ -133,12 +133,12 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
   private handleVerticalMovement(): void {
     if (this.isJumpControllable && this.jumpPressed) { // jump button pressed/held
       if (this.numberOfFloorBoundaryContacts > 0) { // able to jump
-        this.vel.y = Constants.CHARACTER_JUMP_VERTICAL_VELOCITY;
+        this.vel.y = constants.CHARACTER_JUMP_VERTICAL_VELOCITY;
       } else {
         // for jumping higher the longer jump button is held
         this.vel.y = Math.min(
-          this.vel.y + Constants.GRAVITY.y * Constants.VARIABLE_JUMP_GRAVITY_MULTIPLIER,
-          Constants.MAX_VERTICAL_VELOCITY);
+          this.vel.y + constants.GRAVITY.y * constants.VARIABLE_JUMP_GRAVITY_MULTIPLIER,
+          constants.MAX_VERTICAL_VELOCITY);
       }
 
     } else if (this.numberOfFloorBoundaryContacts == 0) { // in air

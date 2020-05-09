@@ -1,5 +1,5 @@
 import { ACollectable } from "./collectable.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 
 /**
@@ -14,7 +14,7 @@ export class Checkpoint extends ACollectable {
   constructor(leftX: number, topY: number, width: number, height: number,
               blockLineThickness: number, isActive: boolean) {
     super(leftX, topY, width, height, blockLineThickness, isActive);
-    this.fillColor = Constants.CHECKPOINT_COLOR;
+    this.fillColor = constants.CHECKPOINT_COLOR;
   }
 
   /**

@@ -1,7 +1,7 @@
 import {
   IDrawable
 } from '../../drawable.interface';
-import { Constants } from '../../../const/constants';
+import { constants } from '../../../const/constants';
 import { mainSketch } from '../../../main';
 import { IMouseControllable } from '../../mouse-controllable.interface';
 import { platformer } from '../../../platformer';
@@ -70,7 +70,7 @@ export abstract class APanel implements IDrawable, IMouseControllable {
 
     mainSketch.fill(0);
     mainSketch.textAlign(mainSketch.CENTER, mainSketch.CENTER);
-    mainSketch.textSize(Constants.TEXT_SIZE);
+    mainSketch.textSize(constants.TEXT_SIZE);
     mainSketch.text(this.panelText + '', this.leftX, this.topY, this.width, this.height);
   }
 

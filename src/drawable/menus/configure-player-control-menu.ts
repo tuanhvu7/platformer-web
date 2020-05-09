@@ -1,6 +1,6 @@
 import { AMenuWithKeyboardControl } from "./menu-with-keyboard-control.abstract";
 import { platformer } from '../../platformer';
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { ResourceUtils } from "../../utils/resource-utils";
 import { mainSketch } from '../../main';
 import { APanel } from "./panels/panel.abstract";
@@ -32,21 +32,21 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
     let topYPanelPosition = 100;
 
     for (let curConfigurablePlayerControls in EConfigurablePlayerControls) {
-      if (leftXPanelPosition + Constants.PANEL_SIZE > ResourceUtils.DEFAULT_MENU_IMAGE.width) {
+      if (leftXPanelPosition + constants.PANEL_SIZE > ResourceUtils.DEFAULT_MENU_IMAGE.width) {
         leftXPanelPosition = 100;
-        topYPanelPosition += (100 + Constants.PANEL_SIZE);
+        topYPanelPosition += (100 + constants.PANEL_SIZE);
       }
 
       this.panelsList.push(new ConfigurePlayerControlPanel(
         curConfigurablePlayerControls as any, // any for enum
         leftXPanelPosition,
         topYPanelPosition,
-        Constants.PANEL_SIZE,
-        Constants.PANEL_SIZE,
+        constants.PANEL_SIZE,
+        constants.PANEL_SIZE,
         true
       ));
 
-      leftXPanelPosition += Constants.PANEL_SIZE + 100;
+      leftXPanelPosition += constants.PANEL_SIZE + 100;
       ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
     }
   }

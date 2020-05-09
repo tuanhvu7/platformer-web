@@ -1,5 +1,5 @@
 import { ACharacter } from "./character.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
 import { ResourceUtils } from "../../utils/resource-utils";
@@ -22,7 +22,7 @@ export class Enemy extends ACharacter {
     isInvulnerable: boolean, isVisible: boolean, isActive: boolean) {
     super(x, y, diameter, isActive);
 
-    this.fillColor = Constants.ENEMY_COLOR;
+    this.fillColor = constants.ENEMY_COLOR;
 
     this.vel.x = horizontalVel;
 
@@ -70,7 +70,7 @@ export class Enemy extends ACharacter {
     if (curPlayer.isCanHaveContactWithEnemies()) { // to prevent multiple consecutive deaths and damage
       const collisionAngle = this.collisionWithPlayer();
       if (collisionAngle >= 0) {
-        if (this.radianToDegrees(collisionAngle) >= Constants.MIN_PLAYER_KILL_ENEMY_COLLISION_ANGLE &&
+        if (this.radianToDegrees(collisionAngle) >= constants.MIN_PLAYER_KILL_ENEMY_COLLISION_ANGLE &&
           this.pos.y > curPlayer.getPos().y &&
           !this.isInvulnerable) // player is above this
         {

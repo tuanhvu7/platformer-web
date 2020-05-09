@@ -1,5 +1,5 @@
 import { ABlock } from "./block.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
@@ -29,9 +29,9 @@ export class Block extends ABlock {
   //   super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
 
   //   if (isBreakableFromBottom) {
-  //     this.fillColor = Constants.BREAKABLE_BLOCK_COLOR;
+  //     this.fillColor = constants.BREAKABLE_BLOCK_COLOR;
   //   } else {
-  //     this.fillColor = Constants.DEFAULT_BLOCK_COLOR;
+  //     this.fillColor = constants.DEFAULT_BLOCK_COLOR;
   //   }
   //   this.isBreakableFromBottom = isBreakableFromBottom;
 
@@ -68,9 +68,9 @@ export class Block extends ABlock {
       isVisible, false); // initially not active, to be set in makeActive()
 
     if (isBreakableFromBottom) {
-      this.fillColor = Constants.BREAKABLE_BLOCK_COLOR;
+      this.fillColor = constants.BREAKABLE_BLOCK_COLOR;
     } else {
-      this.fillColor = Constants.DEFAULT_BLOCK_COLOR;
+      this.fillColor = constants.DEFAULT_BLOCK_COLOR;
     }
     this.isBreakableFromBottom = isBreakableFromBottom;
 

@@ -1,5 +1,5 @@
 import { ACollectable } from "./collectable.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { mainSketch } from '../../main';
 import { platformer } from '../../platformer';
 /**
@@ -18,7 +18,7 @@ export class HealthItem extends ACollectable {
               blockLineThickness: number, isActive: boolean) {
     super(leftX, topY, width, height, blockLineThickness, isActive);
     this.healthChangeAmount = healthChangeAmount;
-    this.fillColor = Constants.HEALTH_ITEM_COLOR;
+    this.fillColor = constants.HEALTH_ITEM_COLOR;
   }
 
   show(): void {
@@ -26,11 +26,11 @@ export class HealthItem extends ACollectable {
     mainSketch.strokeWeight(this.blockLineThickness);
     mainSketch.rect(this.leftX, this.topY, this.width, this.height);
     if (this.healthChangeAmount > 0) {
-      mainSketch.fill(Constants.POSITIVE_HEALTH_ITEM_TEXT_COLOR);
+      mainSketch.fill(constants.POSITIVE_HEALTH_ITEM_TEXT_COLOR);
     } else if (this.healthChangeAmount == 0) {
-      mainSketch.fill(Constants.ZERO_HEALTH_ITEM_TEXT_COLOR);
+      mainSketch.fill(constants.ZERO_HEALTH_ITEM_TEXT_COLOR);
     } else {
-      mainSketch.fill(Constants.NEGATIVE_HEALTH_ITEM_TEXT_COLOR);
+      mainSketch.fill(constants.NEGATIVE_HEALTH_ITEM_TEXT_COLOR);
     }
     mainSketch.textAlign(mainSketch.CENTER, mainSketch.CENTER);
     mainSketch.textSize(Math.min(this.width / 2, this.height / 2));
