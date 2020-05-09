@@ -2,7 +2,7 @@ import { IDrawable } from "../drawable.interface";
 import { Vector } from 'p5';
 import { platformer } from '../../platformer';
 import { mainSketch } from "../../main";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { ACharacter } from "../characters/character.abstract";
 
 /**
@@ -97,7 +97,7 @@ export abstract class ABoundary implements IDrawable {
    */
   show(): void {
     if (this.isVisible) {
-      mainSketch.stroke(Constants.BOUNDARY_COLOR);
+      mainSketch.stroke(constants.BOUNDARY_COLOR);
       mainSketch.strokeWeight(this.boundaryLineThickness);
       mainSketch.line(this.startPoint.x, this.startPoint.y, this.endPoint.x, this.endPoint.y);
     }

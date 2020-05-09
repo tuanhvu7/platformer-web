@@ -1,5 +1,5 @@
 import { APanel } from "./panel.abstract";
-import { Constants } from "../../../const/constants";
+import { constants } from "../../../const/constants";
 import { ResourceUtils } from "../../../utils/resource-utils";
 import { platformer } from '../../../platformer';
 import { mainSketch } from '../../../main';
@@ -23,7 +23,7 @@ export class PauseMenuPanel extends APanel {
   constructor(panelType: EPauseMenuButtonType,
               leftX: number, topY: number, width: number, height: number,
               horizontalOffset: number, isActive: boolean) {
-    super(Constants.DEFAULT_PANEL_COLOR, panelType.toString(), leftX, topY, width, height, isActive);
+    super(constants.DEFAULT_PANEL_COLOR, panelType.toString(), leftX, topY, width, height, isActive);
     this.horizontalOffset = horizontalOffset;
     this.panelType = panelType;
   }

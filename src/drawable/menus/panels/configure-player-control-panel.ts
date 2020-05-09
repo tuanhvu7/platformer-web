@@ -1,6 +1,6 @@
 import { APanel } from "./panel.abstract";
 import { IKeyControllable } from "../../key-controllable.interface";
-import { Constants } from "../../../const/constants";
+import { constants } from "../../../const/constants";
 import { platformer } from '../../../platformer';
 import { EConfigurablePlayerControls } from "../../../enums/configurable-player-controls.enum";
 import { PlayerControlSettings } from "../../../utils/player-control-settings";
@@ -19,7 +19,7 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
    */
   constructor(configurableControlPanelText: EConfigurablePlayerControls,
     leftX: number, topY: number, width: number, height: number, isActive: boolean) {
-    super(Constants.DEFAULT_PANEL_COLOR, "", leftX, topY, width, height, isActive);
+    super(constants.DEFAULT_PANEL_COLOR, "", leftX, topY, width, height, isActive);
     this.configurablePlayerControlType = configurableControlPanelText;
     switch (this.configurablePlayerControlType) {
       case EConfigurablePlayerControls.UP:
@@ -41,7 +41,7 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
 
   executeWhenClicked(): void {
     platformer.getChangePlayerControlMenu().resetPanelsColorAndUnregisterKeyEvent();
-    this.panelColor = Constants.ALTERNATE_PANEL_COLOR;
+    this.panelColor = constants.ALTERNATE_PANEL_COLOR;
     platformer.addToAllKeyControllables(this);
   }
 
@@ -88,7 +88,7 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
    * set this to have default panel color and unregister keyEvent
    */
   public resetColorAndUnregisterKeyEvent(): void {
-    this.panelColor = Constants.DEFAULT_PANEL_COLOR;
+    this.panelColor = constants.DEFAULT_PANEL_COLOR;
     platformer.deleteFromAllKeyControllables(this);  // disconnect this keyEvent() from main keyEvent()
   }
 

@@ -1,5 +1,5 @@
 import { ALevel } from "./level.abstract";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { ResourceUtils } from "../../utils/resource-utils";
 import { mainSketch } from '../../main';
 import { Player } from "../characters/player";
@@ -29,42 +29,40 @@ export class LevelOne extends ALevel {
    * sets properties, boundaries, and characters of this
    */
   constructor(isActive: boolean, loadPlayerFromCheckPoint: boolean) {
-      super(isActive, loadPlayerFromCheckPoint, Constants.BIG_ENEMY_DIAMETER + 200);
+    super(isActive, loadPlayerFromCheckPoint, constants.BIG_ENEMY_DIAMETER + 200);
   }
 
   /**
    * setup and activate this
    */
   public setUpActivateLevel(): void {
-      this.bigEnemyTriggerActivated = false;
-      this.checkpointXPos = 3100;
+    this.bigEnemyTriggerActivated = false;
+    this.checkpointXPos = 3100;
 
-      this.makeActive();
-      ResourceUtils.loopSong(ESongType.LEVEL);
+    this.makeActive();
+    ResourceUtils.loopSong(ESongType.LEVEL);
 
-      if (this.loadPlayerFromCheckPoint) {
-          this.viewBox = new ViewBox(this.checkpointXPos - 200, 0, true);
-          this.player = new Player(this.checkpointXPos, 0, Constants.PLAYER_DIAMETER, 1, true);
-      } else {
-          this.viewBox = new ViewBox(0, 0, true);
-          this.player = new Player(200, 0, Constants.PLAYER_DIAMETER, 1, true);
+    if (this.loadPlayerFromCheckPoint) {
+      this.viewBox = new ViewBox(this.checkpointXPos - 200, 0, true);
+      this.player = new Player(this.checkpointXPos, 0, constants.PLAYER_DIAMETER, 1, true);
+    } else {
+      this.viewBox = new ViewBox(0, 0, true);
+      this.player = new Player(200, 0, constants.PLAYER_DIAMETER, 1, true);
 
-          this.levelDrawableCollection.addDrawable(new Checkpoint(
-              this.checkpointXPos,
-              Constants.LEVEL_FLOOR_Y_POSITION - Constants.CHECKPOINT_HEIGHT,
-              Constants.CHECKPOINT_WIDTH,
-              Constants.CHECKPOINT_HEIGHT,
-              Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-              true)
-          );
-      }
+      this.levelDrawableCollection.addDrawable(new Checkpoint(
+        this.checkpointXPos,
+        constants.LEVEL_FLOOR_Y_POSITION - constants.CHECKPOINT_HEIGHT,
+        constants.CHECKPOINT_WIDTH,
+        constants.CHECKPOINT_HEIGHT,
+        constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+        true));
+    }
 
-      let levelFloorXPosReference: number = this.setupActivateBeforeCheckpoint();
-      levelFloorXPosReference = this.setupActivateMiddleSectionAfterCheckpoint(levelFloorXPosReference + 500);
-      this.setupActivateEndSection(levelFloorXPosReference);
+    let levelFloorXPosReference: number = this.setupActivateBeforeCheckpoint();
+    levelFloorXPosReference = this.setupActivateMiddleSectionAfterCheckpoint(levelFloorXPosReference + 500);
+    this.setupActivateEndSection(levelFloorXPosReference);
 
-      this.bigEnemyTriggerCharacterListSizeCondition
-          = this.levelDrawableCollection.getCharactersList().size - 2;
+    this.bigEnemyTriggerCharacterListSizeCondition = this.levelDrawableCollection.getCharactersList().size - 2;
   }
 
   /**
@@ -72,453 +70,444 @@ export class LevelOne extends ALevel {
    * to override in extended classes
    */
   public handleConditionalEnemyTriggers(): void {
-      if (!this.bigEnemyTriggerActivated
-          && this.levelDrawableCollection.getCharactersList().size == this.bigEnemyTriggerCharacterListSizeCondition) {
+    if (!this.bigEnemyTriggerActivated &&
+      this.levelDrawableCollection.getCharactersList().size == this.bigEnemyTriggerCharacterListSizeCondition) {
 
-          const triggerEnemy: Enemy = new Enemy(
-              3000,
-              0,
-              Constants.BIG_ENEMY_DIAMETER,
-              -Constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-              false,
-              true,
-              false
-          );
-          this.levelDrawableCollection.addDrawable(triggerEnemy);
+      const triggerEnemy: Enemy = new Enemy(
+        3000,
+        0,
+        constants.BIG_ENEMY_DIAMETER,
+        -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+        false,
+        true,
+        false
+      );
+      this.levelDrawableCollection.addDrawable(triggerEnemy);
 
-          this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-              2900,
-              0,
-              Constants.LEVEL_FLOOR_Y_POSITION,
-              Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-              true,
-              triggerEnemy
-          ));
+      this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
+        2900,
+        0,
+        constants.LEVEL_FLOOR_Y_POSITION,
+        constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+        true,
+        triggerEnemy
+      ));
 
-          this.bigEnemyTriggerActivated = true;
-      }
+      this.bigEnemyTriggerActivated = true;
+    }
   }
 
   /**
    * @return sum of given startXPos and section floor x offset
    */
   private setupActivateBeforeCheckpoint(): number {
-      const sectionFloorXOffset = 2500;
-      // stage floor
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          0,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          sectionFloorXOffset,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          true,
-          true,
-          true
-      ));
+    const sectionFloorXOffset = 2500;
+    // stage floor
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      0,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      sectionFloorXOffset,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
+      true,
+      true
+    ));
 
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          500,
-          0,
-          Constants.BIG_ENEMY_DIAMETER,
-          -Constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      500,
+      0,
+      constants.BIG_ENEMY_DIAMETER,
+      -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
 
-      this.levelDrawableCollection.addDrawable(new Block(
-          750,
-          mainSketch.height - 300 - Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          true
-      ));
+    this.levelDrawableCollection.addDrawable(new Block(
+      750,
+      mainSketch.height - 300 - constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true
+    ));
 
-      // TODO: loop
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + 2 * Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + 3 * Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + 4 * Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + 5 * Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          1750 + 6 * Constants.SMALL_ENEMY_DIAMETER,
-          0,
-          Constants.SMALL_ENEMY_DIAMETER,
-          -Constants.ENEMY_SLOW_MOVEMENT_SPEED,
-          false,
-          true,
-          true)
-      );
+    // TODO: loop
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + 2 * constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + 3 * constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + 4 * constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + 5 * constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      1750 + 6 * constants.SMALL_ENEMY_DIAMETER,
+      0,
+      constants.SMALL_ENEMY_DIAMETER,
+      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+      false,
+      true,
+      true));
 
-      this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
-          2000,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
-          true,
-          true
-      ));
+    this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
+      2000,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
+      true,
+      true
+    ));
 
-      const playerWarpEndXPos = 2800;
-      this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
-          2000 + Constants.DEFAULT_EVENT_BLOCK_WIDTH + Constants.PLAYER_DIAMETER + 100,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [
-            playerWarpEndXPos,
-              750
-          ],
-          true,
-          true
-      ));
+    const playerWarpEndXPos = 2800;
+    this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
+      2000 + constants.DEFAULT_EVENT_BLOCK_WIDTH + constants.PLAYER_DIAMETER + 100,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [
+        playerWarpEndXPos,
+        750
+      ],
+      true,
+      true
+    ));
 
-      this.levelDrawableCollection.addDrawable(new Block(
-          2550,
-          Constants.LEVEL_FLOOR_Y_POSITION - 300 - Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          false,
-          false,
-          true
-      ));
+    this.levelDrawableCollection.addDrawable(new Block(
+      2550,
+      constants.LEVEL_FLOOR_Y_POSITION - 300 - constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      false,
+      false,
+      true
+    ));
 
-      return sectionFloorXOffset;
+    return sectionFloorXOffset;
   }
 
   /**
    * @return sum of given startXPos and section floor x offset
    */
   private setupActivateMiddleSectionAfterCheckpoint(startXPos: number): number {
-      const sectionFloorXOffset = 2000;
-      // stage floor
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          startXPos,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          sectionFloorXOffset,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          true,
-          true,
-          true
-      ));
+    const sectionFloorXOffset = 2000;
+    // stage floor
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      startXPos,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      sectionFloorXOffset,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
+      true,
+      true
+    ));
 
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          startXPos + 250,
-          Constants.LEVEL_FLOOR_Y_POSITION - 4 * Constants.PLAYER_DIAMETER,
-          4 * Constants.PLAYER_DIAMETER,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          true,
-          true,
-          true
-      ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      startXPos + 250,
+      constants.LEVEL_FLOOR_Y_POSITION - 4 * constants.PLAYER_DIAMETER,
+      4 * constants.PLAYER_DIAMETER,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
+      true,
+      true
+    ));
 
-      // controllable enemy
-      let enemyToAdd: Enemy = new ControllableEnemy(
-          startXPos + 1000 + 4 * Constants.PLAYER_DIAMETER,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.SMALL_ENEMY_DIAMETER - 10,
-          Constants.SMALL_ENEMY_DIAMETER,
-          true,
-          false,
-          -Constants.ENEMY_FAST_MOVEMENT_SPEED,
-          false,
-          true,
-          false
-      );
-      this.levelDrawableCollection.addDrawable(enemyToAdd);
-      this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-          startXPos + 500 + 4 * Constants.PLAYER_DIAMETER,
-          0,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          enemyToAdd
-      ));
+    // controllable enemy
+    let enemyToAdd: Enemy = new ControllableEnemy(
+      startXPos + 1000 + 4 * constants.PLAYER_DIAMETER,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER - 10,
+      constants.SMALL_ENEMY_DIAMETER,
+      true,
+      false,
+      -constants.ENEMY_FAST_MOVEMENT_SPEED,
+      false,
+      true,
+      false
+    );
+    this.levelDrawableCollection.addDrawable(enemyToAdd);
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
+      startXPos + 500 + 4 * constants.PLAYER_DIAMETER,
+      0,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      enemyToAdd
+    ));
 
-      // flying enemies
-      const triggerEnemySet: Set<Enemy> = new Set();
-      for (let i = 1; i <= 2; i++) {
-          enemyToAdd = new FlyingEnemy(
-              startXPos + 1600 + (4 * i) * Constants.PLAYER_DIAMETER,
-              Constants.LEVEL_FLOOR_Y_POSITION - (2 + 2 * i) * Constants.PLAYER_DIAMETER,
-              Constants.SMALL_ENEMY_DIAMETER,
-              -Constants.ENEMY_FAST_MOVEMENT_SPEED,
-              0,
-              null,
-              null,
-              false,
-              false,
-              false,
-              true,
-              false);
-          triggerEnemySet.add(enemyToAdd);
-          this.levelDrawableCollection.addDrawable(enemyToAdd);
-      }
-
+    // flying enemies
+    const triggerEnemySet: Set < Enemy > = new Set();
+    for (let i = 1; i <= 2; i++) {
       enemyToAdd = new FlyingEnemy(
-          startXPos + 1600 + 14 * Constants.PLAYER_DIAMETER,
-          Constants.LEVEL_FLOOR_Y_POSITION - 5 * Constants.PLAYER_DIAMETER,
-          Constants.BIG_ENEMY_DIAMETER,
-          -Constants.ENEMY_FAST_MOVEMENT_SPEED,
-          0,
-          null,
-          null,
-          false,
-          false,
-          false,
-          true,
-          false);
+        startXPos + 1600 + (4 * i) * constants.PLAYER_DIAMETER,
+        constants.LEVEL_FLOOR_Y_POSITION - (2 + 2 * i) * constants.PLAYER_DIAMETER,
+        constants.SMALL_ENEMY_DIAMETER,
+        -constants.ENEMY_FAST_MOVEMENT_SPEED,
+        0,
+        null,
+        null,
+        false,
+        false,
+        false,
+        true,
+        false);
       triggerEnemySet.add(enemyToAdd);
       this.levelDrawableCollection.addDrawable(enemyToAdd);
+    }
 
-      this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-          startXPos + 1100 + 4 * Constants.PLAYER_DIAMETER,
-          0,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          triggerEnemySet
-      ));
+    enemyToAdd = new FlyingEnemy(
+      startXPos + 1600 + 14 * constants.PLAYER_DIAMETER,
+      constants.LEVEL_FLOOR_Y_POSITION - 5 * constants.PLAYER_DIAMETER,
+      constants.BIG_ENEMY_DIAMETER,
+      -constants.ENEMY_FAST_MOVEMENT_SPEED,
+      0,
+      null,
+      null,
+      false,
+      false,
+      false,
+      true,
+      false);
+    triggerEnemySet.add(enemyToAdd);
+    this.levelDrawableCollection.addDrawable(enemyToAdd);
 
-      return startXPos + sectionFloorXOffset;
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
+      startXPos + 1100 + 4 * constants.PLAYER_DIAMETER,
+      0,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      triggerEnemySet
+    ));
+
+    return startXPos + sectionFloorXOffset;
   }
 
   private setupActivateEndSection(startXPos: number): void {
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          startXPos,
-          platformer.getCurrentActiveLevelHeight(),
-          250,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          false,
-          true,
-          true
-      ));
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          startXPos + 250,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          250,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          false,
-          false,
-          true,
-          true
-      ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      startXPos,
+      platformer.getCurrentActiveLevelHeight(),
+      250,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      false,
+      true,
+      true
+    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      startXPos + 250,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      250,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      false,
+      false,
+      true,
+      true
+    ));
 
-      const endStageFloorPosition = startXPos + 500;
-      // stage floor
-      this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-          endStageFloorPosition,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          platformer.getCurrentActiveLevelWidth() - startXPos,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          true,
-          true,
-          true,
-          true
-      ));
+    const endStageFloorPosition = startXPos + 500;
+    // stage floor
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
+      endStageFloorPosition,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      platformer.getCurrentActiveLevelWidth() - startXPos,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
+      true,
+      true
+    ));
 
-      // event block with invincible enemy
-      const eventBlockInvulnerableEnemyXReference = endStageFloorPosition + 300;
-      this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
-          eventBlockInvulnerableEnemyXReference,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
-          true,
-          true
-      ));
-      this.levelDrawableCollection.addDrawable(new Enemy(
-          eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT - Constants.SMALL_ENEMY_DIAMETER,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          0,
-          true,
-          false,
-          true
-      ));
+    // event block with invincible enemy
+    const eventBlockInvulnerableEnemyXReference = endStageFloorPosition + 300;
+    this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
+      eventBlockInvulnerableEnemyXReference,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
+      true,
+      true
+    ));
+    this.levelDrawableCollection.addDrawable(new Enemy(
+      eventBlockInvulnerableEnemyXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - constants.SMALL_ENEMY_DIAMETER,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      0,
+      true,
+      false,
+      true
+    ));
 
-      /*** START two event blocks trap ***/
-      const eventBlockGoingToTrapXReference = endStageFloorPosition + 750;
-      const eventBlockTrapXReference = endStageFloorPosition + 2000;
-      this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
-          eventBlockGoingToTrapXReference,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [
-            eventBlockTrapXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-              Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
-          ],
-          true,
-          true
-      ));
+    /*** START two event blocks trap ***/
+    const eventBlockGoingToTrapXReference = endStageFloorPosition + 750;
+    const eventBlockTrapXReference = endStageFloorPosition + 2000;
+    this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
+      eventBlockGoingToTrapXReference,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [
+        eventBlockTrapXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+        constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT + constants.SMALL_ENEMY_DIAMETER
+      ],
+      true,
+      true
+    ));
 
-      this.levelDrawableCollection.addDrawable(new Block(  // block left of event block trap
-          eventBlockTrapXReference - Constants.DEFAULT_BLOCK_SIZE,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * Constants.PLAYER_DIAMETER),
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * Constants.PLAYER_DIAMETER),
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          false,
-          true
-      ));
-      this.levelDrawableCollection.addDrawable(new Block(  // block above event block trap
-          eventBlockTrapXReference,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * Constants.PLAYER_DIAMETER),
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          false,
-          true
-      ));
-      this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
-          eventBlockTrapXReference,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [
-            eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-            Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
-          ],
-          true,
-          true
-      ));
-      this.levelDrawableCollection.addDrawable(new Block(  // block right of event block trap
-          eventBlockTrapXReference + Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * Constants.PLAYER_DIAMETER),
-          Constants.DEFAULT_BLOCK_SIZE,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * Constants.PLAYER_DIAMETER),
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          false,
-          true
-      ));
-      /*** END two event blocks trap ***/
+    this.levelDrawableCollection.addDrawable(new Block( // block left of event block trap
+      eventBlockTrapXReference - constants.DEFAULT_BLOCK_SIZE,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * constants.PLAYER_DIAMETER),
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * constants.PLAYER_DIAMETER),
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      false,
+      true
+    ));
+    this.levelDrawableCollection.addDrawable(new Block( // block above event block trap
+      eventBlockTrapXReference,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * constants.PLAYER_DIAMETER),
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      false,
+      true
+    ));
+    this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
+      eventBlockTrapXReference,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [
+        eventBlockInvulnerableEnemyXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+        constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT + constants.SMALL_ENEMY_DIAMETER
+      ],
+      true,
+      true
+    ));
+    this.levelDrawableCollection.addDrawable(new Block( // block right of event block trap
+      eventBlockTrapXReference + constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - (4 * constants.PLAYER_DIAMETER),
+      constants.DEFAULT_BLOCK_SIZE,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * constants.PLAYER_DIAMETER),
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      false,
+      true
+    ));
+    /*** END two event blocks trap ***/
 
 
-      /*** START two event blocks NOT trap ***/
-      const doubleEventBlockXReference = endStageFloorPosition + 1000;
-      // for warp x position to line up with another event block's x position
-      const eventBlockSurroundedByBlocksXPos
-          = doubleEventBlockXReference + (2 * Constants.DEFAULT_EVENT_BLOCK_WIDTH);
-      this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
-          doubleEventBlockXReference,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [
-              eventBlockSurroundedByBlocksXPos + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-              Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
-          ],
-          true,
-          true
-      ));
+    /*** START two event blocks NOT trap ***/
+    const doubleEventBlockXReference = endStageFloorPosition + 1000;
+    // for warp x position to line up with another event block's x position
+    const eventBlockSurroundedByBlocksXPos = doubleEventBlockXReference + (2 * constants.DEFAULT_EVENT_BLOCK_WIDTH);
+    this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
+      doubleEventBlockXReference,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [
+        eventBlockSurroundedByBlocksXPos + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+        constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT + constants.SMALL_ENEMY_DIAMETER
+      ],
+      true,
+      true
+    ));
 
-      // invincible enemy at end of level
-      const triggerEnemy: Enemy = new Enemy(
-          platformer.getCurrentActiveLevelWidth() - (Constants.BIG_ENEMY_DIAMETER / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - (Constants.BIG_ENEMY_DIAMETER / 2),
-          Constants.BIG_ENEMY_DIAMETER,
-          0,
-          true,
-          true,
-          false
-      );
-      this.levelDrawableCollection.addDrawable(triggerEnemy);
-      this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-          doubleEventBlockXReference + Math.floor((1.5 * Constants.DEFAULT_EVENT_BLOCK_WIDTH)),
-          0,
-          Constants.LEVEL_FLOOR_Y_POSITION,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          true,
-          triggerEnemy
-      ));
-      // warp to event block with invincible enemy
-      this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
-          eventBlockSurroundedByBlocksXPos,
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_EVENT_BLOCK_WIDTH,
-          Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-          Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          [
-            eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-            Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
-          ],
-          true,
-          true
-      ));
-      /*** END two event blocks NOT trap ***/
+    // invincible enemy at end of level
+    const triggerEnemy: Enemy = new Enemy(
+      platformer.getCurrentActiveLevelWidth() - (constants.BIG_ENEMY_DIAMETER / 2),
+      constants.LEVEL_FLOOR_Y_POSITION - (constants.BIG_ENEMY_DIAMETER / 2),
+      constants.BIG_ENEMY_DIAMETER,
+      0,
+      true,
+      true,
+      false
+    );
+    this.levelDrawableCollection.addDrawable(triggerEnemy);
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
+      doubleEventBlockXReference + Math.floor((1.5 * constants.DEFAULT_EVENT_BLOCK_WIDTH)),
+      0,
+      constants.LEVEL_FLOOR_Y_POSITION,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      triggerEnemy
+    ));
+    // warp to event block with invincible enemy
+    this.levelDrawableCollection.addDrawable(new EventBlock( // warp event
+      eventBlockSurroundedByBlocksXPos,
+      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      [
+        eventBlockInvulnerableEnemyXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+        constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT + constants.SMALL_ENEMY_DIAMETER
+      ],
+      true,
+      true
+    ));
+    /*** END two event blocks NOT trap ***/
   }
 
 }

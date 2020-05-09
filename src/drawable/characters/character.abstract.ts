@@ -1,7 +1,7 @@
 import { IDrawable } from "../drawable.interface";
 import { Vector } from 'p5';
 import { mainSketch } from "../../main";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 
 /**
@@ -88,7 +88,7 @@ export abstract class ACharacter implements IDrawable {
    * handle arial physics
    */
   handleInAirPhysics(): void {
-    this.vel.y = Math.min(this.vel.y + Constants.GRAVITY.y, Constants.MAX_VERTICAL_VELOCITY);
+    this.vel.y = Math.min(this.vel.y + constants.GRAVITY.y, constants.MAX_VERTICAL_VELOCITY);
   }
 
 

@@ -1,7 +1,7 @@
 import { Block } from "./block";
 import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { ACollectable } from "../collectables/collectable.abstract";
 
 /**
@@ -101,7 +101,7 @@ export class ItemBlock extends Block {
     mainSketch.fill(this.fillColor);
     mainSketch.rect(this.leftX, this.topY, this.width, this.height);
 
-    mainSketch.fill(Constants.ITEM_BLOCK_TEXT_COLOR);
+    mainSketch.fill(constants.ITEM_BLOCK_TEXT_COLOR);
     mainSketch.textAlign(mainSketch.CENTER, mainSketch.CENTER);
     mainSketch.textSize(Math.min(this.width / 2, this.height / 2));
     mainSketch.text(

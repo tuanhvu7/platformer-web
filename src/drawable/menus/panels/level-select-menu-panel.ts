@@ -1,5 +1,5 @@
 import { APanel } from './panel.abstract';
-import { Constants } from '../../../const/constants';
+import { constants } from '../../../const/constants';
 import { platformer } from '../../../platformer';
 import { levelFactory } from '../../levels/level.factory';
 
@@ -16,7 +16,7 @@ export class LevelSelectMenuPanel extends APanel {
    */
   constructor(panelLevel: number, leftX: number, topY: number,
               width: number, height: number, isActive: boolean) {
-    super(Constants.DEFAULT_PANEL_COLOR, panelLevel + '', leftX, topY, width, height, isActive);
+    super(constants.DEFAULT_PANEL_COLOR, panelLevel + '', leftX, topY, width, height, isActive);
     this.panelLevel = panelLevel;
     this.loadLevelFromCheckpoint = false;
   }
@@ -53,9 +53,9 @@ export class LevelSelectMenuPanel extends APanel {
   toggleLoadLevelFromCheckpoint(): void {
     this.loadLevelFromCheckpoint = !this.loadLevelFromCheckpoint;
     if (this.loadLevelFromCheckpoint) {
-      this.panelColor = Constants.ALTERNATE_PANEL_COLOR;
+      this.panelColor = constants.ALTERNATE_PANEL_COLOR;
     } else {
-      this.panelColor = Constants.DEFAULT_PANEL_COLOR;
+      this.panelColor = constants.DEFAULT_PANEL_COLOR;
     }
   }
 }

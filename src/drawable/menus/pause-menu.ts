@@ -1,7 +1,7 @@
 import { AMenu } from "./menu.abstract";
 import { platformer } from '../../platformer';
 import { PauseMenuPanel } from "./panels/pause-menu-panel";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { EPauseMenuButtonType } from "../../enums/pause-menu-button-type.enum";
 
 /**
@@ -27,8 +27,8 @@ export class PauseMenu extends AMenu {
       EPauseMenuButtonType.CONTINUE,
       100 + this.horizontalOffset, // add offset to account for viewbox
       100,
-      Constants.PANEL_SIZE,
-      Constants.PANEL_SIZE,
+      constants.PANEL_SIZE,
+      constants.PANEL_SIZE,
       this.horizontalOffset,
       true
     ));
@@ -37,8 +37,8 @@ export class PauseMenu extends AMenu {
       EPauseMenuButtonType.QUIT,
       400 + this.horizontalOffset, // add offset to account for viewbox
       100,
-      Constants.PANEL_SIZE,
-      Constants.PANEL_SIZE,
+      constants.PANEL_SIZE,
+      constants.PANEL_SIZE,
       this.horizontalOffset,
       true
     ));

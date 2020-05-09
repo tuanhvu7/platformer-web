@@ -1,5 +1,5 @@
 import { Enemy } from "./enemy";
-import { Constants } from "../../const/constants";
+import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 
 /**
@@ -35,10 +35,10 @@ export class FlyingEnemy extends Enemy {
   //             isActive: boolean) {
   //   super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
 
-  //   this.fillColor = Constants.ENEMY_COLOR;
+  //   this.fillColor = constants.ENEMY_COLOR;
 
-  //   this.topYLimit = Constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
-  //   this.bottomYLimit = Constants.SCREEN_HEIGHT - this.diameter / 2;
+  //   this.topYLimit = constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
+  //   this.bottomYLimit = constants.SCREEN_HEIGHT - this.diameter / 2;
 
   //   this.vel.x = horizontalVel;
   //   this.vel.y = verticalVel;
@@ -69,14 +69,14 @@ export class FlyingEnemy extends Enemy {
               isActive: boolean) {
       super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
 
-      this.fillColor = Constants.ENEMY_COLOR;
+      this.fillColor = constants.ENEMY_COLOR;
 
       if ((topYLimit || topYLimit === 0) && (bottomYLimit || bottomYLimit === 0)) {
         this.topYLimit = topYLimit;
         this.bottomYLimit = bottomYLimit;
       } else {  // falsy non-zero topYLimit and bottomYLimit are given
-        this.topYLimit = Constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
-        this.bottomYLimit = Constants.SCREEN_HEIGHT - this.diameter / 2;
+        this.topYLimit = constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
+        this.bottomYLimit = constants.SCREEN_HEIGHT - this.diameter / 2;
       }
 
       this.vel.x = horizontalVel;
