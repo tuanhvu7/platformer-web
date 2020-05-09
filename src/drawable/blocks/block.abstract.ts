@@ -29,41 +29,48 @@ export abstract class ABlock implements IDrawable {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(leftX: number, topY: number, width: number, height: number, blockLineThickness: number,
-    isActive: boolean) {
+  // constructor(leftX: number,
+  //             topY: number,
+  //             width: number,
+  //             height: number,
+  //             blockLineThickness: number,
+  //             isActive: boolean) {
 
-    this.leftX = leftX;
-    this.topY = topY;
-    this.width = width;
-    this.height = height;
+  //   this.leftX = leftX;
+  //   this.topY = topY;
+  //   this.width = width;
+  //   this.height = height;
 
-    this.isVisible = true;
+  //   this.isVisible = true;
 
-    this.bottomSide = new HorizontalBoundary(
-      leftX,
-      topY + height,
-      width,
-      blockLineThickness,
-      false,
-      isActive
-    );
+  //   this.bottomSide = new HorizontalBoundary(
+  //     leftX,
+  //     topY + height,
+  //     width,
+  //     blockLineThickness,
+  //     true,
+  //     true,
+  //     true,
+  //     false,
+  //     isActive
+  //   );
 
-    this.leftSide = new VerticalBoundary(
-      leftX,
-      topY + 1,
-      height - 2,
-      blockLineThickness,
-      isActive
-    );
+  //   this.leftSide = new VerticalBoundary(
+  //     leftX,
+  //     topY + 1,
+  //     height - 2,
+  //     blockLineThickness,
+  //     isActive
+  //   );
 
-    this.rightSide = new VerticalBoundary(
-      leftX + width,
-      topY + 1,
-      height - 2,
-      blockLineThickness,
-      isActive
-    );
-  }
+  //   this.rightSide = new VerticalBoundary(
+  //     leftX + width,
+  //     topY + 1,
+  //     height - 2,
+  //     blockLineThickness,
+  //     isActive
+  //   );
+  // }
 
   /**
    * set properties of this;
@@ -71,46 +78,55 @@ export abstract class ABlock implements IDrawable {
    * if given isVisible is false, only bottom boundary of block is active
    * to all characters
    */
-  // constructor(int leftX, int topY, int width, int height, int blockLineThickness,
-  //   boolean isVisible, boolean isActive) {
+  constructor(leftX: number,
+              topY: number,
+              width: number,
+              height: number,
+              blockLineThickness: number,
+              isVisible: boolean,
+              isActive: boolean) {
 
-  //   mainSketch = mainSketch;
+    this.leftX = leftX;
+    this.topY = topY;
+    this.width = width;
+    this.height = height;
 
-  //   this.leftX = leftX;
-  //   this.topY = topY;
-  //   this.width = width;
-  //   this.height = height;
+    this.isVisible = isVisible;
 
-  //   this.isVisible = isVisible;
+    this.bottomSide = new HorizontalBoundary(
+      leftX + 1,
+      topY + height,
+      width - 1,
+      blockLineThickness,
+      isVisible,
+      true,
+      true,
+      false,
+      isActive
+    );
 
-  //   this.bottomSide = new HorizontalBoundary(
-  //     leftX + 1,
-  //     topY + height,
-  //     width - 1,
-  //     blockLineThickness,
-  //     isVisible,
-  //     false,
-  //     isActive
-  //   );
+    this.leftSide = new VerticalBoundary(
+      leftX,
+      topY,
+      height,
+      blockLineThickness,
+      isVisible,
+      true,
+      true,
+      isActive
+    );
 
-  //   this.leftSide = new VerticalBoundary(
-  //     leftX,
-  //     topY,
-  //     height,
-  //     blockLineThickness,
-  //     isVisible,
-  //     isActive
-  //   );
-
-  //   this.rightSide = new VerticalBoundary(
-  //     leftX + width,
-  //     topY,
-  //     height,
-  //     blockLineThickness,
-  //     isVisible,
-  //     isActive
-  //   );
-  // }
+    this.rightSide = new VerticalBoundary(
+      leftX + width,
+      topY,
+      height,
+      blockLineThickness,
+      isVisible,
+      true,
+      true,
+      isActive
+    );
+  }
 
   public abstract draw(): void;
 

@@ -18,44 +18,15 @@ export class Block extends ABlock {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(leftX: number, topY: number,
-    width: number, height: number, blockLineThickness: number,
-    isBreakableFromBottom: boolean, isActive: boolean) {
+  // constructor(leftX: number,
+  //             topY: number,
+  //             width: number,
+  //             height: number,
+  //             blockLineThickness: number,
+  //             isBreakableFromBottom: boolean,
+  //             isActive: boolean) {
 
-    super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
-
-    if (isBreakableFromBottom) {
-      this.fillColor = Constants.BREAKABLE_BLOCK_COLOR;
-    } else {
-      this.fillColor = Constants.DEFAULT_BLOCK_COLOR;
-    }
-    this.isBreakableFromBottom = isBreakableFromBottom;
-
-    this.topSide = new HorizontalBoundary(
-      leftX,
-      topY,
-      width,
-      blockLineThickness,
-      true,
-      false // initially not active, to be set in makeActive()
-    );
-
-    if (isActive) {
-      this.makeActive();
-    }
-  }
-
-  /**
-   * set properties of this;
-   * sets this to be active for all characters;
-   * if given isVisible is false, only bottom boundary of block is active
-   * to all characters
-   */
-  // constructor(int leftX, int topY, int width, int height, int blockLineThickness,
-  //   boolean isVisible, boolean isBreakableFromBottom, boolean isActive) {
-
-  //   super(leftX, topY, width, height, blockLineThickness,
-  //     isVisible, false); // initially not active, to be set in makeActive(), isVisible
+  //   super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
 
   //   if (isBreakableFromBottom) {
   //     this.fillColor = Constants.BREAKABLE_BLOCK_COLOR;
@@ -69,7 +40,6 @@ export class Block extends ABlock {
   //     topY,
   //     width,
   //     blockLineThickness,
-  //     isVisible,
   //     true,
   //     false // initially not active, to be set in makeActive()
   //   );
@@ -78,6 +48,48 @@ export class Block extends ABlock {
   //     this.makeActive();
   //   }
   // }
+
+  /**
+   * set properties of this;
+   * sets this to be active for all characters;
+   * if given isVisible is false, only bottom boundary of block is active
+   * to all characters
+   */
+  constructor(leftX: number,
+              topY: number,
+              width: number,
+              height: number,
+              blockLineThickness: number,
+              isVisible: boolean,
+              isBreakableFromBottom: boolean,
+              isActive: boolean) {
+
+    super(leftX, topY, width, height, blockLineThickness,
+      isVisible, false); // initially not active, to be set in makeActive()
+
+    if (isBreakableFromBottom) {
+      this.fillColor = Constants.BREAKABLE_BLOCK_COLOR;
+    } else {
+      this.fillColor = Constants.DEFAULT_BLOCK_COLOR;
+    }
+    this.isBreakableFromBottom = isBreakableFromBottom;
+
+    this.topSide = new HorizontalBoundary(
+      leftX,
+      topY,
+      width,
+      blockLineThickness,
+      isVisible,
+      true,
+      true,
+      true,
+      false // initially not active, to be set in makeActive()
+    );
+
+    if (isActive) {
+      this.makeActive();
+    }
+  }
 
   /**
    * runs continuously

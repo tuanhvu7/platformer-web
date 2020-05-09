@@ -13,6 +13,7 @@ import { ControllableEnemy } from "../characters/controllable-enemy";
 import { FlyingEnemy } from "../characters/flying-enemy";
 import { platformer } from '../../platformer';
 import { ViewBox } from "../viewbox/viewbox";
+import { ESongType } from "../../enums/song-type.enum";
 
 /**
  * Level one

@@ -12,10 +12,10 @@ export class VerticalBoundary extends ABoundary {
    * sets this to affect all characters and be visible
    */
   // constructor(startXPoint: number,
-  //                         startYPoint: number,
-  //                         y2Offset: number,
-  //                         boundaryLineThickness: number,
-  //                         isActive: boolean) {
+  //             startYPoint: number,
+  //             y2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isActive: boolean) {
   //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
   //     true, true, true, isActive);
   // }
@@ -25,11 +25,11 @@ export class VerticalBoundary extends ABoundary {
    * sets this to affect all characters
    */
   // constructor(startXPoint: number,
-  //                         startYPoint: number,
-  //                         y2Offset: number,
-  //                         boundaryLineThickness: number,
-  //                         isVisible: boolean,
-  //                         isActive: boolean) {
+  //             startYPoint: number,
+  //             y2Offset: number,
+  //             boundaryLineThickness: number,
+  //             isVisible: boolean,
+  //             isActive: boolean) {
   //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
   //     isVisible, true, true, isActive);
   // }
@@ -38,13 +38,13 @@ export class VerticalBoundary extends ABoundary {
    * set properties of this
    */
   constructor(startXPoint: number,
-                    startYPoint: number,
-                    y2Offset: number,
-                    boundaryLineThickness: number,
-                    isVisible: boolean, 
-                    doesAffectPlayer: boolean, 
-                    doesAffectNonPlayers: boolean,
-                    isActive: boolean) {
+              startYPoint: number,
+              y2Offset: number,
+              boundaryLineThickness: number,
+              isVisible: boolean, 
+              doesAffectPlayer: boolean, 
+              doesAffectNonPlayers: boolean,
+              isActive: boolean) {
     super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
       isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
   }
