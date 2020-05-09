@@ -7,7 +7,7 @@ import { mainSketch } from '../../main';
  */
 export abstract class ACollectable implements IDrawable {
 
-  fillColor: number;
+  fillColor: string;
 
   // position and dimensions
   leftX: number;

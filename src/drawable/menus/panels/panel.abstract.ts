@@ -16,7 +16,7 @@ export abstract class APanel implements IDrawable, IMouseControllable {
   readonly topY: number;
   readonly bottomY: number;
 
-  panelColor: number;
+  panelColor: string;
   panelText: string;
 
   private readonly width: number;
@@ -26,7 +26,7 @@ export abstract class APanel implements IDrawable, IMouseControllable {
   /**
    * set properties of this
    */
-  constructor(panelColor: number,
+  constructor(panelColor: string,
     panelText: string, leftX: number, topY: number, width: number, height: number, isActive: boolean) {
 
     this.panelText = panelText;
