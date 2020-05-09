@@ -1,3 +1,5 @@
+import { EReservedControlKeys } from "../enums/reserved-control-keys.enum";
+
 /**
  * For handling reserved key controls
  */
@@ -13,13 +15,4 @@ export class ReservedControlUtils {
   public static isKeyCodeReserved(keyToTest: string): boolean {
     return keyToTest.toLowerCase() in EReservedControlKeys;
   }
-}
-
-/**
- * reserved control keys
- */
-export enum EReservedControlKeys {
-  c,  // used for toggle checkpoint
-  u,  // used for configure player controls
-  p   // used for game pause
 }

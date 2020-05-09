@@ -11,7 +11,7 @@ import { Player } from "../characters/player";
 import { ViewBox } from "../viewbox/viewbox";
 import { PauseMenu } from "../menus/pause-menu";
 import { ESongType } from "../../enums/song-type.enum";
-import { EReservedControlKeys } from "../../utils/reserved-control-utils";
+import { EReservedControlKeys } from "../../enums/reserved-control-keys.enum";
 
 /**
  * common for levels
@@ -56,6 +56,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
     this.handlingLevelComplete = false;
 
     if (isActive) {
+      ResourceUtils.stopSong();
       this.setUpActivateLevel();
       this.setUpActivateWallsGoal(goalRightSideOffsetWithStageWidth);
     }
@@ -169,7 +170,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   public keyPressed(): void {
     if (this.player != null && !this.handlingLevelComplete) { // only allow pause if player is active
       const keyPressed = mainSketch.key;
-      if (EReservedControlKeys.p.toString().toLowerCase() === keyPressed.toLowerCase()) { // pause
+      if (EReservedControlKeys.p.toLowerCase() === keyPressed.toLowerCase()) { // pause
         this.isPaused = !this.isPaused;
 
         if (this.isPaused) {

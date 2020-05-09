@@ -50,6 +50,7 @@ class Platformer {
       await ResourceUtils.fetchSongs();
       constants.setVectorProperties();
       mainSketch.createCanvas(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT);
+      ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
       this.levelSelectMenu = new LevelSelectMenu(true);
       this.configurePlayerControlMenu = new ConfigurePlayerControlMenu(false);
       // new MockMenu();
