@@ -125,6 +125,7 @@ class Platformer {
       () => {
         this.getCurrentActiveLevel().deactivateLevel();
         this.currentActiveLevelNumber = 0;
+        ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
         this.levelSelectMenu.setupActivateMenu();
       },
       ResourceUtils.getSongDurationMilliSec(ESongType.LEVEL_COMPLETE)

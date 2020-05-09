@@ -326,8 +326,6 @@ export class Player extends ACharacter implements IKeyControllable {
    * handle vertical movement of this
    */
   private handleVerticalMovement(): void {
-    // console.log('this.jumpPressed', this.jumpPressed);
-    console.log(this.numberOfVerticalBoundaryContacts, this.numberOfCeilingBoundaryContacts === 0);
     if (this.jumpPressed) { // jump button pressed/held
       if (this.numberOfFloorBoundaryContacts > 0 ||
         (this.numberOfVerticalBoundaryContacts > 0 && this.numberOfCeilingBoundaryContacts === 0)) { // able to jump

@@ -39,6 +39,7 @@ export class LevelOne extends ALevel {
     this.bigEnemyTriggerActivated = false;
     this.checkpointXPos = 3100;
 
+    console.log('pre setUpActivateLevel()', this.bigEnemyTriggerActivated, this.bigEnemyTriggerCharacterListSizeCondition);
     this.makeActive();
     ResourceUtils.loopSong(ESongType.LEVEL);
 
@@ -63,6 +64,7 @@ export class LevelOne extends ALevel {
     this.setupActivateEndSection(levelFloorXPosReference);
 
     this.bigEnemyTriggerCharacterListSizeCondition = this.levelDrawableCollection.getCharactersList().size - 2;
+    console.log('post setUpActivateLevel()', this.bigEnemyTriggerActivated, this.bigEnemyTriggerCharacterListSizeCondition);
   }
 
   /**
@@ -71,7 +73,7 @@ export class LevelOne extends ALevel {
    */
   public handleConditionalEnemyTriggers(): void {
     if (!this.bigEnemyTriggerActivated &&
-      this.levelDrawableCollection.getCharactersList().size === this.bigEnemyTriggerCharacterListSizeCondition) {
+      this.levelDrawableCollection.getCharactersList().size <= 12) {  // TODO: avoid hardcoding 12
 
       const triggerEnemy: Enemy = new Enemy(
         3000,
