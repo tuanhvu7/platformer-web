@@ -17,7 +17,7 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
   /**
    * set properties of this
    */
-  public ConfigurePlayerControlMenu(isActive: boolean) {
+  constructor(isActive: boolean) {
     super(isActive);
   }
 

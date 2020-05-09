@@ -169,7 +169,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   public keyPressed(): void {
     if (this.player != null && !this.handlingLevelComplete) { // only allow pause if player is active
       const keyPressed = mainSketch.key;
-      if (EReservedControlKeys.p.toString().equalsIgnoreCase(keyPressed)) { // pause
+      if (EReservedControlKeys.p.toString().toLowerCase() === keyPressed.toLowerCase()) { // pause
         this.isPaused = !this.isPaused;
 
         if (this.isPaused) {
@@ -210,6 +210,9 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
       0,
       Constants.LEVEL_FLOOR_Y_POSITION,
       Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
       true
     ));
 
@@ -218,6 +221,9 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
       0,
       Constants.LEVEL_FLOOR_Y_POSITION,
       Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+      true,
+      true,
+      true,
       true
     ));
   }
