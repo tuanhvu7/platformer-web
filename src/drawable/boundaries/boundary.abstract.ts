@@ -76,7 +76,7 @@ export abstract class ABoundary implements IDrawable {
    */
   public draw(): void {
     this.show();
-    if (platformer.getCurrentActivePlayer() != null) {
+    if (platformer.getCurrentActivePlayer()) {
       this.checkHandleContactWithPlayer();
     }
     this.checkHandleContactWithNonPlayerCharacters();

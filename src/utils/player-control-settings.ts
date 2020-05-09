@@ -72,9 +72,9 @@ export class PlayerControlSettings {
    * @return true if given key is available (not used)
    */
   public static isKeyAvailable(key: string): boolean {
-    return PlayerControlSettings.getPlayerUp() != key &&
-      PlayerControlSettings.getPlayerLeft() != key &&
-      PlayerControlSettings.getPlayerDown() != key &&
-      PlayerControlSettings.getPlayerRight() != key;
+    return PlayerControlSettings.getPlayerUp() !== key &&
+      PlayerControlSettings.getPlayerLeft() !== key &&
+      PlayerControlSettings.getPlayerDown() !== key &&
+      PlayerControlSettings.getPlayerRight() !== key;
   }
 }

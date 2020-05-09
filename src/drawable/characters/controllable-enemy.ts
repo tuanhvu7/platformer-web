@@ -106,26 +106,26 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
    */
   public keyPressed(): void {
     const lowerCaseKey = mainSketch.key.toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowerCaseKey) { //left
+    if (PlayerControlSettings.getPlayerLeft() === lowerCaseKey) { //left
       this.moveLeftPressed = true;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowerCaseKey) { //right
+    if (PlayerControlSettings.getPlayerRight() === lowerCaseKey) { //right
       this.moveRightPressed = true;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowerCaseKey) {
+    if (PlayerControlSettings.getPlayerUp() === lowerCaseKey) {
       this.jumpPressed = true;
     }
   }
 
   public keyReleased(): void {
     const lowerCaseKey = mainSketch.key.toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowerCaseKey) { //left
+    if (PlayerControlSettings.getPlayerLeft() === lowerCaseKey) { //left
       this.moveLeftPressed = false;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowerCaseKey) { //right
+    if (PlayerControlSettings.getPlayerRight() === lowerCaseKey) { //right
       this.moveRightPressed = false;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowerCaseKey) {
+    if (PlayerControlSettings.getPlayerUp() === lowerCaseKey) {
       this.jumpPressed = false;
     }
   }
@@ -141,7 +141,7 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
           constants.MAX_VERTICAL_VELOCITY);
       }
 
-    } else if (this.numberOfFloorBoundaryContacts == 0) { // in air
+    } else if (this.numberOfFloorBoundaryContacts === 0) { // in air
       this.handleInAirPhysics();
     }
   }

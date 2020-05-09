@@ -71,7 +71,7 @@ export class LevelOne extends ALevel {
    */
   public handleConditionalEnemyTriggers(): void {
     if (!this.bigEnemyTriggerActivated &&
-      this.levelDrawableCollection.getCharactersList().size == this.bigEnemyTriggerCharacterListSizeCondition) {
+      this.levelDrawableCollection.getCharactersList().size === this.bigEnemyTriggerCharacterListSizeCondition) {
 
       const triggerEnemy: Enemy = new Enemy(
         3000,

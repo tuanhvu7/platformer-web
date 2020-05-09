@@ -101,7 +101,7 @@ export class Block extends ABlock {
 
     const player = platformer.getCurrentActivePlayer();
     // handle player collision with invisible block
-    if (player != null && this.bottomSide.contactWithCharacter(player)) {
+    if (player && this.bottomSide.contactWithCharacter(player)) {
       if (!this.isVisible) {
         this.handleInvisibleBlockCollisionWithPlayer();
 

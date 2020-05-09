@@ -85,7 +85,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
    * deactivate this;
    */
   public deactivateLevel(): void {
-    if (this.player != null) {
+    if (this.player) {
       this.player.makeNotActive();
     }
 
@@ -168,7 +168,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
    * handle character keypress controls
    */
   public keyPressed(): void {
-    if (this.player != null && !this.handlingLevelComplete) { // only allow pause if player is active
+    if (this.player !==null && !this.handlingLevelComplete) { // only allow pause if player is active
       const keyPressed = mainSketch.key;
       if (EReservedControlKeys.p.toLowerCase() === keyPressed.toLowerCase()) { // pause
         this.isPaused = !this.isPaused;

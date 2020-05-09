@@ -91,7 +91,7 @@ export class HorizontalBoundary extends ABoundary {
       character.getPos().x < this.endPoint.x + (character.getDiameter() / 2); // < upper x boundary
 
     const alreadyCharacterContact: boolean =
-      character.getVel().y == 0 &&
+      character.getVel().y === 0 &&
       this.charactersTouchingThis.has(character);
 
     if (alreadyCharacterContact) {
@@ -180,7 +180,6 @@ export class HorizontalBoundary extends ABoundary {
    */
   isPreviousContactWithPlayer(): boolean {
     const curPlayer = platformer.getCurrentActivePlayer();
-    return curPlayer.getPreviousFloorBoundaryContact() != null &&
-      curPlayer.getPreviousFloorBoundaryContact() === this; // .equals()
+    return curPlayer.getPreviousFloorBoundaryContact() === this; // .equals()
   }
 }

@@ -30,7 +30,7 @@ export class EnemyTriggerVerticalBoundary extends VerticalBoundary {
    */
   public draw(): void {
     this.show();
-    if (platformer.getCurrentActivePlayer() != null) {
+    if (platformer.getCurrentActivePlayer()) {
       this.checkHandleContactWithPlayer();
     }
   }
