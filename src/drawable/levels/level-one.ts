@@ -44,10 +44,10 @@ export class LevelOne extends ALevel {
 
       if (this.loadPlayerFromCheckPoint) {
           this.viewBox = new ViewBox(this.checkpointXPos - 200, 0, true);
-          this.player = new Player(this.checkpointXPos, 0, Constants.PLAYER_DIAMETER, true);
+          this.player = new Player(this.checkpointXPos, 0, Constants.PLAYER_DIAMETER, 1, true);
       } else {
           this.viewBox = new ViewBox(0, 0, true);
-          this.player = new Player(200, 0, Constants.PLAYER_DIAMETER, true);
+          this.player = new Player(200, 0, Constants.PLAYER_DIAMETER, 1, true);
 
           this.levelDrawableCollection.addDrawable(new Checkpoint(
               this.checkpointXPos,
@@ -111,6 +111,9 @@ export class LevelOne extends ALevel {
           sectionFloorXOffset,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
+          true,
+          true,
+          true,
           true
       ));
 
@@ -131,9 +134,11 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_BLOCK_SIZE,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
+          true,
           true
       ));
 
+      // TODO: loop
       this.levelDrawableCollection.addDrawable(new Enemy(
           1750,
           0,
@@ -204,7 +209,7 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY,
+          [Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
           true,
           true
       ));
@@ -216,8 +221,10 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          playerWarpEndXPos,
-          750,
+          [
+            playerWarpEndXPos,
+              750
+          ],
           true,
           true
       ));
@@ -248,6 +255,9 @@ export class LevelOne extends ALevel {
           sectionFloorXOffset,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
+          true,
+          true,
+          true,
           true
       ));
 
@@ -256,6 +266,9 @@ export class LevelOne extends ALevel {
           Constants.LEVEL_FLOOR_Y_POSITION - 4 * Constants.PLAYER_DIAMETER,
           4 * Constants.PLAYER_DIAMETER,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+          true,
+          true,
+          true,
           true,
           true
       ));
@@ -291,6 +304,8 @@ export class LevelOne extends ALevel {
               Constants.SMALL_ENEMY_DIAMETER,
               -Constants.ENEMY_FAST_MOVEMENT_SPEED,
               0,
+              null,
+              null,
               false,
               false,
               false,
@@ -306,6 +321,8 @@ export class LevelOne extends ALevel {
           Constants.BIG_ENEMY_DIAMETER,
           -Constants.ENEMY_FAST_MOVEMENT_SPEED,
           0,
+          null,
+          null,
           false,
           false,
           false,
@@ -358,6 +375,9 @@ export class LevelOne extends ALevel {
           platformer.getCurrentActiveLevelWidth() - startXPos,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
           true,
+          true,
+          true,
+          true,
           true
       ));
 
@@ -369,7 +389,7 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY,
+          [Constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
           true,
           true
       ));
@@ -392,8 +412,10 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          eventBlockTrapXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER,
+          [
+            eventBlockTrapXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+              Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
+          ],
           true,
           true
       ));
@@ -404,6 +426,7 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_BLOCK_SIZE,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * Constants.PLAYER_DIAMETER),
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+          true,
           false,
           true
       ));
@@ -413,6 +436,7 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_BLOCK_SIZE,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+          true,
           false,
           true
       ));
@@ -422,8 +446,10 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER,
+          [
+            eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+            Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
+          ],
           true,
           true
       ));
@@ -433,6 +459,7 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_BLOCK_SIZE,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT + (4 * Constants.PLAYER_DIAMETER),
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
+          true,
           false,
           true
       ));
@@ -450,8 +477,10 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          eventBlockSurroundedByBlocksXPos + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER,
+          [
+              eventBlockSurroundedByBlocksXPos + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+              Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
+          ],
           true,
           true
       ));
@@ -482,8 +511,10 @@ export class LevelOne extends ALevel {
           Constants.DEFAULT_EVENT_BLOCK_WIDTH,
           Constants.DEFAULT_EVENT_BLOCK_HEIGHT,
           Constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-          Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER,
+          [
+            eventBlockInvulnerableEnemyXReference + (Constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+            Constants.LEVEL_FLOOR_Y_POSITION - Constants.DEFAULT_EVENT_BLOCK_HEIGHT + Constants.SMALL_ENEMY_DIAMETER
+          ],
           true,
           true
       ));
