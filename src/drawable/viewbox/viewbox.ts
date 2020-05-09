@@ -31,7 +31,7 @@ export class ViewBox implements IDrawable {
    * runs continuously. handles viewbox position
    */
   public draw(): void {
-    if (platformer.getCurrentActivePlayer() != null) {
+    if (platformer.getCurrentActivePlayer()) {
       this.handleHorizontalMovement();
       this.handleVerticalMovement();
     }
@@ -130,7 +130,7 @@ export class ViewBox implements IDrawable {
 
     // fix viewbox level boundary overflows
     const isPlayerAtGroundLevel
-      = player.getPos().y + (constants.PLAYER_DIAMETER / 2) == constants.LEVEL_FLOOR_Y_POSITION;
+      = player.getPos().y + (constants.PLAYER_DIAMETER / 2) === constants.LEVEL_FLOOR_Y_POSITION;
     if (this.pos.y < mainSketch.height - platformer.getCurrentActiveLevelHeight()) { // top overflow
       this.pos.y = mainSketch.height - platformer.getCurrentActiveLevelHeight();
     } else if (this.pos.y > 0 || isPlayerAtGroundLevel) { // bottom overflow or player at ground level

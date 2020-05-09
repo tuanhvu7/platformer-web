@@ -32,7 +32,7 @@ export class PauseMenuPanel extends APanel {
    * to execute when this panel is clicked
    */
   executeWhenClicked(): void {
-    if (this.panelType == EPauseMenuButtonType.CONTINUE) {
+    if (this.panelType === EPauseMenuButtonType.CONTINUE) {
       ResourceUtils.loopSong(ESongType.LEVEL);
       platformer.getCurrentActiveLevel().setPaused(false);
       platformer.getCurrentActiveLevel().closePauseMenu();

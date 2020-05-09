@@ -67,6 +67,7 @@ export class Player extends ACharacter implements IKeyControllable {
 
     this.numberOfVerticalBoundaryContacts = 0;
     this.numberOfFloorBoundaryContacts = 0;
+    this.numberOfCeilingBoundaryContacts = 0; // initialize for wall jump
 
     this.eventBlockTopBoundaryContacts = new Set();
     this.previousFloorBoundaryContact = null;
@@ -80,35 +81,35 @@ export class Player extends ACharacter implements IKeyControllable {
     this.ableToMoveLeft = true;
   }
 
-    /**
+  /**
    * handle character keypress controls
    */
   public keyPressed(): void {
     const lowerCaseKey = mainSketch.key.toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == lowerCaseKey) { //left
+    if (PlayerControlSettings.getPlayerLeft() === lowerCaseKey) { //left
       this.moveLeftPressed = true;
     }
-    if (PlayerControlSettings.getPlayerRight() == lowerCaseKey) { //right
+    if (PlayerControlSettings.getPlayerRight() === lowerCaseKey) { //right
       this.moveRightPressed = true;
     }
-    if (PlayerControlSettings.getPlayerUp() == lowerCaseKey) {
+    if (PlayerControlSettings.getPlayerUp() === lowerCaseKey) {
       this.jumpPressed = true;
     }
-    if ((PlayerControlSettings.getPlayerDown() == lowerCaseKey) &&
-      this.eventBlockTopBoundaryContacts.size == 1 && !this.isDescendingDownEventBlock) {
+    if ((PlayerControlSettings.getPlayerDown() === lowerCaseKey) &&
+      this.eventBlockTopBoundaryContacts.size === 1 && !this.isDescendingDownEventBlock) {
       this.isDescendingDownEventBlock = true;
     }
   }
 
   public keyReleased(): void {
     const lowerCaseKey = mainSketch.key.toLowerCase();
-    if (PlayerControlSettings.getPlayerLeft() == (lowerCaseKey)) { //left
+    if (PlayerControlSettings.getPlayerLeft() === (lowerCaseKey)) { //left
       this.moveLeftPressed = false;
     }
-    if (PlayerControlSettings.getPlayerRight() == (lowerCaseKey)) { //right
+    if (PlayerControlSettings.getPlayerRight() === (lowerCaseKey)) { //right
       this.moveRightPressed = false;
     }
-    if (PlayerControlSettings.getPlayerUp() == (lowerCaseKey)) {
+    if (PlayerControlSettings.getPlayerUp() === (lowerCaseKey)) {
       this.jumpPressed = false;
     }
   }
@@ -217,7 +218,7 @@ export class Player extends ACharacter implements IKeyControllable {
   public handleContactWithEventBoundary(eventBlockTopBoundary: EventBlockTopBoundary,
                                         launchEventVerticalVelocity: number, endWarpPosition: Vector) {
     this.isDescendingDownEventBlock = false;
-    if (endWarpPosition == null) {
+    if (!endWarpPosition) {
       this.vel.y = launchEventVerticalVelocity;
     } else {
       this.pos.x = endWarpPosition.x;
@@ -288,7 +289,7 @@ export class Player extends ACharacter implements IKeyControllable {
    * handle this descent down event block
    */
   private handleEventBlockDescent(): void {
-    if (this.eventBlockTopBoundaryContacts.size == 1) {
+    if (this.eventBlockTopBoundaryContacts.size === 1) {
       this.resetControlPressed();
       platformer.deleteFromAllKeyControllables(this); // disconnect this keyEvent() from main keyEvent()
 
@@ -325,9 +326,11 @@ export class Player extends ACharacter implements IKeyControllable {
    * handle vertical movement of this
    */
   private handleVerticalMovement(): void {
+    // console.log('this.jumpPressed', this.jumpPressed);
+    console.log(this.numberOfVerticalBoundaryContacts, this.numberOfCeilingBoundaryContacts === 0);
     if (this.jumpPressed) { // jump button pressed/held
       if (this.numberOfFloorBoundaryContacts > 0 ||
-        (this.numberOfVerticalBoundaryContacts > 0 && this.numberOfCeilingBoundaryContacts == 0)) { // able to jump
+        (this.numberOfVerticalBoundaryContacts > 0 && this.numberOfCeilingBoundaryContacts === 0)) { // able to jump
         ResourceUtils.playSong(ESongType.PLAYER_ACTION);
         this.vel.y = constants.CHARACTER_JUMP_VERTICAL_VELOCITY;
 
@@ -343,7 +346,7 @@ export class Player extends ACharacter implements IKeyControllable {
     } else { // jump button not pressed
       if (this.numberOfVerticalBoundaryContacts > 0) { // touching wall
         this.handleOnWallPhysics();
-      } else if (this.numberOfFloorBoundaryContacts == 0) { // in air
+      } else if (this.numberOfFloorBoundaryContacts === 0) { // in air
         this.handleInAirPhysics();
       }
     }

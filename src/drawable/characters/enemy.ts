@@ -36,7 +36,7 @@ export class Enemy extends ACharacter {
   public draw(): void {
     this.checkHandleOffscreenDeath();
 
-    if (platformer.getCurrentActivePlayer() != null) {
+    if (platformer.getCurrentActivePlayer()) {
       this.checkHandleContactWithPlayer();
     }
     this.handleMovement();

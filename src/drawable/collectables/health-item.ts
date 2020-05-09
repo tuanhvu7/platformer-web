@@ -27,7 +27,7 @@ export class HealthItem extends ACollectable {
     mainSketch.rect(this.leftX, this.topY, this.width, this.height);
     if (this.healthChangeAmount > 0) {
       mainSketch.fill(constants.POSITIVE_HEALTH_ITEM_TEXT_COLOR);
-    } else if (this.healthChangeAmount == 0) {
+    } else if (this.healthChangeAmount === 0) {
       mainSketch.fill(constants.ZERO_HEALTH_ITEM_TEXT_COLOR);
     } else {
       mainSketch.fill(constants.NEGATIVE_HEALTH_ITEM_TEXT_COLOR);
