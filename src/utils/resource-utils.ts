@@ -16,31 +16,31 @@ export class ResourceUtils {
   private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "/assets/level-select-menu-song.mp3";
   // private static readonly Media OUT_OF_LEVEL_MENU_SONG = new Media(
   //     getResourcePathUri(OUT_OF_LEVEL_MENU_SONG_PATH));
-  private static readonly OUT_OF_LEVEL_MENU_SONG: AudioBuffer;
+  private static readonly OUT_OF_LEVEL_MENU_SONG: AudioBufferSourceNode;
 
   // level song
   private static readonly LEVEL_SONG_PATH = "/assets/level-song.mp3";
-  private static readonly LEVEL_SONG: AudioBuffer;
+  private static readonly LEVEL_SONG: AudioBufferSourceNode;
 
   // player damage song
   private static readonly PLAYER_DAMAGE_SONG_PATH = "/assets/player-damage-song.mp3";
-  private static readonly PLAYER_DAMAGE_SONG: AudioBuffer;
+  private static readonly PLAYER_DAMAGE_SONG: AudioBufferSourceNode;
 
   // player death song
   private static readonly PLAYER_DEATH_SONG_PATH = "/assets/player-death-song.mp3";;
-  private static readonly PLAYER_DEATH_SONG: AudioBuffer;
+  private static readonly PLAYER_DEATH_SONG: AudioBufferSourceNode;
 
   // level complete song
   private static readonly LEVEL_COMPLETE_SONG_PATH = "/assets/level-complete-song.mp3";
-  private static readonly LEVEL_COMPLETE_SONG: AudioBuffer;
+  private static readonly LEVEL_COMPLETE_SONG: AudioBufferSourceNode;
 
   // player action song
   private static readonly PLAYER_ACTION_SONG_PATH = "/assets/player-action-song.mp3";
-  private static readonly PLAYER_ACTION_SONG: AudioBuffer;
+  private static readonly PLAYER_ACTION_SONG: AudioBufferSourceNode;
 
   // event block descent song
   private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "/assets/event-block-descent-song.mp3";
-  private static readonly EVENT_BLOCK_DESCENT_SONG: AudioBuffer;
+  private static readonly EVENT_BLOCK_DESCENT_SONG: AudioBufferSourceNode;
 
   /**
    * loop song
@@ -116,11 +116,11 @@ export class ResourceUtils {
   public static getSongDurationMilliSec(songType: ESongType): number {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        return this.PLAYER_DEATH_SONG.duration;
+        return this.PLAYER_DEATH_SONG.buffer.duration;
       case ESongType.PLAYER_DAMAGE:
-        return this.PLAYER_DAMAGE_SONG.duration;
+        return this.PLAYER_DAMAGE_SONG.buffer.duration;
       case ESongType.LEVEL_COMPLETE:
-        return this.LEVEL_COMPLETE_SONG.duration;
+        return this.LEVEL_COMPLETE_SONG.buffer.duration;
       default:
         return 0;
     }
@@ -130,12 +130,12 @@ export class ResourceUtils {
    * stop song
    */
   public static stopSong(): void {
-    // this.OUT_OF_LEVEL_MENU_SONG.stop();
-    // this.LEVEL_SONG.stop();
-    // this.PLAYER_DEATH_SONG.stop();
-    // this.LEVEL_COMPLETION_SONG.stop();
-    // this.PLAYER_ACTION_SONG.stop();
-    // this.EVENT_BLOCK_DESCENT_SONG.stop();
+    this.OUT_OF_LEVEL_MENU_SONG.stop();
+    this.LEVEL_SONG.stop();
+    this.PLAYER_DEATH_SONG.stop();
+    this.LEVEL_COMPLETE_SONG.stop();
+    this.PLAYER_ACTION_SONG.stop();
+    this.EVENT_BLOCK_DESCENT_SONG.stop();
   }
 
   /**

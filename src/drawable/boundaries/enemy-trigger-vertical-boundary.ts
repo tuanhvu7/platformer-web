@@ -10,27 +10,20 @@ export class EnemyTriggerVerticalBoundary extends VerticalBoundary {
 
   /**
    * set properties of this;
-   * only one enemy to trigger
+   * @param enemy can be 1 enemy or set of enemies to add
    */
   constructor(startXPoint: number, startYPoint: number, y2Offset: number, boundaryLineThickness: number,
-              isActive: boolean, enemy: Enemy) {
+              isActive: boolean, enemy: Enemy  | Set<Enemy>) {
     super(startXPoint, startYPoint, y2Offset, boundaryLineThickness,
-      false, isActive);
-    const set: Set<Enemy> = new Set();
-    set.add(enemy);
-    this.enemiesToAddSet = set;
+          false, true, false, isActive);
+    if (enemy instanceof Enemy) {
+      const set: Set<Enemy> = new Set();
+      set.add(enemy);
+      this.enemiesToAddSet = set;
+    } else {
+      this.enemiesToAddSet = enemy
+    }
   }
-
-  /**
-   * set properties of this;
-   * set of enemies to trigger
-   */
-  // constructor(int startXPoint, int startYPoint, int y2Offset, int boundaryLineThickness,
-  //   boolean isActive, Set < Enemy > enemySet) {
-  //   super(startXPoint, startYPoint, y2Offset, boundaryLineThickness,
-  //     false, isActive);
-  //   this.enemiesToAddSet = enemySet;
-  // }
 
   /**
    * runs continuously. checks and handles contact between this and characters

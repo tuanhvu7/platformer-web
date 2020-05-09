@@ -11,18 +11,25 @@ export class VerticalBoundary extends ABoundary {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  public VerticalBoundary(startXPoint: number, startYPoint: number, y2Offset: number, boundaryLineThickness: number,
-                          isActive: boolean) {
-    super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
-      true, true, true, isActive);
-  }
+  // constructor(startXPoint: number,
+  //                         startYPoint: number,
+  //                         y2Offset: number,
+  //                         boundaryLineThickness: number,
+  //                         isActive: boolean) {
+  //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
+  //     true, true, true, isActive);
+  // }
 
   /**
    * set properties of this
    * sets this to affect all characters
    */
-  // public VerticalBoundary(int startXPoint, int startYPoint, int y2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean isActive) {
+  // constructor(startXPoint: number,
+  //                         startYPoint: number,
+  //                         y2Offset: number,
+  //                         boundaryLineThickness: number,
+  //                         isVisible: boolean,
+  //                         isActive: boolean) {
   //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
   //     isVisible, true, true, isActive);
   // }
@@ -30,12 +37,17 @@ export class VerticalBoundary extends ABoundary {
   /**
    * set properties of this
    */
-  // public VerticalBoundary(int startXPoint, int startYPoint, int y2Offset, int boundaryLineThickness,
-  //   boolean isVisible, boolean doesAffectPlayer, boolean doesAffectNonPlayers,
-  //   boolean isActive) {
-  //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
-  //     isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
-  // }
+  constructor(startXPoint: number,
+                    startYPoint: number,
+                    y2Offset: number,
+                    boundaryLineThickness: number,
+                    isVisible: boolean, 
+                    doesAffectPlayer: boolean, 
+                    doesAffectNonPlayers: boolean,
+                    isActive: boolean) {
+    super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
+      isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
+  }
 
   /**
    * return true if collide with given character
