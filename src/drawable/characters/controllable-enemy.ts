@@ -29,10 +29,15 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
    * set properties of this;
    * horizontalVel is vel of this if this.isHorizontalControllable is false
    */
-  constructor(x: number, y: number, diameter: number,
-              isJumpControllable: boolean, isHorizontalControllable: boolean,
+  constructor(x: number,
+              y: number,
+              diameter: number,
+              isJumpControllable: boolean,
+              isHorizontalControllable: boolean,
               horizontalVel: number,
-              isInvulnerable: boolean, isVisible: boolean, isActive: boolean) {
+              isInvulnerable: boolean,
+              isVisible: boolean,
+              isActive: boolean) {
     super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
     this.isJumpControllable = isJumpControllable;
     this.jumpPressed = false;

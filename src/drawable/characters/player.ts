@@ -49,13 +49,19 @@ export class Player extends ACharacter implements IKeyControllable {
   private isDescendingDownEventBlock: boolean;
 
   /**
-   * set properties of this;
-   * set this to have 1 health
+   * set properties of this
    */
-  constructor(x: number, y: number, diameter: number, isActive: boolean) {
+  constructor(x: number,
+              y: number,
+              diameter: number,
+              health: number,
+              isActive: boolean) {
     super(x, y, diameter, isActive);
+    if (health < 1) {
+      throw new Error("Initial player health must be at least 1");
+    }
 
-    this.health = 1;
+    this.health = health;
     this.canHaveContactWithEnemies = true;
     this.fillColor = Constants.PLAYER_DEFAULT_COLOR;
 
@@ -73,34 +79,6 @@ export class Player extends ACharacter implements IKeyControllable {
     this.ableToMoveRight = true;
     this.ableToMoveLeft = true;
   }
-
-  /**
-   * set properties of this
-   */
-  // constructor(int x, int y, int diameter, int health, boolean isActive) {
-  //   super(x, y, diameter, isActive);
-  //   if (health < 1) {
-  //     throw new IllegalArgumentException("Initial player health must be at least 1");
-  //   }
-
-  //   this.health = health;
-  //   this.canHaveContactWithEnemies = true;
-  //   this.fillColor = Constants.PLAYER_DEFAULT_COLOR;
-
-  //   this.numberOfVerticalBoundaryContacts = 0;
-  //   this.numberOfFloorBoundaryContacts = 0;
-
-  //   this.eventBlockTopBoundaryContacts = Collections.newSetFromMap(new ConcurrentHashMap < > ());
-  //   this.previousFloorBoundaryContact = null;
-  //   this.shouldSetPreviousFloorBoundaryContact = true;
-
-  //   this.resetControlPressed();
-
-  //   this.isDescendingDownEventBlock = false;
-
-  //   this.ableToMoveRight = true;
-  //   this.ableToMoveLeft = true;
-  // }
 
     /**
    * handle character keypress controls
