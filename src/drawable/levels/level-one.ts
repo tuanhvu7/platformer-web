@@ -135,63 +135,16 @@ export class LevelOne extends ALevel {
       true
     ));
 
-    // TODO: loop
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + 2 * constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + 3 * constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + 4 * constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + 5 * constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      1750 + 6 * constants.SMALL_ENEMY_DIAMETER,
-      0,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_SLOW_MOVEMENT_SPEED,
-      false,
-      true,
-      true));
+    for (let i = 0; i < 7; i++) {
+      this.levelDrawableCollection.addDrawable(new Enemy(
+        1750 + i * constants.SMALL_ENEMY_DIAMETER,
+        0,
+        constants.SMALL_ENEMY_DIAMETER,
+        -constants.ENEMY_SLOW_MOVEMENT_SPEED,
+        false,
+        true,
+        true));
+    }
 
     this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
       2000,
@@ -336,7 +289,7 @@ export class LevelOne extends ALevel {
   private setupActivateEndSection(startXPos: number): void {
     this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
       startXPos,
-      platformer.getCurrentActiveLevelHeight(),
+      platformer.getCurrentActiveLevelHeight() + 1, // +1 to make floor not visible on screen
       250,
       constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
       true,

@@ -7,44 +7,44 @@ import { mainSketch } from '../main';
  * make this class "static"
  */
 export class ResourceUtils {
-  private static readonly DEFAULT_MENU_IMAGE_PATH = '/assets/sky-blue-bg.png';
+  private static readonly DEFAULT_MENU_IMAGE_PATH = 'assets/sky-blue-bg.png';
   public static readonly DEFAULT_MENU_IMAGE: Image;
 
-  private static readonly LEVEL_BACKGROUND_IMAGE_PATH = "/assets/sky-bg.png";
+  private static readonly LEVEL_BACKGROUND_IMAGE_PATH = "assets/sky-bg.png";
   public static readonly LEVEL_BACKGROUND_IMAGE: Image;
 
   // out-of-level menu song
-  private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "/assets/level-select-menu-song.mp3";
+  private static readonly OUT_OF_LEVEL_MENU_SONG_PATH: string = "assets/level-select-menu-song.mp3";
   private static readonly OUT_OF_LEVEL_MENU_SONG: AudioBuffer;
   private static OUT_OF_LEVEL_MENU_SONG_PLAYER: AudioBufferSourceNode;
 
   // level song
-  private static readonly LEVEL_SONG_PATH = "/assets/level-song.mp3";
+  private static readonly LEVEL_SONG_PATH = "assets/level-song.mp3";
   private static readonly LEVEL_SONG: AudioBuffer;
   private static LEVEL_SONG_PLAYER: AudioBufferSourceNode;
 
   // player damage song
-  private static readonly PLAYER_DAMAGE_SONG_PATH = "/assets/player-damage-song.mp3";
+  private static readonly PLAYER_DAMAGE_SONG_PATH = "assets/player-damage-song.mp3";
   private static readonly PLAYER_DAMAGE_SONG: AudioBuffer;
   private static PLAYER_DAMAGE_SONG_PLAYER: AudioBufferSourceNode;
 
   // player death song
-  private static readonly PLAYER_DEATH_SONG_PATH = "/assets/player-death-song.mp3";;
+  private static readonly PLAYER_DEATH_SONG_PATH = "assets/player-death-song.mp3";;
   private static readonly PLAYER_DEATH_SONG: AudioBuffer;
   private static PLAYER_DEATH_SONG_PLAYER: AudioBufferSourceNode;
 
   // level complete song
-  private static readonly LEVEL_COMPLETE_SONG_PATH = "/assets/level-complete-song.mp3";
+  private static readonly LEVEL_COMPLETE_SONG_PATH = "assets/level-complete-song.mp3";
   private static readonly LEVEL_COMPLETE_SONG: AudioBuffer;
   private static LEVEL_COMPLETE_SONG_PLAYER: AudioBufferSourceNode;
 
   // player action song
-  private static readonly PLAYER_ACTION_SONG_PATH = "/assets/player-action-song.mp3";
+  private static readonly PLAYER_ACTION_SONG_PATH = "assets/player-action-song.mp3";
   private static readonly PLAYER_ACTION_SONG: AudioBuffer;
   private static PLAYER_ACTION_SONG_PLAYER: AudioBufferSourceNode;
 
   // event block descent song
-  private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "/assets/event-block-descent-song.mp3";
+  private static readonly EVENT_BLOCK_DESCENT_SONG_PATH = "assets/event-block-descent-song.mp3";
   private static readonly EVENT_BLOCK_DESCENT_SONG: AudioBuffer;
   private static EVENT_BLOCK_DESCENT_SONG_PLAYER: AudioBufferSourceNode;
 

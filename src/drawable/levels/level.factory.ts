@@ -1,6 +1,7 @@
 import { ALevel } from './level.abstract';
 import { LevelOne } from './level-one';
 import { platformer } from '../../platformer';
+import { LevelTwo } from './level-two';
 
 /**
  * for creating appropriate level
@@ -14,8 +15,8 @@ class LevelFactory {
       case 1:
         return new LevelOne(makeActive, loadPlayerFromCheckPoint);
 
-      // case 2:
-      //   return new LevelTwo(mainSketch, makeActive, loadPlayerFromCheckPoint);
+      case 2:
+        return new LevelTwo(makeActive, loadPlayerFromCheckPoint);
 
       // case 3:
       //   return new LevelThree(mainSketch, makeActive, loadPlayerFromCheckPoint);

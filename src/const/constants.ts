@@ -16,7 +16,7 @@ class Constants {
   public readonly LEVELS_WIDTH_ARRAY = [
       0,          // non-existent level zero
       8750,
-      // 12000,
+      12000,
       // 8500
   ];
 
@@ -24,7 +24,7 @@ class Constants {
   public readonly LEVELS_HEIGHT_ARRAY = [
       0,      // non-existent level zero
       900,    // level one
-      // 1300,
+      1300,
       // 900
   ];
 
