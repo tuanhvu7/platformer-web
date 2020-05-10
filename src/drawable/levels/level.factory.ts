@@ -2,6 +2,7 @@ import { ALevel } from './level.abstract';
 import { LevelOne } from './level-one';
 import { platformer } from '../../platformer';
 import { LevelTwo } from './level-two';
+import { LevelThree } from './level-three';
 
 /**
  * for creating appropriate level
@@ -18,8 +19,8 @@ class LevelFactory {
       case 2:
         return new LevelTwo(makeActive, loadPlayerFromCheckPoint);
 
-      // case 3:
-      //   return new LevelThree(mainSketch, makeActive, loadPlayerFromCheckPoint);
+      case 3:
+        return new LevelThree(makeActive, loadPlayerFromCheckPoint);
 
       default:
         throw new Error('getCurrentActiveLevelNumber() is not valid level value');

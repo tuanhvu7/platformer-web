@@ -14,18 +14,18 @@ class Constants {
 
   // widths of all levels
   public readonly LEVELS_WIDTH_ARRAY = [
-      0,          // non-existent level zero
-      8750,
-      12000,
-      // 8500
+    0,          // non-existent level zero
+    8750,
+    12000,
+    8500
   ];
 
   // heights of all levels
   public readonly LEVELS_HEIGHT_ARRAY = [
-      0,      // non-existent level zero
-      900,    // level one
-      1300,
-      // 900
+    0,      // non-existent level zero
+    900,    // level one
+    1300,
+    900
   ];
 
   /*** screen config ***/
