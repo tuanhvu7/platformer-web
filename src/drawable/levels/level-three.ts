@@ -174,7 +174,7 @@ export class LevelThree extends ALevel {
     ));
     this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
       6 * beginningGoalXPos,
-      platformer.getCurrentActiveLevelHeight(),
+      platformer.getCurrentActiveLevelHeight() + 1,
       2 * beginningGoalXPos,
       constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
       true,
