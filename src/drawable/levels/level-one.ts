@@ -20,10 +20,13 @@ import { ESongType } from "../../enums/song-type.enum";
  */
 export class LevelOne extends ALevel {
 
-  // true means big enemy trigger boundary has been activated
-  private bigEnemyTriggerActivated: boolean;
-  // size of this characters list to make big enemy trigger boundary active
-  private bigEnemyTriggerCharacterListSizeCondition: number;
+  /**
+   * Custom properties for subClassCustomProperties are:
+   * - bigEnemyTriggerActivated: boolean
+   *    true means big enemy trigger boundary has been activated
+   * - bigEnemyTriggerCharacterListSizeCondition: number
+   *    size of this characters list to make big enemy trigger boundary active
+   */
 
   /**
    * sets properties, boundaries, and characters of this
@@ -32,11 +35,16 @@ export class LevelOne extends ALevel {
     super(isActive, loadPlayerFromCheckPoint, constants.BIG_ENEMY_DIAMETER + 200);
   }
 
+  public draw(): void {
+    this.drawBackground();
+    this.handleConditionalEnemyTriggers();
+  }
+
   /**
    * setup and activate this
    */
   public setUpActivateLevel(): void {
-    this.bigEnemyTriggerActivated = false;
+    this.subClassCustomProperties.bigEnemyTriggerActivated = false;
     this.checkpointXPos = 3100;
 
     this.makeActive();
@@ -62,16 +70,17 @@ export class LevelOne extends ALevel {
     levelFloorXPosReference = this.setupActivateMiddleSectionAfterCheckpoint(levelFloorXPosReference + 500);
     this.setupActivateEndSection(levelFloorXPosReference);
 
-    this.bigEnemyTriggerCharacterListSizeCondition = this.levelDrawableCollection.getCharactersList().size - 2;
+    this.subClassCustomProperties.bigEnemyTriggerCharacterListSizeCondition
+      = this.levelDrawableCollection.getCharactersList().size - 2;
   }
 
   /**
    * handle conditional enemy triggers in this;
-   * to override in extended classes
    */
-  public handleConditionalEnemyTriggers(): void {
-    if (!this.bigEnemyTriggerActivated &&
-      this.levelDrawableCollection.getCharactersList().size <= 12) {  // TODO: avoid hardcoding 12
+  private handleConditionalEnemyTriggers(): void {
+    if (!this.subClassCustomProperties.bigEnemyTriggerActivated &&
+        this.levelDrawableCollection.getCharactersList().size <= 
+        this.subClassCustomProperties.bigEnemyTriggerCharacterListSizeCondition) {
 
       const triggerEnemy: Enemy = new Enemy(
         3000,
@@ -93,7 +102,7 @@ export class LevelOne extends ALevel {
         triggerEnemy
       ));
 
-      this.bigEnemyTriggerActivated = true;
+      this.subClassCustomProperties.bigEnemyTriggerActivated = true;
     }
   }
 

@@ -33,6 +33,9 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   // true means load player at checkpoint position
   loadPlayerFromCheckPoint: boolean;
 
+  // for custom sub class properties; used to avoid undefined subclass properties in extended methods
+  subClassCustomProperties: { [key: string]: any } = {};
+
   // pause menu for level
   private pauseMenu: PauseMenu;
 
@@ -76,12 +79,6 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   abstract setUpActivateLevel(): void;
 
   /**
-   * handle conditional enemy triggers in this;
-   * to override in extended classes if needed
-   */
-  handleConditionalEnemyTriggers(): void {}
-
-  /**
    * deactivate this;
    */
   public deactivateLevel(): void {
@@ -109,6 +106,38 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
    * runs continuously
    */
   public draw(): void {
+    this.drawBackground();
+  }
+
+  /**
+   * handle character keypress controls
+   */
+  public keyPressed(): void {
+    if (this.player !==null && !this.handlingLevelComplete) { // only allow pause if player is active
+      const keyPressed = mainSketch.key;
+      if (EReservedControlKeys.p.toLowerCase() === keyPressed.toLowerCase()) { // pause
+        this.isPaused = !this.isPaused;
+
+        if (this.isPaused) {
+          ResourceUtils.stopSong();
+          mainSketch.noLoop();
+          this.pauseMenu = new PauseMenu(
+            Math.floor(this.viewBox.getPos().x),
+            true);
+
+        } else {
+          ResourceUtils.loopSong(ESongType.LEVEL);
+          mainSketch.loop();
+          this.closePauseMenu();
+        }
+      }
+    }
+  }
+
+  /**
+   * draw background at proper location
+   */
+  drawBackground(): void {
     // for scrolling background
     mainSketch.translate(-this.viewBox.getPos().x, -this.viewBox.getPos().y);
 
@@ -159,33 +188,6 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
         }
       }
       levelWidthLeftToDraw -= curIterationWidthToDraw;
-    }
-
-    this.handleConditionalEnemyTriggers();
-  }
-
-  /**
-   * handle character keypress controls
-   */
-  public keyPressed(): void {
-    if (this.player !==null && !this.handlingLevelComplete) { // only allow pause if player is active
-      const keyPressed = mainSketch.key;
-      if (EReservedControlKeys.p.toLowerCase() === keyPressed.toLowerCase()) { // pause
-        this.isPaused = !this.isPaused;
-
-        if (this.isPaused) {
-          ResourceUtils.stopSong();
-          mainSketch.noLoop();
-          this.pauseMenu = new PauseMenu(
-            Math.floor(this.viewBox.getPos().x),
-            true);
-
-        } else {
-          ResourceUtils.loopSong(ESongType.LEVEL);
-          mainSketch.loop();
-          this.closePauseMenu();
-        }
-      }
     }
   }
 
