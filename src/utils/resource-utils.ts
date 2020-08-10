@@ -60,13 +60,22 @@ export class ResourceUtils {
    * Fetch and set songs used in app
    */
   public static async fetchSongs(): Promise<void> {
-    (ResourceUtils.OUT_OF_LEVEL_MENU_SONG as any) = await SoundUtils.getSoundFile(this.OUT_OF_LEVEL_MENU_SONG_PATH);
-    (ResourceUtils.LEVEL_SONG as any) = await SoundUtils.getSoundFile(this.LEVEL_SONG_PATH);;
-    (ResourceUtils.PLAYER_DAMAGE_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_DAMAGE_SONG_PATH);;
-    (ResourceUtils.PLAYER_DEATH_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_DEATH_SONG_PATH);;
-    (ResourceUtils.LEVEL_COMPLETE_SONG as any) = await SoundUtils.getSoundFile(this.LEVEL_COMPLETE_SONG_PATH);;
-    (ResourceUtils.PLAYER_ACTION_SONG as any) = await SoundUtils.getSoundFile(this.PLAYER_ACTION_SONG_PATH);;
-    (ResourceUtils.EVENT_BLOCK_DESCENT_SONG as any) = await SoundUtils.getSoundFile(this.EVENT_BLOCK_DESCENT_SONG_PATH);;
+    const audioBuffers: AudioBuffer[] = await Promise.all([
+      SoundUtils.getSoundFile(this.OUT_OF_LEVEL_MENU_SONG_PATH),
+      SoundUtils.getSoundFile(this.LEVEL_SONG_PATH),
+      SoundUtils.getSoundFile(this.PLAYER_DAMAGE_SONG_PATH),
+      SoundUtils.getSoundFile(this.PLAYER_DEATH_SONG_PATH),
+      SoundUtils.getSoundFile(this.LEVEL_COMPLETE_SONG_PATH),
+      SoundUtils.getSoundFile(this.PLAYER_ACTION_SONG_PATH),
+      SoundUtils.getSoundFile(this.EVENT_BLOCK_DESCENT_SONG_PATH)
+    ]);
+    (ResourceUtils.OUT_OF_LEVEL_MENU_SONG as any) = audioBuffers[0];
+    (ResourceUtils.LEVEL_SONG as any) = audioBuffers[1];
+    (ResourceUtils.PLAYER_DAMAGE_SONG as any) = audioBuffers[2];
+    (ResourceUtils.PLAYER_DEATH_SONG as any) = audioBuffers[3];
+    (ResourceUtils.LEVEL_COMPLETE_SONG as any) = audioBuffers[4];
+    (ResourceUtils.PLAYER_ACTION_SONG as any) = audioBuffers[5];
+    (ResourceUtils.EVENT_BLOCK_DESCENT_SONG as any) = audioBuffers[6];
   }
 
   /**
