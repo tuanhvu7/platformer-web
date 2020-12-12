@@ -4,6 +4,7 @@ import { mainSketch } from "../../main";
 import { constants } from "../../const/constants";
 import { Enemy } from "./enemy";
 import { PlayerControlSettings } from "../../utils/player-control-settings";
+import { IControllableEnemyProps } from './character-prop.interfaces';
 
 /**
  * controllable enemy
@@ -29,27 +30,20 @@ export class ControllableEnemy extends Enemy implements IKeyControllable {
    * set properties of this;
    * horizontalVel is vel of this if this.isHorizontalControllable is false
    */
-  constructor(x: number,
-              y: number,
-              diameter: number,
-              isJumpControllable: boolean,
-              isHorizontalControllable: boolean,
-              horizontalVel: number,
-              isInvulnerable: boolean,
-              isVisible: boolean,
-              isActive: boolean) {
-    super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
-    this.isJumpControllable = isJumpControllable;
+  constructor(controllableCharacterProps: IControllableEnemyProps) {
+    super(controllableCharacterProps);
+    this.isJumpControllable = controllableCharacterProps.isJumpControllable;
     this.jumpPressed = false;
 
-    this.isHorizontalControllable = isHorizontalControllable;
+    this.isHorizontalControllable = controllableCharacterProps.isHorizontalControllable;
     this.moveLeftPressed = false;
     this.moveRightPressed = false;
 
     this.ableToMoveRight = true;
     this.ableToMoveLeft = true;
 
-    this.horizontalMoveSpeed = Math.abs(horizontalVel); // used for left and right control
+    // used for left and right control
+    this.horizontalMoveSpeed = Math.abs(controllableCharacterProps.horizontalVel);
   }
 
 

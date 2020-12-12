@@ -141,11 +141,11 @@ export class ResourceUtils {
   public static getSongDurationMilliSec(songType: ESongType): number {
     switch (songType) {
       case ESongType.PLAYER_DEATH:
-        return this.PLAYER_DEATH_SONG_PLAYER.buffer.duration * 1000;
+        return Number(this.PLAYER_DEATH_SONG_PLAYER.buffer?.duration) * 1000;
       case ESongType.PLAYER_DAMAGE:
-        return this.PLAYER_DAMAGE_SONG_PLAYER.buffer.duration * 1000;
+        return Number(this.PLAYER_DAMAGE_SONG_PLAYER.buffer?.duration) * 1000;
       case ESongType.LEVEL_COMPLETE:
-        return this.LEVEL_COMPLETE_SONG_PLAYER.buffer.duration * 1000;
+        return Number(this.LEVEL_COMPLETE_SONG_PLAYER.buffer?.duration) * 1000;
       default:
         return 0;
     }

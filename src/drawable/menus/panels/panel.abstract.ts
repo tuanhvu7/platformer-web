@@ -5,6 +5,8 @@ import { constants } from '../../../const/constants';
 import { mainSketch } from '../../../main';
 import { IMouseControllable } from '../../mouse-controllable.interface';
 import { platformer } from '../../../platformer';
+import { IAPanelProps } from './panel-prop.interfaces';
+import { handleDefaultValue } from '../../../utils/ccommon-utils';
 /**
  * Common for panels
  */
@@ -26,21 +28,23 @@ export abstract class APanel implements IDrawable, IMouseControllable {
   /**
    * set properties of this
    */
-  constructor(panelColor: string,
-    panelText: string, leftX: number, topY: number, width: number, height: number, isActive: boolean) {
+  constructor(aPanelProps: IAPanelProps) {
+    /** START default values if optional prop(s) not defined */
+    const initActive = handleDefaultValue(aPanelProps.initAsActive, true);
+    /** END default values if optional prop(s) not defined */
 
-    this.panelText = panelText;
-    this.panelColor = panelColor;
-    this.width = width;
-    this.height = height;
+    this.panelText = aPanelProps.panelText;
+    this.panelColor = aPanelProps.panelColor;
+    this.width = aPanelProps.width;
+    this.height = aPanelProps.height;
 
-    this.leftX = leftX;
-    this.rightX = leftX + width;
+    this.leftX = aPanelProps.leftX;
+    this.rightX = aPanelProps.leftX + aPanelProps.width;
 
-    this.topY = topY;
-    this.bottomY = topY + height;
+    this.topY = aPanelProps.topY;
+    this.bottomY = aPanelProps.topY + aPanelProps.height;
 
-    if (isActive) {
+    if (initActive) {
       this.makeActive();
     }
   }

@@ -11,8 +11,8 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
   /**
    * set properties of this
    */
-  constructor(isActive: boolean) {
-    super(isActive);
+  constructor(initAsActive: boolean) {
+    super(initAsActive);
   }
 
   /**
@@ -31,14 +31,13 @@ export class LevelSelectMenu extends AMenuWithKeyboardControl {
         topYPanelPosition += (100 + constants.PANEL_SIZE);
       }
 
-      this.panelsList.push(new LevelSelectMenuPanel(
-        i,
-        leftXPanelPosition,
-        topYPanelPosition,
-        constants.PANEL_SIZE,
-        constants.PANEL_SIZE,
-        true
-      ));
+      this.panelsList.push(new LevelSelectMenuPanel({
+        panelLevel: i,
+        leftX: leftXPanelPosition,
+        topY: topYPanelPosition,
+        width: constants.PANEL_SIZE,
+        height: constants.PANEL_SIZE,
+      }));
 
       leftXPanelPosition += constants.PANEL_SIZE + 100;
     }

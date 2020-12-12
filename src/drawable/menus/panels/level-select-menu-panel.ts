@@ -2,6 +2,7 @@ import { APanel } from './panel.abstract';
 import { constants } from '../../../const/constants';
 import { platformer } from '../../../platformer';
 import { levelFactory } from '../../levels/level.factory';
+import { ILevelSelectMenuPanelProps } from './panel-prop.interfaces';
 
 export class LevelSelectMenuPanel extends APanel {
 
@@ -14,10 +15,14 @@ export class LevelSelectMenuPanel extends APanel {
   /**
    * set properties of this
    */
-  constructor(panelLevel: number, leftX: number, topY: number,
-              width: number, height: number, isActive: boolean) {
-    super(constants.DEFAULT_PANEL_COLOR, panelLevel + '', leftX, topY, width, height, isActive);
-    this.panelLevel = panelLevel;
+  constructor(levelSelectMenuProps: ILevelSelectMenuPanelProps) {
+    super({
+      ...levelSelectMenuProps,
+      panelColor: constants.DEFAULT_PANEL_COLOR,
+      panelText: levelSelectMenuProps.panelLevel + ''
+      
+    })
+    this.panelLevel = levelSelectMenuProps.panelLevel;
     this.loadLevelFromCheckpoint = false;
   }
 

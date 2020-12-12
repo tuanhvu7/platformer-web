@@ -1,6 +1,7 @@
 import { ACollectable } from "./collectable.abstract";
 import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
+import { IACollectableProps } from './collectable-prop.interfaces';
 
 /**
  * level goal
@@ -10,9 +11,8 @@ export class LevelGoal extends ACollectable {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(leftX: number, topY: number, width: number, height: number,
-              blockLineThickness: number, isActive: boolean) {
-    super(leftX, topY, width, height, blockLineThickness, isActive);
+  constructor(levelGoalProps: IACollectableProps) {
+    super(levelGoalProps);
     this.fillColor = constants.LEVEL_GOAL_COLOR;
   }
 

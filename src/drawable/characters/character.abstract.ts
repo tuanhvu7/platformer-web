@@ -3,6 +3,8 @@ import { Vector } from 'p5';
 import { mainSketch } from "../../main";
 import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
+import { IACharacterProps } from "./character-prop.interfaces";
+import { handleDefaultValue } from "../../utils/ccommon-utils";
 
 /**
  * Common for circular characters
@@ -16,7 +18,7 @@ export abstract class ACharacter implements IDrawable {
 
   readonly diameter: number;
 
-  fillColor: string;
+  fillColor!: string;
 
   // number of floor-like boundaries this is touching;
   numberOfFloorBoundaryContacts: number;
@@ -24,17 +26,18 @@ export abstract class ACharacter implements IDrawable {
   /**
    * set properties of this
    */
-  constructor(x: number,
-              y: number,
-              diameter: number,
-              isActive: boolean) {
-    this.pos = mainSketch.createVector(x, y);
+  constructor(acharacterProps: IACharacterProps) {
+    /** START default values if optional prop(s) not defined */
+    const initAsActive = handleDefaultValue(acharacterProps.initAsActive, true);
+    /** END default values if optional prop(s) not defined */
+
+    this.pos = mainSketch.createVector(acharacterProps.x, acharacterProps.y);
     this.vel = mainSketch.createVector();
-    this.diameter = diameter;
+    this.diameter = acharacterProps.diameter;
 
     this.numberOfFloorBoundaryContacts = 0;
 
-    if (isActive) {
+    if (initAsActive) {
       this.makeActive();
     }
   }

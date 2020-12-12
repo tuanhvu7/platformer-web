@@ -42,9 +42,9 @@ class Constants {
 
 
   /*** velocity and acceleration physics ***/
-  public readonly GRAVITY: Vector;
+  public readonly GRAVITY!: Vector;
   // gravity multiplier for jumping higher when holding jump button
-  public readonly WALL_SLIDE_ACCELERATION: Vector;
+  public readonly WALL_SLIDE_ACCELERATION!: Vector;
   public readonly CHARACTER_JUMP_VERTICAL_VELOCITY = -12;
   public readonly VARIABLE_JUMP_GRAVITY_MULTIPLIER = 0.55;
   public readonly EVENT_BLOCK_DESCENT_VERTICAL_VELOCITY = 1.5;

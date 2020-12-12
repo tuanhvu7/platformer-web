@@ -1,6 +1,7 @@
 import { platformer } from '../../platformer';
 import { VerticalBoundary } from './vertical-boundary';
 import { Enemy } from '../characters/enemy';
+import { IEnemyTriggerVerBoundaryProps } from './boundary-prop.interfaces';
 /**
  * boundary to add enemies upon player contact
  */
@@ -12,16 +13,25 @@ export class EnemyTriggerVerticalBoundary extends VerticalBoundary {
    * set properties of this;
    * @param enemy can be 1 enemy or set of enemies to add
    */
-  constructor(startXPoint: number, startYPoint: number, y2Offset: number, boundaryLineThickness: number,
-              isActive: boolean, enemy: Enemy  | Set<Enemy>) {
-    super(startXPoint, startYPoint, y2Offset, boundaryLineThickness,
-          false, true, false, isActive);
-    if (enemy instanceof Enemy) {
+  constructor(enemyTriggerVerticalBoundaryProps: IEnemyTriggerVerBoundaryProps) {    
+    super({
+      startXPoint: enemyTriggerVerticalBoundaryProps.startXPoint,
+      startYPoint: enemyTriggerVerticalBoundaryProps.startYPoint,
+      y2Offset: enemyTriggerVerticalBoundaryProps.y2Offset,
+      boundaryLineThickness: enemyTriggerVerticalBoundaryProps.boundaryLineThickness,
+      isVisible: false,
+      doesAffectPlayer: true,
+      doesAffectNonPlayers: false,
+      initAsActive: enemyTriggerVerticalBoundaryProps.initAsActive
+    });
+    
+    const enemyProp = enemyTriggerVerticalBoundaryProps.enemy;
+    if (enemyProp instanceof Enemy) {
       const set: Set<Enemy> = new Set();
-      set.add(enemy);
+      set.add(enemyProp);
       this.enemiesToAddSet = set;
     } else {
-      this.enemiesToAddSet = enemy
+      this.enemiesToAddSet = enemyProp
     }
   }
 
@@ -40,6 +50,7 @@ export class EnemyTriggerVerticalBoundary extends VerticalBoundary {
    */
   checkHandleContactWithPlayer(): void {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return;
 
     if (this.doesAffectPlayer) {
       // boundary collision for player

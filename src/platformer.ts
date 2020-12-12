@@ -19,16 +19,16 @@ import { mainSketch } from './main';
  */
 class Platformer {
   // level select menu
-  private levelSelectMenu: LevelSelectMenu;
+  private levelSelectMenu!: LevelSelectMenu;
 
   // set control menu
-  private configurePlayerControlMenu: ConfigurePlayerControlMenu;
+  private configurePlayerControlMenu!: ConfigurePlayerControlMenu;
 
   // stores current active level
-  private currentActiveLevel: ALevel;
+  private currentActiveLevel!: ALevel;
 
   // stores currently active level number
-  private currentActiveLevelNumber: number;
+  private currentActiveLevelNumber!: number;
 
   // timer to handle level completion; stored in variable to be able interrupt
   private levelCompleteTimer: NodeJS.Timeout | undefined;
@@ -93,7 +93,7 @@ class Platformer {
       this.levelCompleteTimer = undefined;
     }
 
-    this.getCurrentActivePlayer().makeNotActive();
+    this.getCurrentActivePlayer()?.makeNotActive();
     this.currentActiveLevel.setPlayer(null); // to stop interactions with player
 
     ResourceUtils.stopSong();
@@ -113,10 +113,14 @@ class Platformer {
    * complete level
    */
   public handleLevelComplete(): void {
+    const curPlayer = this.getCurrentActivePlayer();
+    if (!curPlayer) return;
+
     this.getCurrentActiveLevel().setHandlingLevelComplete(true);
-    this.getCurrentActivePlayer().resetControlPressed();
-    this.getCurrentActivePlayer().setVel(mainSketch.createVector(constants.PLAYER_LEVEL_COMPLETE_SPEED, 0));
-    this.deleteFromAllKeyControllables(this.getCurrentActivePlayer()) // disconnect this keyEvent() from main keyEvent()
+    curPlayer.resetControlPressed();
+    curPlayer.setVel(mainSketch.createVector(constants.PLAYER_LEVEL_COMPLETE_SPEED, 0));
+    // disconnect this keyEvent() from main keyEvent()
+    this.deleteFromAllKeyControllables(curPlayer);
 
     ResourceUtils.stopSong();
     ResourceUtils.playSong(ESongType.LEVEL_COMPLETE);
@@ -160,7 +164,7 @@ class Platformer {
   /**
    * return player of current active level
    */
-  public getCurrentActivePlayer(): Player {
+  public getCurrentActivePlayer(): Player | null {
     return this.currentActiveLevel.getPlayer();
   }
 

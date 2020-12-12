@@ -16,8 +16,8 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
   /**
    * set properties of this
    */
-  constructor(isActive: boolean) {
-    super(isActive);
+  constructor(initAsActive: boolean) {
+    super(initAsActive);
   }
 
   /**
@@ -36,14 +36,14 @@ export class ConfigurePlayerControlMenu extends AMenuWithKeyboardControl {
         topYPanelPosition += (100 + constants.PANEL_SIZE);
       }
 
-      this.panelsList.push(new ConfigurePlayerControlPanel(
-        curConfigControl as any, // any for enum
-        leftXPanelPosition,
-        topYPanelPosition,
-        constants.PANEL_SIZE,
-        constants.PANEL_SIZE,
-        true
-      ));
+
+      this.panelsList.push(new ConfigurePlayerControlPanel({
+        configControlPanelControls: curConfigControl as any,  // any for enum
+        leftX: leftXPanelPosition,
+        topY: topYPanelPosition,
+        width: constants.PANEL_SIZE,
+        height: constants.PANEL_SIZE,
+      }));
 
       leftXPanelPosition += constants.PANEL_SIZE + 100;
     });

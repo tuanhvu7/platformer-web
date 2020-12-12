@@ -4,6 +4,8 @@ import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { ESongType } from "../../enums/song-type.enum";
+import { IEnemyProps } from "./character-prop.interfaces";
+import { handleDefaultValue } from "../../utils/ccommon-utils";
 
 /**
  * enemy
@@ -18,16 +20,19 @@ export class Enemy extends ACharacter {
   /**
    * set properties of this
    */
-  constructor(x: number, y: number, diameter: number, horizontalVel: number,
-    isInvulnerable: boolean, isVisible: boolean, isActive: boolean) {
-    super(x, y, diameter, isActive);
+  constructor(enemyProps: IEnemyProps) {
+    super(enemyProps);
+
+    /** START default values if optional prop(s) not defined */
+    const isInvulnerable = handleDefaultValue(enemyProps.isInvulnerable, false);
+    /** END default values if optional prop(s) not defined */
 
     this.fillColor = constants.ENEMY_COLOR;
 
-    this.vel.x = horizontalVel;
+    this.vel.x = enemyProps.horizontalVel;
 
     this.isInvulnerable = isInvulnerable;
-    this.isVisible = isVisible;
+    this.isVisible = handleDefaultValue(enemyProps.isVisible, true);
   }
 
   /**
@@ -67,6 +72,8 @@ export class Enemy extends ACharacter {
    */
   private checkHandleContactWithPlayer(): void {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return;
+
     if (curPlayer.isCanHaveContactWithEnemies()) { // to prevent multiple consecutive deaths and damage
       const collisionAngle = this.collisionWithPlayer();
       if (collisionAngle >= 0) {
@@ -91,6 +98,8 @@ export class Enemy extends ACharacter {
    */
   private collisionWithPlayer(): number {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return -1;
+
     const xDifference = Math.abs(this.pos.x - curPlayer.getPos().x);
     const yDifference = Math.abs(this.pos.y - curPlayer.getPos().y);
 
@@ -124,7 +133,7 @@ export class Enemy extends ACharacter {
     platformer.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
     if (!isOffscreenDeath) {
       ResourceUtils.playSong(ESongType.PLAYER_ACTION);
-      platformer.getCurrentActivePlayer().handleJumpKillEnemyPhysics();
+      platformer.getCurrentActivePlayer()?.handleJumpKillEnemyPhysics();
     }
   }
   

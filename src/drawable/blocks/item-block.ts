@@ -3,6 +3,7 @@ import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
 import { constants } from "../../const/constants";
 import { ACollectable } from "../collectables/collectable.abstract";
+import { IItemBlockProps } from './block-prop.interfaces';
 
 /**
  * Block with item that appears when hit from below by player
@@ -19,52 +20,16 @@ export class ItemBlock extends Block {
 
   /**
    * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(leftX: number,
-  //             topY: number,
-  //             width: number,
-  //             height: number,
-  //             item: ACollectable,
-  //             blockLineThickness: number,
-  //             isBreakableFromBottom: boolean,
-  //             isActive: boolean) {
-
-  //   super(leftX, topY, width, height,
-  //     blockLineThickness, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive()
-
-  //   this.blockText = "?";
-  //   this.itemAppeared = false;
-
-  //   this.item = item;
-  //   this.item.makeNotActive();
-  //   this.item.setLeftX((this.leftX + this.width / 2) - this.item.getWidth() / 2);
-  //   this.item.setTopY(this.topY - this.item.getHeight());
-  // }
-
-  /**
-   * set properties of this;
-   * sets this to be active for all characters;
    * if given isVisible is false, only bottom boundary of block is active
    * to all characters
    */
-  constructor(leftX: number,
-              topY: number,
-              width: number,
-              height: number,
-              item: ACollectable,
-              blockLineThickness: number,
-              isVisible: boolean,
-              isBreakableFromBottom: boolean,
-              isActive: boolean) {
-
-    super(leftX, topY, width, height, blockLineThickness,
-      isVisible, isBreakableFromBottom, isActive); // initially not active, to be set in makeActive(), isVisible
+  constructor(iteemBlockProps: IItemBlockProps) {
+    super(iteemBlockProps);
 
     this.blockText = "?";
     this.itemAppeared = false;
 
-    this.item = item;
+    this.item = iteemBlockProps.item;
     this.item.makeNotActive();
     this.item.setLeftX((this.leftX + this.width / 2) - this.item.getWidth() / 2);
     this.item.setTopY(this.topY - this.item.getHeight());

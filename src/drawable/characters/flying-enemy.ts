@@ -1,6 +1,8 @@
 import { Enemy } from "./enemy";
 import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
+import { IFlyingEnemyProps } from './character-prop.interfaces';
+import { handleDefaultValue, isNumber } from '../../utils/ccommon-utils';
 
 /**
  * flying enemy
@@ -21,71 +23,31 @@ export class FlyingEnemy extends Enemy {
 
   /**
    * set properties of this;
-   * set upper and lower Y limits to boundaries of level
-   */
-  // constructor(x: number,
-  //             y: number,
-  //             diameter: number,
-  //             horizontalVel: number,
-  //             verticalVel: number,
-  //             isAffectedByHorizontalBoundaries: boolean,
-  //             isAffectedByVerticalBoundaries: boolean,
-  //             isInvulnerable: boolean,
-  //             isVisible: boolean,
-  //             isActive: boolean) {
-  //   super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
-
-  //   this.fillColor = constants.ENEMY_COLOR;
-
-  //   this.topYLimit = constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
-  //   this.bottomYLimit = constants.SCREEN_HEIGHT - this.diameter / 2;
-
-  //   this.vel.x = horizontalVel;
-  //   this.vel.y = verticalVel;
-
-  //   this.isAffectedByHorizontalBoundaries = isAffectedByHorizontalBoundaries;
-  //   this.isAffectedByVerticalBoundaries = isAffectedByVerticalBoundaries;
-
-  //   this.isVisible = isVisible;
-  // }
-
-  /**
-   * set properties of this;
    * set topYLimit and bottomYLimit to given values;
    * if null or undefined is given for topYLimit and bottomYLimit,
    * then they shall be set to upper and lower Y limits to boundaries of level
    */
-  constructor(x: number,
-              y: number,
-              diameter: number,
-              horizontalVel: number,
-              verticalVel: number,
-              topYLimit: number,
-              bottomYLimit: number,
-              isAffectedByHorizontalBoundaries: boolean,
-              isAffectedByVerticalBoundaries: boolean,
-              isInvulnerable: boolean,
-              isVisible: boolean,
-              isActive: boolean) {
-      super(x, y, diameter, horizontalVel, isInvulnerable, isVisible, isActive);
+  constructor(flyingEnemyProps: IFlyingEnemyProps) {
+    super(flyingEnemyProps);
 
-      this.fillColor = constants.ENEMY_COLOR;
+    this.fillColor = constants.ENEMY_COLOR;
 
-      if ((topYLimit || topYLimit === 0) && (bottomYLimit || bottomYLimit === 0)) {
-        this.topYLimit = topYLimit;
-        this.bottomYLimit = bottomYLimit;
-      } else {  // falsy non-zero topYLimit and bottomYLimit are given
-        this.topYLimit = constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
-        this.bottomYLimit = constants.SCREEN_HEIGHT - this.diameter / 2;
-      }
+    const topAndBotYProvided = isNumber(flyingEnemyProps.topYLimit) && isNumber(flyingEnemyProps.bottomYLimit);
+    if (topAndBotYProvided) {
+      this.topYLimit = flyingEnemyProps.topYLimit as number;
+      this.bottomYLimit = flyingEnemyProps.bottomYLimit as number;
+    } else {  // falsy non-zero topYLimit and bottomYLimit are given
+      this.topYLimit = constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight() + this.diameter / 2;
+      this.bottomYLimit = constants.SCREEN_HEIGHT - this.diameter / 2;
+    }
 
-      this.vel.x = horizontalVel;
-      this.vel.y = verticalVel;
+    this.vel.x = flyingEnemyProps.horizontalVel;
+    this.vel.y = flyingEnemyProps.verticalVel;
 
-      this.isAffectedByHorizontalBoundaries = isAffectedByHorizontalBoundaries;
-      this.isAffectedByVerticalBoundaries = isAffectedByVerticalBoundaries;
+    this.isAffectedByHorizontalBoundaries = flyingEnemyProps.isAffectedByHorizontalBoundaries;
+    this.isAffectedByVerticalBoundaries = flyingEnemyProps.isAffectedByVerticalBoundaries;
 
-      this.isVisible = isVisible;
+    this.isVisible = handleDefaultValue(flyingEnemyProps.isVisible, true);
   }
 
   /**

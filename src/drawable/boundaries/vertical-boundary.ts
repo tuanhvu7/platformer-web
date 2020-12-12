@@ -2,51 +2,27 @@ import { ABoundary } from "./boundary.abstract";
 import { platformer } from '../../platformer';
 import { ACharacter } from "../characters/character.abstract";
 import { ControllableEnemy } from "../characters/controllable-enemy";
+import { IVerticalBoundaryProps } from './boundary-prop.interfaces';
 
 /**
  * vertical line boundaries; walls
  */
 export class VerticalBoundary extends ABoundary {
   /**
-   * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             y2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
-  //     true, true, true, isActive);
-  // }
-
-  /**
-   * set properties of this
-   * sets this to affect all characters
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             y2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isVisible: boolean,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
-  //     isVisible, true, true, isActive);
-  // }
-
-  /**
    * set properties of this
    */
-  constructor(startXPoint: number,
-              startYPoint: number,
-              y2Offset: number,
-              boundaryLineThickness: number,
-              isVisible: boolean, 
-              doesAffectPlayer: boolean, 
-              doesAffectNonPlayers: boolean,
-              isActive: boolean) {
-    super(startXPoint, startYPoint, 0, y2Offset, boundaryLineThickness,
-      isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
+  constructor(verticalBoundaryProps: IVerticalBoundaryProps) {
+    super({
+      x1Point: verticalBoundaryProps.startXPoint,
+      y1Point: verticalBoundaryProps.startYPoint,
+      x2Offset: 0,
+      y2Offset: verticalBoundaryProps.y2Offset,
+      boundaryLineThickness: verticalBoundaryProps.boundaryLineThickness,
+      isVisible: verticalBoundaryProps.isVisible,
+      doesAffectPlayer: verticalBoundaryProps.doesAffectPlayer,
+      doesAffectNonPlayers: verticalBoundaryProps.doesAffectNonPlayers,
+      initAsActive: verticalBoundaryProps.initAsActive
+    });
   }
 
   /**
@@ -67,6 +43,7 @@ export class VerticalBoundary extends ABoundary {
    */
   checkHandleContactWithPlayer(): void {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return;
 
     if (this.doesAffectPlayer) {
       // boundary collision for player

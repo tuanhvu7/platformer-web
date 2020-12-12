@@ -1,13 +1,16 @@
 import { IDrawable } from "../drawable.interface";
 import { platformer } from '../../platformer';
 import { mainSketch } from '../../main';
+import { IACollectableProps } from "./collectable-prop.interfaces";
+import { handleDefaultValue } from '../../utils/ccommon-utils';
+import { constants } from '../../const/constants';
 
 /**
  * common for rectangular collectables
  */
 export abstract class ACollectable implements IDrawable {
 
-  fillColor: string;
+  fillColor!: string;
 
   // position and dimensions
   leftX: number;
@@ -21,17 +24,21 @@ export abstract class ACollectable implements IDrawable {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(leftX: number, topY: number, width: number, height: number,
-              blockLineThickness: number, isActive: boolean) {
+  constructor(aCollectableProps: IACollectableProps) {
+    /** START default values if optional prop(s) not defined */
+    const initActive = handleDefaultValue(aCollectableProps.initAsActive, true);
 
-    this.leftX = leftX;
-    this.topY = topY;
-    this.width = width;
-    this.height = height;
+    this.blockLineThickness = handleDefaultValue(
+      aCollectableProps.blockLineThickness,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS);
+    /** END default values if optional prop(s) not defined */
 
-    this.blockLineThickness = blockLineThickness;
+    this.leftX = aCollectableProps.leftX;
+    this.topY = aCollectableProps.topY;
+    this.width = aCollectableProps.width;
+    this.height = aCollectableProps.height;
 
-    if (isActive) {
+    if (initActive) {
       this.makeActive();
     }
   }
@@ -80,6 +87,8 @@ export abstract class ACollectable implements IDrawable {
    */
   contactWithPlayer(): boolean {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return false;
+
     const playerInHorizontalRange =
       (curPlayer.getPos().x + (curPlayer.getDiameter() / 2) >= this.leftX) &&
       (curPlayer.getPos().x - (curPlayer.getDiameter() / 2) <= this.leftX + this.width);

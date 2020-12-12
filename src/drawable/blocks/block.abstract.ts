@@ -2,6 +2,9 @@ import { IDrawable } from "../drawable.interface";
 import { mainSketch } from '../../main';
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
 import { VerticalBoundary } from "../boundaries/vertical-boundary";
+import { IABlockProps } from "./block-prop.interfaces";
+import { constants } from "../../const/constants";
+import { handleDefaultValue } from "../../utils/ccommon-utils";
 
 /**
  * common for blocks
@@ -10,7 +13,7 @@ export abstract class ABlock implements IDrawable {
 
   isVisible: boolean;
 
-  fillColor: string;
+  fillColor: string = constants.DEFAULT_BLOCK_COLOR;
 
   // position and dimensions
   readonly leftX: number;
@@ -19,7 +22,7 @@ export abstract class ABlock implements IDrawable {
   readonly height: number;
 
   // boundaries that make up block
-  topSide: HorizontalBoundary;
+  topSide!: HorizontalBoundary;
   readonly bottomSide: HorizontalBoundary;
 
   readonly leftSide: VerticalBoundary;
@@ -27,105 +30,58 @@ export abstract class ABlock implements IDrawable {
 
   /**
    * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(leftX: number,
-  //             topY: number,
-  //             width: number,
-  //             height: number,
-  //             blockLineThickness: number,
-  //             isActive: boolean) {
-
-  //   this.leftX = leftX;
-  //   this.topY = topY;
-  //   this.width = width;
-  //   this.height = height;
-
-  //   this.isVisible = true;
-
-  //   this.bottomSide = new HorizontalBoundary(
-  //     leftX,
-  //     topY + height,
-  //     width,
-  //     blockLineThickness,
-  //     true,
-  //     true,
-  //     true,
-  //     false,
-  //     isActive
-  //   );
-
-  //   this.leftSide = new VerticalBoundary(
-  //     leftX,
-  //     topY + 1,
-  //     height - 2,
-  //     blockLineThickness,
-  //     isActive
-  //   );
-
-  //   this.rightSide = new VerticalBoundary(
-  //     leftX + width,
-  //     topY + 1,
-  //     height - 2,
-  //     blockLineThickness,
-  //     isActive
-  //   );
-  // }
-
-  /**
-   * set properties of this;
-   * sets this to be active for all characters;
    * if given isVisible is false, only bottom boundary of block is active
    * to all characters
    */
-  constructor(leftX: number,
-              topY: number,
-              width: number,
-              height: number,
-              blockLineThickness: number,
-              isVisible: boolean,
-              isActive: boolean) {
-
-    this.leftX = leftX;
-    this.topY = topY;
-    this.width = width;
-    this.height = height;
-
-    this.isVisible = isVisible;
-
-    this.bottomSide = new HorizontalBoundary(
-      leftX + 1,
-      topY + height,
-      width - 1,
-      blockLineThickness,
-      isVisible,
-      true,
-      true,
-      false,
-      isActive
+  constructor(ablockProps: IABlockProps) {
+    /** START default values if optional prop(s) not defined */
+    this.isVisible = handleDefaultValue(ablockProps.isVisible, true);
+    const blockLineThickness = handleDefaultValue(
+      ablockProps.blockLineThickness,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS
     );
+    /** END default values if optional prop(s) not defined */
+    
+    this.leftX = ablockProps.leftX;
+    this.topY = ablockProps.topY;
+    this.width = ablockProps.width;
+    this.height = ablockProps.height;
 
-    this.leftSide = new VerticalBoundary(
-      leftX,
-      topY,
-      height,
-      blockLineThickness,
-      isVisible,
-      true,
-      true,
-      isActive
-    );
+    // pass initAsActive=false to boundary constructors
+    // since need this and its boundaries active state to be synced
+    this.bottomSide = new HorizontalBoundary({
+      startXPoint: ablockProps.leftX + 1,
+      startYPoint: ablockProps.topY + ablockProps.height,
+      x2Offset: ablockProps.width - 1,
+      boundaryLineThickness: blockLineThickness,
+      isVisible: this.isVisible,
+      doesAffectPlayer: true,
+      doesAffectNonPlayers: true,
+      isFloorBoundary: false,
+      initAsActive: false
+    });
 
-    this.rightSide = new VerticalBoundary(
-      leftX + width,
-      topY,
-      height,
-      blockLineThickness,
-      isVisible,
-      true,
-      true,
-      isActive
-    );
+    this.leftSide = new VerticalBoundary({
+      startXPoint: ablockProps.leftX,
+      startYPoint: ablockProps.topY,
+      y2Offset: ablockProps.height,
+      boundaryLineThickness: blockLineThickness,
+      isVisible: this.isVisible, 
+      doesAffectPlayer: true, 
+      doesAffectNonPlayers: true,
+      initAsActive: false
+    });
+
+    this.rightSide = new VerticalBoundary({
+      startXPoint: ablockProps.leftX + ablockProps.width,
+      startYPoint: ablockProps.topY,
+      y2Offset: ablockProps.height,
+      boundaryLineThickness: blockLineThickness,
+      isVisible: this.isVisible, 
+      doesAffectPlayer: true, 
+      doesAffectNonPlayers: true,
+      initAsActive: false
+    });
   }
 
   public abstract draw(): void;

@@ -26,8 +26,8 @@ export class LevelTwo extends ALevel {
   /**
    * sets properties, boundaries, and characters of this
    */
-  constructor(isActive: boolean, loadPlayerFromCheckPoint: boolean) {
-    super(isActive, loadPlayerFromCheckPoint, 4 * constants.PLAYER_DIAMETER);
+  constructor(initAsActive: boolean, loadPlayerFromCheckPoint: boolean) {
+    super(initAsActive, loadPlayerFromCheckPoint, 4 * constants.PLAYER_DIAMETER);
   }
 
   /**
@@ -45,31 +45,30 @@ export class LevelTwo extends ALevel {
         this.checkpointXPos - ((constants.SCREEN_WIDTH / 2) + 75),
         0,
         true);
-      this.player = new Player(
-        this.checkpointXPos,
-        0,
-        constants.PLAYER_DIAMETER,
-        1,
-        true);
+      this.player = new Player({
+        x: this.checkpointXPos,
+        y: 0,
+        diameter: constants.PLAYER_DIAMETER,
+        health: 1
+      });
     } else {
       this.viewBox = new ViewBox(
         levelMiddleXPos,
         0,
         true);
-      this.player = new Player(
-        levelMiddleXPos + (constants.SCREEN_WIDTH / 2) + 75,
-        0,
-        constants.PLAYER_DIAMETER,
-        1,
-        true);
+      this.player = new Player({
+        x: levelMiddleXPos + (constants.SCREEN_WIDTH / 2) + 75,
+        y: 0,
+        diameter: constants.PLAYER_DIAMETER,
+        health: 1
+      });
 
-      this.levelDrawableCollection.addDrawable(new Checkpoint(
-        this.checkpointXPos,
-        constants.LEVEL_FLOOR_Y_POSITION - constants.CHECKPOINT_HEIGHT,
-        constants.CHECKPOINT_WIDTH,
-        constants.CHECKPOINT_HEIGHT,
-        constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-        true));
+      this.levelDrawableCollection.addDrawable(new Checkpoint({
+        leftX: this.checkpointXPos,
+        topY: constants.LEVEL_FLOOR_Y_POSITION - constants.CHECKPOINT_HEIGHT,
+        width: constants.CHECKPOINT_WIDTH,
+        height: constants.CHECKPOINT_HEIGHT
+      }));
     }
 
     let levelFloorXPosReference = this.setupActivateStartWrongSection(levelMiddleXPos);
@@ -89,72 +88,54 @@ export class LevelTwo extends ALevel {
   private setupActivateStartWrongSection(startXPos: number): number {
     const sectionFloorXOffset = 1000;
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      sectionFloorXOffset,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: sectionFloorXOffset,
+      isFloorBoundary: true
+    }));
 
     // level half split boundary
-    this.levelDrawableCollection.addDrawable(new VerticalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      -constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new VerticalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      y2Offset: -constants.LEVEL_FLOOR_Y_POSITION
+    }));
 
+    // invincible enemies above divider wall
     for (let i = 0; i < 5; i++) {
-      this.levelDrawableCollection.addDrawable(new FlyingEnemy(
-        (startXPos + 2 * constants.SMALL_ENEMY_DIAMETER) - (i * constants.SMALL_ENEMY_DIAMETER),
-        (constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight()) / 2,
-        constants.SMALL_ENEMY_DIAMETER,
-        0,
-        0,
-        null,
-        null,
-        false,
-        false,
-        true,
-        true,
-        true
-      ));
+      this.levelDrawableCollection.addDrawable(new FlyingEnemy({
+        x: (startXPos + 2 * constants.SMALL_ENEMY_DIAMETER) - (i * constants.SMALL_ENEMY_DIAMETER),
+        y: (constants.SCREEN_HEIGHT - platformer.getCurrentActiveLevelHeight()) / 2,
+        diameter: constants.SMALL_ENEMY_DIAMETER,
+        horizontalVel: 0,
+        verticalVel: 0,
+        isAffectedByHorizontalBoundaries: false,
+        isAffectedByVerticalBoundaries: false,
+        isInvulnerable: true
+      }));
     }
 
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      startXPos + (constants.BIG_ENEMY_DIAMETER / 2),
-      0,
-      constants.BIG_ENEMY_DIAMETER,
-      constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new Enemy({
+      x: startXPos + (constants.BIG_ENEMY_DIAMETER / 2),
+      y: 0,
+      diameter: constants.BIG_ENEMY_DIAMETER,
+      horizontalVel: constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+      isInvulnerable: true
+    }));
 
     for (let i = 0; i < 7; i++) {
-      this.levelDrawableCollection.addDrawable(new FlyingEnemy(
-        startXPos + 1100 + i * (constants.SMALL_ENEMY_DIAMETER + 30),
-        constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-        constants.SMALL_ENEMY_DIAMETER,
-        0,
-        constants.ENEMY_SLOW_MOVEMENT_SPEED,
-        200,
-        constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-        false,
-        false,
-        false,
-        true,
-        true
-      ));
+      this.levelDrawableCollection.addDrawable(new FlyingEnemy({
+        x: startXPos + 1100 + i * (constants.SMALL_ENEMY_DIAMETER + 30),
+        y: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+        diameter: constants.SMALL_ENEMY_DIAMETER,
+        horizontalVel: 0,
+        verticalVel: constants.ENEMY_SLOW_MOVEMENT_SPEED,
+        topYLimit: 200,
+        bottomYLimit: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+        isAffectedByHorizontalBoundaries: false,
+        isAffectedByVerticalBoundaries: false
+      }));
     }
 
     return startXPos + sectionFloorXOffset;
@@ -166,130 +147,99 @@ export class LevelTwo extends ALevel {
   private setupActivateMiddleWrongSection(startXPos: number): number {
     const sectionFloorXOffset = 2000;
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      sectionFloorXOffset,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: sectionFloorXOffset,
+      isFloorBoundary: true
+    }));
 
     // item block before stair section
-    const healthItemForBlock = new HealthItem(
-      -1,
-      0,
-      0,
-      constants.HEALTH_ITEM_SIZE,
-      constants.HEALTH_ITEM_SIZE,
-      1,
-      false
-    );
+    const healthItemForBlock = new HealthItem({
+      healthChangeAmount: -1,
+      leftX: 0,
+      topY: 0,
+      width: constants.HEALTH_ITEM_SIZE,
+      height: constants.HEALTH_ITEM_SIZE,
+      initAsActive: false
+    });
     this.levelDrawableCollection.addDrawable((healthItemForBlock));
-    this.levelDrawableCollection.addDrawable(new ItemBlock(
-      startXPos + 250,
-      constants.LEVEL_FLOOR_Y_POSITION - 3 * constants.DEFAULT_BLOCK_SIZE,
-      constants.DEFAULT_BLOCK_SIZE,
-      constants.DEFAULT_BLOCK_SIZE,
-      healthItemForBlock,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      false,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new ItemBlock({
+      leftX: startXPos + 250,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - 3 * constants.DEFAULT_BLOCK_SIZE,
+      width: constants.DEFAULT_BLOCK_SIZE,
+      height: constants.DEFAULT_BLOCK_SIZE,
+      item: healthItemForBlock
+    }));
 
     // stair section
     for (let i = 0; i < 3; i++) {
-      this.levelDrawableCollection.addDrawable(new Block(
-        startXPos + 500 + (i + 1) * constants.DEFAULT_BLOCK_SIZE,
-        mainSketch.height - (i + 2) * constants.DEFAULT_BLOCK_SIZE,
-        constants.DEFAULT_BLOCK_SIZE,
-        (i + 1) * constants.DEFAULT_BLOCK_SIZE,
-        constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-        true,
-        false,
-        true
-      ));
+      this.levelDrawableCollection.addDrawable(new Block({
+        leftX: startXPos + 500 + (i + 1) * constants.DEFAULT_BLOCK_SIZE,
+        topY: mainSketch.height - (i + 2) * constants.DEFAULT_BLOCK_SIZE,
+        width: constants.DEFAULT_BLOCK_SIZE,
+        height: (i + 1) * constants.DEFAULT_BLOCK_SIZE
+      }));
     }
 
-    const enemyToAddForTrigger = new Enemy(
-      startXPos + 2000,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-      constants.SMALL_ENEMY_DIAMETER,
-      -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-      false,
-      true,
-      false
-    );
+    const enemyToAddForTrigger = new Enemy({
+      x: startXPos + 2000,
+      y: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+      diameter: constants.SMALL_ENEMY_DIAMETER,
+      horizontalVel: -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+      initAsActive: false
+    });
     this.levelDrawableCollection.addDrawable(enemyToAddForTrigger);
-    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-      startXPos + 500 + 4 * constants.DEFAULT_BLOCK_SIZE + 2 * constants.DEFAULT_BLOCK_SIZE,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      enemyToAddForTrigger
-    ));
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary({
+      startXPoint: startXPos + 500 + 4 * constants.DEFAULT_BLOCK_SIZE + 2 * constants.DEFAULT_BLOCK_SIZE,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+      enemy: enemyToAddForTrigger
+    }));
 
     return startXPos + sectionFloorXOffset;
   }
 
   private setupActivateEndWrongSection(startXPos: number): void {
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      platformer.getCurrentActiveLevelWidth() - startXPos - 2 * constants.PLAYER_DIAMETER,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: platformer.getCurrentActiveLevelWidth() - startXPos - 2 * constants.PLAYER_DIAMETER,
+      isFloorBoundary: true
+    }));
 
-    this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-      constants.DEFAULT_EVENT_BLOCK_WIDTH,
-      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      [constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new EventBlock({ // launch event
+      leftX: startXPos,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      width: constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      height: constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      launchEventVerticalVelocity: constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY,
+      isEventTriggerFloorBoundary: true
+    }));
 
     // enemies at end
     const enemyAtEndToTrigger: Set<Enemy> = new Set();
     for (let i = 0; i < 2; i++) {
-      const enemyToAdd = new FlyingEnemy(
-        platformer.getCurrentActiveLevelWidth() - (i + 1) * constants.SMALL_ENEMY_DIAMETER,
-        constants.LEVEL_FLOOR_Y_POSITION - (constants.SMALL_ENEMY_DIAMETER / 2),
-        constants.SMALL_ENEMY_DIAMETER,
-        -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-        0,
-        null,
-        null,
-        true,
-        true,
-        false,
-        true,
-        false
-      );
+      const enemyToAdd = new FlyingEnemy({
+        x: platformer.getCurrentActiveLevelWidth() - (i + 1) * constants.SMALL_ENEMY_DIAMETER,
+        y: constants.LEVEL_FLOOR_Y_POSITION - (constants.SMALL_ENEMY_DIAMETER / 2),
+        diameter: constants.SMALL_ENEMY_DIAMETER,
+        horizontalVel: -constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+        verticalVel: 0,
+        isAffectedByHorizontalBoundaries: true,
+        isAffectedByVerticalBoundaries: true,
+        initAsActive: false
+      });
       this.levelDrawableCollection.addDrawable(enemyToAdd);
       enemyAtEndToTrigger.add(enemyToAdd);
     }
-    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-      startXPos + constants.DEFAULT_EVENT_BLOCK_WIDTH,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      enemyAtEndToTrigger
-    ));
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary({
+      startXPoint: startXPos + constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+      enemy: enemyAtEndToTrigger
+    }));
   }
 
   /* ****** CORRECT SECTION ****** */
@@ -300,51 +250,42 @@ export class LevelTwo extends ALevel {
   private setupActivateStartCorrectSection(startXPos: number): number {
     const sectionFloorXOffset = -1000;
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      sectionFloorXOffset,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: sectionFloorXOffset,
+      isFloorBoundary: true
+    }));
 
-    const enemyToAddForTrigger = new Enemy(
-      startXPos - 700,
-      0,
-      constants.BIG_ENEMY_DIAMETER,
-      constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-      true,
-      true,
-      false);
+    const enemyToAddForTrigger = new Enemy({
+      x: startXPos - 700,
+      y: 0,
+      diameter: constants.BIG_ENEMY_DIAMETER,
+      horizontalVel: constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+      isInvulnerable: true,
+      initAsActive: false
+    });
     this.levelDrawableCollection.addDrawable(enemyToAddForTrigger);
-    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-      startXPos - 500,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      enemyToAddForTrigger
-    ));
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary({
+      startXPoint: startXPos - 500,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+      enemy: enemyToAddForTrigger 
+    }));
 
     for (let i = 0; i < 7; i++) {
-      this.levelDrawableCollection.addDrawable(new FlyingEnemy(
-        startXPos - (1100 + i * (constants.SMALL_ENEMY_DIAMETER + 30)),
-        constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-        constants.SMALL_ENEMY_DIAMETER,
-        0,
-        constants.ENEMY_SLOW_MOVEMENT_SPEED,
-        200,
-        constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-        false,
-        false,
-        i % 2 == 0,
-        true,
-        true
-      ));
+      this.levelDrawableCollection.addDrawable(new FlyingEnemy({
+        x: startXPos - (1100 + i * (constants.SMALL_ENEMY_DIAMETER + 30)),
+        y: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+        diameter: constants.SMALL_ENEMY_DIAMETER,
+        horizontalVel: 0,
+        verticalVel: constants.ENEMY_SLOW_MOVEMENT_SPEED,
+        topYLimit: 200,
+        bottomYLimit: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+        isAffectedByHorizontalBoundaries: false,
+        isAffectedByVerticalBoundaries: false,
+        isInvulnerable: i % 2 == 0
+      }));
     }
 
     return startXPos + sectionFloorXOffset;
@@ -356,75 +297,57 @@ export class LevelTwo extends ALevel {
   private setupActivateMiddleCorrectSection(startXPos: number): number {
     const sectionFloorXOffset = -2000;
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      sectionFloorXOffset,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: sectionFloorXOffset,
+      isFloorBoundary: true
+    }));
 
     // item block before stair section
-    let healthItemForBlock = new HealthItem(
-      -1,
-      0,
-      0,
-      constants.HEALTH_ITEM_SIZE,
-      constants.HEALTH_ITEM_SIZE,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      false
-    );
+    let healthItemForBlock = new HealthItem({
+      healthChangeAmount: -1,
+      leftX: 0,
+      topY: 0,
+      width: constants.HEALTH_ITEM_SIZE,
+      height: constants.HEALTH_ITEM_SIZE,
+      initAsActive: false
+    });
     this.levelDrawableCollection.addDrawable((healthItemForBlock));
-    this.levelDrawableCollection.addDrawable(new ItemBlock(
-      startXPos - 250 - constants.DEFAULT_BLOCK_SIZE,
-      constants.LEVEL_FLOOR_Y_POSITION - 3 * constants.DEFAULT_BLOCK_SIZE,
-      constants.DEFAULT_BLOCK_SIZE,
-      constants.DEFAULT_BLOCK_SIZE,
-      healthItemForBlock,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      false,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new ItemBlock({
+      leftX: startXPos - 250 - constants.DEFAULT_BLOCK_SIZE,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - 3 * constants.DEFAULT_BLOCK_SIZE,
+      width: constants.DEFAULT_BLOCK_SIZE,
+      height: constants.DEFAULT_BLOCK_SIZE,
+      item: healthItemForBlock
+    }));
 
     // stair section
     let leftXPosOfStairsSection = 0;
     for (let i = 0; i < 3; i++) {
       leftXPosOfStairsSection = startXPos - (500 + (i + 2) * constants.DEFAULT_BLOCK_SIZE);
-      this.levelDrawableCollection.addDrawable(new Block(
-        leftXPosOfStairsSection,
-        mainSketch.height - (i + 2) * constants.DEFAULT_BLOCK_SIZE,
-        constants.DEFAULT_BLOCK_SIZE,
-        (i + 1) * constants.DEFAULT_BLOCK_SIZE,
-        constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-        true,
-        false,
-        true
-      ));
+      this.levelDrawableCollection.addDrawable(new Block({
+        leftX: leftXPosOfStairsSection,
+        topY: mainSketch.height - (i + 2) * constants.DEFAULT_BLOCK_SIZE,
+        width: constants.DEFAULT_BLOCK_SIZE,
+        height: (i + 1) * constants.DEFAULT_BLOCK_SIZE
+      }));
     }
 
-    const enemyToAddForTrigger = new Enemy(
-      startXPos - 2000,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
-      constants.SMALL_ENEMY_DIAMETER,
-      constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-      false,
-      true,
-      false
-    );
+    const enemyToAddForTrigger = new Enemy({
+      x: startXPos - 2000,
+      y: constants.LEVEL_FLOOR_Y_POSITION - constants.SMALL_ENEMY_DIAMETER,
+      diameter: constants.SMALL_ENEMY_DIAMETER,
+      horizontalVel: constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+      initAsActive: false
+    });
     this.levelDrawableCollection.addDrawable(enemyToAddForTrigger);
-    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-      startXPos - (500 + 4 * constants.DEFAULT_BLOCK_SIZE) - 2 * constants.DEFAULT_BLOCK_SIZE,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      enemyToAddForTrigger
-    ));
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary({
+      startXPoint: startXPos - (500 + 4 * constants.DEFAULT_BLOCK_SIZE) - 2 * constants.DEFAULT_BLOCK_SIZE,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+      enemy: enemyToAddForTrigger
+    }));
 
     // calculated using distance from pit to start from left most x pos of stairs
     const numTimesBlockIterate =
@@ -432,38 +355,32 @@ export class LevelTwo extends ALevel {
         constants.DEFAULT_BLOCK_SIZE) - 1; // -1 to not have block at end
     for (let i = 0; i < numTimesBlockIterate; i++) {
       if (i == 0) { // block closest to stairs is item block
-        healthItemForBlock = new HealthItem(
-          1,
-          0,
-          0,
-          constants.HEALTH_ITEM_SIZE,
-          constants.HEALTH_ITEM_SIZE,
-          constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          false
-        );
+        healthItemForBlock = new HealthItem({
+          healthChangeAmount: 1,
+          leftX: 0,
+          topY: 0,
+          width: constants.HEALTH_ITEM_SIZE,
+          height: constants.HEALTH_ITEM_SIZE,
+          initAsActive: false
+        });
         this.levelDrawableCollection.addDrawable((healthItemForBlock));
-        this.levelDrawableCollection.addDrawable(new ItemBlock(
-          leftXPosOfStairsSection - (i + 1) * constants.DEFAULT_BLOCK_SIZE, // start from left most x pos of stairs
-          constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_BLOCK_SIZE - constants.PLAYER_DIAMETER - 10,
-          constants.DEFAULT_BLOCK_SIZE,
-          constants.DEFAULT_BLOCK_SIZE,
-          healthItemForBlock,
-          constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          false,
-          false,
-          true
-        ));
+        this.levelDrawableCollection.addDrawable(new ItemBlock({
+          leftX: leftXPosOfStairsSection - (i + 1) * constants.DEFAULT_BLOCK_SIZE, // start from left most x pos of stairs
+          topY: constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_BLOCK_SIZE - constants.PLAYER_DIAMETER - 10,
+          width: constants.DEFAULT_BLOCK_SIZE,
+          height: constants.DEFAULT_BLOCK_SIZE,
+          item: healthItemForBlock,
+          isVisible: false,
+          isBreakableFromBottom: false
+        }));
       } else {
-        this.levelDrawableCollection.addDrawable(new Block(
-          leftXPosOfStairsSection - (i + 1) * constants.DEFAULT_BLOCK_SIZE, // start from left most x pos of stairs
-          constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_BLOCK_SIZE - constants.PLAYER_DIAMETER - 10,
-          constants.DEFAULT_BLOCK_SIZE,
-          constants.DEFAULT_BLOCK_SIZE,
-          constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-          false,
-          false,
-          true
-        ));
+        this.levelDrawableCollection.addDrawable(new Block({
+          leftX: leftXPosOfStairsSection - (i + 1) * constants.DEFAULT_BLOCK_SIZE, // start from left most x pos of stairs
+          topY: constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_BLOCK_SIZE - constants.PLAYER_DIAMETER - 10,
+          width: constants.DEFAULT_BLOCK_SIZE,
+          height: constants.DEFAULT_BLOCK_SIZE,
+          isVisible: false
+        }));
       }
     }
 
@@ -472,77 +389,63 @@ export class LevelTwo extends ALevel {
 
   private setupActivateEndCorrectSection(startXPos: number): void {
     // section floor
-    this.levelDrawableCollection.addDrawable(new HorizontalBoundary(
-      startXPos,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      -(platformer.getCurrentActiveLevelWidth() - (platformer.getCurrentActiveLevelWidth() / 2 + 1750 + 2250) - 2 * constants.PLAYER_DIAMETER),
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new HorizontalBoundary({
+      startXPoint: startXPos,
+      startYPoint: constants.LEVEL_FLOOR_Y_POSITION,
+      x2Offset: -(platformer.getCurrentActiveLevelWidth() - (platformer.getCurrentActiveLevelWidth() / 2 + 1750 + 2250) - 2 * constants.PLAYER_DIAMETER),
+      isFloorBoundary: true
+    }));
 
     // event block with invincible enemy
     const eventBlockInvulnerableEnemyXReference = startXPos - constants.DEFAULT_EVENT_BLOCK_WIDTH;
-    this.levelDrawableCollection.addDrawable(new EventBlock( // launch event
-      eventBlockInvulnerableEnemyXReference,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-      constants.DEFAULT_EVENT_BLOCK_WIDTH,
-      constants.DEFAULT_EVENT_BLOCK_HEIGHT,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      [constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY],
-      true,
-      true
-    ));
-    this.levelDrawableCollection.addDrawable(new Enemy(
-      eventBlockInvulnerableEnemyXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
-      constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - constants.SMALL_ENEMY_DIAMETER,
-      constants.DEFAULT_EVENT_BLOCK_WIDTH,
-      0,
-      true,
-      false,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new EventBlock({ // launch event
+      leftX: eventBlockInvulnerableEnemyXReference,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      width: constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      height: constants.DEFAULT_EVENT_BLOCK_HEIGHT,
+      launchEventVerticalVelocity: constants.CHARACTER_LAUNCH_EVENT_VERTICAL_VELOCITY,
+      isEventTriggerFloorBoundary: true
+    }));
+    this.levelDrawableCollection.addDrawable(new Enemy({
+      x: eventBlockInvulnerableEnemyXReference + (constants.DEFAULT_EVENT_BLOCK_WIDTH / 2),
+      y: constants.LEVEL_FLOOR_Y_POSITION - constants.DEFAULT_EVENT_BLOCK_HEIGHT - constants.SMALL_ENEMY_DIAMETER,
+      diameter: constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      horizontalVel: 0,
+      isInvulnerable: true,
+      isVisible: false
+    }));
 
     // enemies at end
     const enemyAtEndToTrigger: Set<Enemy> = new Set();
     for (let i = 0; i < 2; i++) {
-      const enemyToAdd = new FlyingEnemy(
-        (i + 1) * constants.SMALL_ENEMY_DIAMETER,
-        constants.LEVEL_FLOOR_Y_POSITION - (constants.SMALL_ENEMY_DIAMETER / 2),
-        constants.SMALL_ENEMY_DIAMETER,
-        constants.ENEMY_REGULAR_MOVEMENT_SPEED,
-        0,
-        null,
-        null,
-        true,
-        true,
-        true,
-        true,
-        false
-      );
+      const enemyToAdd = new FlyingEnemy({
+        x: (i + 1) * constants.SMALL_ENEMY_DIAMETER,
+        y: constants.LEVEL_FLOOR_Y_POSITION - (constants.SMALL_ENEMY_DIAMETER / 2),
+        diameter: constants.SMALL_ENEMY_DIAMETER,
+        horizontalVel: constants.ENEMY_REGULAR_MOVEMENT_SPEED,
+        verticalVel: 0,
+        isAffectedByHorizontalBoundaries: true,
+        isAffectedByVerticalBoundaries: true,
+        isInvulnerable: true,
+        initAsActive: false
+      });
       this.levelDrawableCollection.addDrawable(enemyToAdd);
       enemyAtEndToTrigger.add(enemyToAdd);
     }
-    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary(
-      startXPos - constants.DEFAULT_EVENT_BLOCK_WIDTH,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      enemyAtEndToTrigger
-    ));
+    this.levelDrawableCollection.addDrawable(new EnemyTriggerVerticalBoundary({
+      startXPoint: startXPos - constants.DEFAULT_EVENT_BLOCK_WIDTH,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+      enemy: enemyAtEndToTrigger
+    }));
 
     // correct goal post
-    this.levelDrawableCollection.addDrawable(new LevelGoal(
-      constants.LEVEL_GOAL_WIDTH + 4 * constants.PLAYER_DIAMETER,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.LEVEL_GOAL_HEIGHT,
-      constants.LEVEL_GOAL_WIDTH,
-      constants.LEVEL_GOAL_HEIGHT,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true));
+    this.levelDrawableCollection.addDrawable(new LevelGoal({
+      leftX: constants.LEVEL_GOAL_WIDTH + 4 * constants.PLAYER_DIAMETER,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - constants.LEVEL_GOAL_HEIGHT,
+      width: constants.LEVEL_GOAL_WIDTH,
+      height: constants.LEVEL_GOAL_HEIGHT
+    }));
   }
 
 }

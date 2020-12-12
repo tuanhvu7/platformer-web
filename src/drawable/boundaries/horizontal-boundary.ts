@@ -1,6 +1,7 @@
 import { ABoundary } from "./boundary.abstract";
 import { platformer } from '../../platformer';
 import { ACharacter } from "../characters/character.abstract";
+import { IHorizontalBoundaryProps } from './boundary-prop.interfaces';
 
 /**
  * horizontal line boundaries; floors or ceilings
@@ -11,54 +12,22 @@ export class HorizontalBoundary extends ABoundary {
   isFloorBoundary: boolean;
 
   /**
-   * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             x2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isFloorBoundary: boolean,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
-  //     true, true, true, isActive);
-
-  //   this.isFloorBoundary = isFloorBoundary;
-  // }
-
-  /**
-   * set properties of this
-   * sets this to affect all characters
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             x2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isVisible: boolean,
-  //             isFloorBoundary: boolean,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
-  //     isVisible, true, true, isActive);
-
-  //   this.isFloorBoundary = isFloorBoundary;
-  // }
-
-  /**
    * set properties of this
    */
-  constructor(startXPoint: number,
-              startYPoint: number,
-              x2Offset: number,
-              boundaryLineThickness: number,
-              isVisible: boolean,
-              doesAffectPlayer: boolean,
-              doesAffectNonPlayers: boolean,
-              isFloorBoundary: boolean,
-              isActive: boolean) {
-    super(startXPoint, startYPoint, x2Offset, 0, boundaryLineThickness,
-      isVisible, doesAffectPlayer, doesAffectNonPlayers, isActive);
+  constructor(horizontalBoundaryProps: IHorizontalBoundaryProps) {    
+      super({
+        x1Point: horizontalBoundaryProps.startXPoint,
+        y1Point: horizontalBoundaryProps.startYPoint,
+        x2Offset: horizontalBoundaryProps.x2Offset,
+        y2Offset: 0,
+        boundaryLineThickness: horizontalBoundaryProps.boundaryLineThickness,
+        isVisible: horizontalBoundaryProps.isVisible,
+        doesAffectPlayer: horizontalBoundaryProps.doesAffectPlayer,
+        doesAffectNonPlayers: horizontalBoundaryProps.doesAffectNonPlayers,
+        initAsActive: horizontalBoundaryProps.initAsActive
+      });
 
-    this.isFloorBoundary = isFloorBoundary;
+    this.isFloorBoundary = horizontalBoundaryProps.isFloorBoundary;
   }
 
   /**
@@ -118,6 +87,7 @@ export class HorizontalBoundary extends ABoundary {
    */
   checkHandleContactWithPlayer(): void {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return;
 
     // boundary collision for player
     if (this.contactWithCharacter(curPlayer) && !this.isPreviousContactWithPlayer()) { // this has contact with player
@@ -180,6 +150,6 @@ export class HorizontalBoundary extends ABoundary {
    */
   isPreviousContactWithPlayer(): boolean {
     const curPlayer = platformer.getCurrentActivePlayer();
-    return curPlayer.getPreviousFloorBoundaryContact() === this; // .equals()
+    return curPlayer?.getPreviousFloorBoundaryContact() === this; // .equals()
   }
 }

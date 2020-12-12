@@ -4,6 +4,8 @@ import { platformer } from '../../platformer';
 import { mainSketch } from "../../main";
 import { constants } from "../../const/constants";
 import { ACharacter } from "../characters/character.abstract";
+import { IABoundaryProps } from "./boundary-prop.interfaces";
+import { handleDefaultValue } from "../../utils/ccommon-utils";
 
 /**
  * Common for line boundaries
@@ -38,35 +40,37 @@ export abstract class ABoundary implements IDrawable {
    * @param x2Offset difference between first and second x coordinates (x2 - x1)
    * @param y2Offset difference between first and second y coordinates (y2 - y1)
    */
-  constructor(x1Point: number,
-              y1Point: number,
-              x2Offset: number,
-              y2Offset: number,
-              boundaryLineThickness: number,
-              isVisible: boolean,
-              doesAffectPlayer: boolean,
-              doesAffectNonPlayers: boolean,
-              isActive: boolean) {
+  constructor(aboundaryProps: IABoundaryProps) {
+
+    /** START default values if optional prop(s) not defined */
+    const initAsActive = handleDefaultValue(aboundaryProps.initAsActive, true);
+
+    this.isVisible = handleDefaultValue(aboundaryProps.isVisible, true);
+    
+    this.doesAffectPlayer = handleDefaultValue(aboundaryProps.doesAffectPlayer, true);
+    
+    this.doesAffectNonPlayers = handleDefaultValue(aboundaryProps.doesAffectNonPlayers, true);
+        
+    this.boundaryLineThickness = handleDefaultValue(
+      aboundaryProps.boundaryLineThickness,
+      constants.DEFAULT_BOUNDARY_LINE_THICKNESS);
+    /** END default values if optional prop(s) not defined */
 
     // set start points to be smaller of given values
     this.startPoint = mainSketch.createVector(
-      Math.min(x1Point, x1Point + x2Offset),
-      Math.min(y1Point, y1Point + y2Offset));
+      Math.min(aboundaryProps.x1Point, aboundaryProps.x1Point + aboundaryProps.x2Offset),
+      Math.min(aboundaryProps.y1Point, aboundaryProps.y1Point + aboundaryProps.y2Offset)
+    );
 
     // set end points to be larger of given values
     this.endPoint = mainSketch.createVector(
-      Math.max(x1Point, x1Point + x2Offset),
-      Math.max(y1Point, y1Point + y2Offset));
-
-    this.boundaryLineThickness = boundaryLineThickness;
-
-    this.isVisible = isVisible;
-    this.doesAffectPlayer = doesAffectPlayer;
-    this.doesAffectNonPlayers = doesAffectNonPlayers;
+      Math.max(aboundaryProps.x1Point, aboundaryProps.x1Point + aboundaryProps.x2Offset),
+      Math.max(aboundaryProps.y1Point, aboundaryProps.y1Point + aboundaryProps.y2Offset)
+    );
 
     this.charactersTouchingThis = new Set();
 
-    if (isActive) {
+    if (initAsActive) {
       this.makeActive();
     }
   }
