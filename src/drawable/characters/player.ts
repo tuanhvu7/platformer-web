@@ -9,6 +9,7 @@ import { Vector } from 'p5';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { PlayerControlSettings } from "../../utils/player-control-settings";
 import { ESongType } from "../../enums/song-type.enum";
+import { IPlayerProps } from "./character-prop.interfaces";
 
 /**
  * player controllable character in game
@@ -32,16 +33,16 @@ export class Player extends ACharacter implements IKeyControllable {
 
   // stores floor boundary that this cannot contact with
   // to prevent going on floor boundaries when walking from below
-  private previousFloorBoundaryContact: HorizontalBoundary;
+  private previousFloorBoundaryContact: HorizontalBoundary | null;
 
   // true means should set previousFloorBoundaryContact
   // when this loses contact with floor boundary
   private shouldSetPreviousFloorBoundaryContact: boolean;
 
   // player pressed control states
-  private moveLeftPressed: boolean;
-  private moveRightPressed: boolean;
-  private jumpPressed: boolean;
+  private moveLeftPressed: boolean = false;
+  private moveRightPressed: boolean = false;
+  private jumpPressed: boolean = false;
 
   private ableToMoveRight: boolean;
   private ableToMoveLeft: boolean;
@@ -51,12 +52,9 @@ export class Player extends ACharacter implements IKeyControllable {
   /**
    * set properties of this
    */
-  constructor(x: number,
-              y: number,
-              diameter: number,
-              health: number,
-              isActive: boolean) {
-    super(x, y, diameter, isActive);
+  constructor(playerProps: IPlayerProps) {
+    super(playerProps);
+    const health = playerProps.health;
     if (health < 1) {
       throw new Error("Initial player health must be at least 1");
     }
@@ -216,7 +214,7 @@ export class Player extends ACharacter implements IKeyControllable {
    * null endWarpPosition means launch event, non-null endWarpPosition means warp event
    */
   public handleContactWithEventBoundary(eventBlockTopBoundary: EventBlockTopBoundary,
-                                        launchEventVerticalVelocity: number, endWarpPosition: Vector) {
+                                        launchEventVerticalVelocity: number, endWarpPosition: Vector | null) {
     this.isDescendingDownEventBlock = false;
     if (!endWarpPosition) {
       this.vel.y = launchEventVerticalVelocity;
@@ -389,7 +387,7 @@ export class Player extends ACharacter implements IKeyControllable {
     this.ableToMoveLeft = ableToMoveLeft;
   }
 
-  public getPreviousFloorBoundaryContact(): HorizontalBoundary {
+  public getPreviousFloorBoundaryContact(): HorizontalBoundary | null {
     return this.previousFloorBoundaryContact;
   }
 

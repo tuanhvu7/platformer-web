@@ -5,6 +5,7 @@ import { platformer } from '../../../platformer';
 import { mainSketch } from '../../../main';
 import { EPauseMenuButtonType } from "../../../enums/pause-menu-button-type.enum";
 import { ESongType } from "../../../enums/song-type.enum";
+import { IPauseMenuPanelProps } from './panel-prop.interfaces';
 
 /**
  * panels in pause menu
@@ -20,12 +21,15 @@ export class PauseMenuPanel extends APanel {
   /**
    * set properties of this
    */
-  constructor(panelType: EPauseMenuButtonType,
-              leftX: number, topY: number, width: number, height: number,
-              horizontalOffset: number, isActive: boolean) {
-    super(constants.DEFAULT_PANEL_COLOR, panelType.toString(), leftX, topY, width, height, isActive);
-    this.horizontalOffset = horizontalOffset;
-    this.panelType = panelType;
+  constructor(pauseMenuPanelProps: IPauseMenuPanelProps) {
+    super({
+      ...pauseMenuPanelProps,
+      panelColor: constants.DEFAULT_PANEL_COLOR,
+      panelText: pauseMenuPanelProps.panelType.toString()
+    })
+
+    this.horizontalOffset = pauseMenuPanelProps.horizontalOffset;
+    this.panelType = pauseMenuPanelProps.panelType;
   }
 
   /**

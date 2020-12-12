@@ -12,8 +12,8 @@ export class PauseMenu extends AMenu {
   /**
    * set properties of this
    */
-  constructor(horizontalOffset: number, isActive: boolean) {
-    super(isActive, horizontalOffset);
+  constructor(horizontalOffset: number, initAsActive: boolean) {
+    super(initAsActive, horizontalOffset);
   }
 
   /**
@@ -23,25 +23,23 @@ export class PauseMenu extends AMenu {
     // make this active
     platformer.addToAllDrawables(this); // connect this draw() from main draw()
 
-    this.panelsList.push(new PauseMenuPanel(
-      EPauseMenuButtonType.CONTINUE,
-      100 + this.horizontalOffset, // add offset to account for viewbox
-      100,
-      constants.PANEL_SIZE,
-      constants.PANEL_SIZE,
-      this.horizontalOffset,
-      true
-    ));
+    this.panelsList.push(new PauseMenuPanel({
+      panelType: EPauseMenuButtonType.CONTINUE,
+      leftX: 100 + this.horizontalOffset, // add offset to account for viewbox,
+      topY: 100,
+      width: constants.PANEL_SIZE,
+      height: constants.PANEL_SIZE,
+      horizontalOffset: this.horizontalOffset
+    }));
 
-    this.panelsList.push(new PauseMenuPanel(
-      EPauseMenuButtonType.QUIT,
-      400 + this.horizontalOffset, // add offset to account for viewbox
-      100,
-      constants.PANEL_SIZE,
-      constants.PANEL_SIZE,
-      this.horizontalOffset,
-      true
-    ));
+    this.panelsList.push(new PauseMenuPanel({
+      panelType: EPauseMenuButtonType.QUIT,
+      leftX: (2 * 100) + constants.PANEL_SIZE + this.horizontalOffset, // add offset to account for viewbox
+      topY: 100,
+      width: constants.PANEL_SIZE,
+      height: constants.PANEL_SIZE,
+      horizontalOffset: this.horizontalOffset
+    }));
   }
 
   /**

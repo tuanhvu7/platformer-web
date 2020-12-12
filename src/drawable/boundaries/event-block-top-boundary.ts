@@ -1,4 +1,5 @@
 import { platformer } from '../../platformer';
+import { IHorizontalBoundaryProps } from './boundary-prop.interfaces';
 import { HorizontalBoundary } from './horizontal-boundary';
 /**
  * top horizontal line boundaries of event blocks;
@@ -6,44 +7,20 @@ import { HorizontalBoundary } from './horizontal-boundary';
  */
 export class EventBlockTopBoundary extends HorizontalBoundary {
   /**
-   * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             x2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, x2Offset, boundaryLineThickness, true, isActive);
-  // }
-
-  /**
-   * set properties of this
-   * sets this to affect all characters
-   */
-  // constructor(startXPoint: number,
-  //             startYPoint: number,
-  //             x2Offset: number,
-  //             boundaryLineThickness: number,
-  //             isVisible: boolean,
-  //             isActive: boolean) {
-  //   super(startXPoint, startYPoint, x2Offset, boundaryLineThickness, isVisible, true, isActive);
-  // }
-
-  /**
    * set properties of this
    */
-  constructor(startXPoint: number,
-              startYPoint: number,
-              x2Offset: number,
-              boundaryLineThickness: number,
-              isVisible: boolean,
-              doesAffectPlayer: boolean,
-              doesAffectNonPlayers: boolean,
-              isActive: boolean) {
-    super(startXPoint, startYPoint, x2Offset, boundaryLineThickness,
-      isVisible, doesAffectPlayer, doesAffectNonPlayers,
-      true, isActive);
+  constructor(eventBlockTopBoundary: IHorizontalBoundaryProps) {    
+      super({
+        startXPoint: eventBlockTopBoundary.startXPoint,
+        startYPoint: eventBlockTopBoundary.startYPoint,
+        x2Offset: eventBlockTopBoundary.x2Offset,
+        isFloorBoundary: true,
+        boundaryLineThickness: eventBlockTopBoundary.boundaryLineThickness, 
+        isVisible: eventBlockTopBoundary.isVisible,
+        doesAffectPlayer: eventBlockTopBoundary.doesAffectPlayer,
+        doesAffectNonPlayers: eventBlockTopBoundary.doesAffectNonPlayers,
+        initAsActive: eventBlockTopBoundary.initAsActive 
+      });
   }
 
   /**
@@ -51,6 +28,8 @@ export class EventBlockTopBoundary extends HorizontalBoundary {
    */
   checkHandleContactWithPlayer(): void {
     const curPlayer = platformer.getCurrentActivePlayer();
+    if (!curPlayer) return;
+    
     if (this.doesAffectPlayer) {
       // boundary collision for player
       if (this.contactWithCharacter(curPlayer) && !this.isPreviousContactWithPlayer()) { // this has contact with player

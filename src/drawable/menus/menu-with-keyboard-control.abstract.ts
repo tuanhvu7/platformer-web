@@ -4,8 +4,8 @@ import { platformer } from '../../platformer';
 import { IKeyControllable } from '../key-controllable.interface';
 
 export abstract class AMenuWithKeyboardControl extends AMenu implements IKeyControllable {
-  constructor(isActive: boolean) {
-    super(isActive);
+  constructor(initAsActive: boolean) {
+    super(initAsActive);
   }
 
   public abstract keyPressed(): void;

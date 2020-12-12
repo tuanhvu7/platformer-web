@@ -10,14 +10,14 @@ export abstract class AMenu implements IDrawable {
    * set properties of this;
    * sets this to have given offset
    */
-  constructor(isActive: boolean, horizontalOffset?: number) {
+  constructor(initAsActive: boolean, horizontalOffset?: number) {
     if (horizontalOffset) {
       this.horizontalOffset = horizontalOffset;
     } else {
       this.horizontalOffset = 0;
     }
     this.panelsList = [];
-    if (isActive) {
+    if (initAsActive) {
         this.setupActivateMenu();
     }
   }

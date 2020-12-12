@@ -19,10 +19,10 @@ export class ViewBox implements IDrawable {
   /**
    * set properties of this
    */
-  constructor(startXPos: number, startYPos: number, isActive: boolean) {
+  constructor(startXPos: number, startYPos: number, initAsActive: boolean) {
     this.pos = mainSketch.createVector(startXPos, startYPos);
     this.vel = mainSketch.createVector(0, 0);
-    if (isActive) {
+    if (initAsActive) {
       this.makeActive();
     }
   }
@@ -71,6 +71,8 @@ export class ViewBox implements IDrawable {
    */
   private handleHorizontalMovement(): void {
     const player = platformer.getCurrentActivePlayer();
+    if (!player) return;
+
     if (platformer.getCurrentActiveLevel().isHandlingLevelComplete() && this.playerAtHorizontalViewBoxBoundary(false)) { // viewbox movement during level completion
       this.vel.x = constants.PLAYER_LEVEL_COMPLETE_SPEED;
 
@@ -115,6 +117,8 @@ export class ViewBox implements IDrawable {
   private handleVerticalMovement(): void {
     const player = platformer.getCurrentActivePlayer();
 
+    if (!player) return;
+
     const shouldScrollDown = this.playerAtVerticalViewBoxBoundary(true) &&
       player.getVel().y < 0;
 
@@ -142,7 +146,10 @@ export class ViewBox implements IDrawable {
    * return if player is at lower (left) or upper (right) boundary (depending from given value) of viewbox
    */
   private playerAtHorizontalViewBoxBoundary(isLowerLeftBoundary: boolean): boolean {
-    const playerXPos = platformer.getCurrentActivePlayer().getPos().x;
+    const player = platformer.getCurrentActivePlayer();
+    if (!player) return false;
+    
+    const playerXPos = player.getPos().x;
     if (isLowerLeftBoundary) {
       return playerXPos <= this.pos.x + constants.HORIZONTAL_VIEWBOX_BOUNDARY * mainSketch.width;
     } else {
@@ -154,7 +161,10 @@ export class ViewBox implements IDrawable {
    * return if player is at bottom or top boundary (depending on given value) of viewbox
    */
   private playerAtVerticalViewBoxBoundary(isBottomBoundary: boolean): boolean {
-    const playerYPos = platformer.getCurrentActivePlayer().getPos().y;
+    const player = platformer.getCurrentActivePlayer();
+    if (!player) return false;
+
+    const playerYPos = player.getPos().y;
     if (isBottomBoundary) {
       return playerYPos <= this.pos.y + constants.VERTICAL_VIEWBOX_BOUNDARY * mainSketch.height;
     } else {

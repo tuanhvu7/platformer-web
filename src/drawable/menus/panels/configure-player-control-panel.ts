@@ -6,6 +6,7 @@ import { EConfigurablePlayerControls } from "../../../enums/configurable-player-
 import { PlayerControlSettings } from "../../../utils/player-control-settings";
 import { mainSketch } from "../../../main";
 import { ReservedControlUtils } from "../../../utils/reserved-control-utils";
+import { IConfigPlayerControlPanelProps } from './panel-prop.interfaces';
 
 /**
  * Used to display and change player control settings
@@ -17,10 +18,13 @@ export class ConfigurePlayerControlPanel extends APanel implements IKeyControlla
   /**
    * set properties of this
    */
-  constructor(configurableControlPanelText: EConfigurablePlayerControls,
-    leftX: number, topY: number, width: number, height: number, isActive: boolean) {
-    super(constants.DEFAULT_PANEL_COLOR, "", leftX, topY, width, height, isActive);
-    this.configurablePlayerControlType = configurableControlPanelText;
+  constructor(configPlayerControlPanelProps: IConfigPlayerControlPanelProps) {
+    super({
+      ...configPlayerControlPanelProps,
+      panelColor: constants.DEFAULT_PANEL_COLOR,
+      panelText: ''
+    });
+    this.configurablePlayerControlType = configPlayerControlPanelProps.configControlPanelControls;
     switch (this.configurablePlayerControlType) {
       case EConfigurablePlayerControls.UP:
         this.panelText = this.createFormattedPanelText(PlayerControlSettings.getPlayerUp());

@@ -4,6 +4,8 @@ import { platformer } from '../../platformer';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
 import { ESongType } from "../../enums/song-type.enum";
+import { IBlockProps } from "./block-prop.interfaces";
+import { handleDefaultValue } from "../../utils/ccommon-utils";
 
 /**
  * Block;
@@ -16,77 +18,39 @@ export class Block extends ABlock {
 
   /**
    * set properties of this;
-   * sets this to affect all characters and be visible
-   */
-  // constructor(leftX: number,
-  //             topY: number,
-  //             width: number,
-  //             height: number,
-  //             blockLineThickness: number,
-  //             isBreakableFromBottom: boolean,
-  //             isActive: boolean) {
-
-  //   super(leftX, topY, width, height, blockLineThickness, false); // initially not active, to be set in makeActive()
-
-  //   if (isBreakableFromBottom) {
-  //     this.fillColor = constants.BREAKABLE_BLOCK_COLOR;
-  //   } else {
-  //     this.fillColor = constants.DEFAULT_BLOCK_COLOR;
-  //   }
-  //   this.isBreakableFromBottom = isBreakableFromBottom;
-
-  //   this.topSide = new HorizontalBoundary(
-  //     leftX,
-  //     topY,
-  //     width,
-  //     blockLineThickness,
-  //     true,
-  //     false // initially not active, to be set in makeActive()
-  //   );
-
-  //   if (isActive) {
-  //     this.makeActive();
-  //   }
-  // }
-
-  /**
-   * set properties of this;
-   * sets this to be active for all characters;
+   * 
    * if given isVisible is false, only bottom boundary of block is active
-   * to all characters
+   * to all characters;
+   * 
+   * if isBreakableFromBottom is not given, default to false
    */
-  constructor(leftX: number,
-              topY: number,
-              width: number,
-              height: number,
-              blockLineThickness: number,
-              isVisible: boolean,
-              isBreakableFromBottom: boolean,
-              isActive: boolean) {
-
-    super(leftX, topY, width, height, blockLineThickness,
-      isVisible, false); // initially not active, to be set in makeActive()
-
-    if (isBreakableFromBottom) {
+  constructor(blockProps: IBlockProps) {
+    super(blockProps);
+    /** START default values if optional prop(s) not defined */
+    this.isBreakableFromBottom = handleDefaultValue(blockProps.isBreakableFromBottom, false);
+    const initAsActive = handleDefaultValue(blockProps.initAsActive, true);
+    /** END default values if optional prop(s) not defined */
+    
+    if (this.isBreakableFromBottom) {
       this.fillColor = constants.BREAKABLE_BLOCK_COLOR;
     } else {
       this.fillColor = constants.DEFAULT_BLOCK_COLOR;
     }
-    this.isBreakableFromBottom = isBreakableFromBottom;
+    
+    // pass initAsActive=false to constructor since need this and its boundaries active state to be synced
+    this.topSide = new HorizontalBoundary({
+      startXPoint: blockProps.leftX,
+      startYPoint: blockProps.topY,
+      x2Offset: blockProps.width,
+      boundaryLineThickness: blockProps.blockLineThickness,
+      isVisible: this.isVisible,
+      doesAffectPlayer: true,
+      doesAffectNonPlayers: true,
+      isFloorBoundary: true,
+      initAsActive: false
+    });
 
-    this.topSide = new HorizontalBoundary(
-      leftX,
-      topY,
-      width,
-      blockLineThickness,
-      isVisible,
-      true,
-      true,
-      true,
-      false // initially not active, to be set in makeActive()
-    );
-
-    if (isActive) {
+    if (initAsActive) {
       this.makeActive();
     }
   }
@@ -166,7 +130,7 @@ export class Block extends ABlock {
    * remove block from player contact
    */
   removeBlockFromPlayerContact(): void {
-    platformer.getCurrentActivePlayer().handleContactWithHorizontalBoundary(
+    platformer.getCurrentActivePlayer()?.handleContactWithHorizontalBoundary(
       this.bottomSide.getStartPoint().y,
       false);
     ResourceUtils.playSong(ESongType.PLAYER_ACTION);

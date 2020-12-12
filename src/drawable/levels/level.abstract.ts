@@ -19,16 +19,16 @@ import { EReservedControlKeys } from "../../enums/reserved-control-keys.enum";
 export abstract class ALevel implements IDrawable, IKeyControllable {
 
   // player-controllable character
-  player: Player;
+  player!: Player | null;
 
   // level viewbox
-  viewBox: ViewBox;
+  viewBox!: ViewBox;
 
   // drawables in this
   readonly levelDrawableCollection: LevelDrawableCollection;
 
   // checkpoint x position
-  checkpointXPos: number;
+  checkpointXPos!: number;
 
   // true means load player at checkpoint position
   loadPlayerFromCheckPoint: boolean;
@@ -37,7 +37,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   subClassCustomProperties: { [key: string]: any } = {};
 
   // pause menu for level
-  private pauseMenu: PauseMenu;
+  private pauseMenu!: PauseMenu;
 
   // true means level is paused and menu appears
   private isPaused: boolean;
@@ -48,7 +48,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
   /**
    * sets properties of this
    */
-  constructor(isActive: boolean, loadPlayerFromCheckPoint: boolean, goalRightSideOffsetWithStageWidth: number) {
+  constructor(initAsActive: boolean, loadPlayerFromCheckPoint: boolean, goalRightSideOffsetWithStageWidth: number) {
 
     this.levelDrawableCollection = new LevelDrawableCollection();
 
@@ -58,7 +58,7 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
 
     this.handlingLevelComplete = false;
 
-    if (isActive) {
+    if (initAsActive) {
       ResourceUtils.stopSong();
       this.setUpActivateLevel();
       this.setUpActivateWallsGoal(goalRightSideOffsetWithStageWidth);
@@ -199,44 +199,34 @@ export abstract class ALevel implements IDrawable, IKeyControllable {
    */
   private setUpActivateWallsGoal(goalRightSideOffsetWithStageWidth: number): void {
     // stage goal
-    this.levelDrawableCollection.addDrawable(new LevelGoal(
-      platformer.getCurrentActiveLevelWidth() - constants.LEVEL_GOAL_WIDTH - goalRightSideOffsetWithStageWidth,
-      constants.LEVEL_FLOOR_Y_POSITION - constants.LEVEL_GOAL_HEIGHT,
-      constants.LEVEL_GOAL_WIDTH,
-      constants.LEVEL_GOAL_HEIGHT,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true));
+    this.levelDrawableCollection.addDrawable(new LevelGoal({
+      leftX: platformer.getCurrentActiveLevelWidth() - constants.LEVEL_GOAL_WIDTH - goalRightSideOffsetWithStageWidth,
+      topY: constants.LEVEL_FLOOR_Y_POSITION - constants.LEVEL_GOAL_HEIGHT,
+      width: constants.LEVEL_GOAL_WIDTH,
+      height: constants.LEVEL_GOAL_HEIGHT,
+    }));
 
     // stage right and left walls
-    this.levelDrawableCollection.addDrawable(new VerticalBoundary(
-      0,
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true
-    ));
+    this.levelDrawableCollection.addDrawable(new VerticalBoundary({
+      startXPoint: 0,
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+    }));
 
-    this.levelDrawableCollection.addDrawable(new VerticalBoundary(
-      platformer.getCurrentActiveLevelWidth(),
-      0,
-      constants.LEVEL_FLOOR_Y_POSITION,
-      constants.DEFAULT_BOUNDARY_LINE_THICKNESS,
-      true,
-      true,
-      true,
-      true
-    ));
+
+    this.levelDrawableCollection.addDrawable(new VerticalBoundary({
+      startXPoint: platformer.getCurrentActiveLevelWidth(),
+      startYPoint: 0,
+      y2Offset: constants.LEVEL_FLOOR_Y_POSITION,
+    }));
   }
 
   /*** getters and setters ***/
-  public getPlayer(): Player {
+  public getPlayer(): Player | null {
     return this.player;
   }
 
-  public setPlayer(player: Player): void {
+  public setPlayer(player: Player | null): void {
     this.player = player;
   }
 

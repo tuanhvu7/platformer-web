@@ -2,6 +2,7 @@ import { ACollectable } from "./collectable.abstract";
 import { constants } from "../../const/constants";
 import { mainSketch } from '../../main';
 import { platformer } from '../../platformer';
+import { IHealthItemProps } from "./collectable-prop.interfaces";
 /**
  * health item for player
  */
@@ -13,11 +14,9 @@ export class HealthItem extends ACollectable {
    * set properties of this;
    * sets this to affect all characters and be visible
    */
-  constructor(healthChangeAmount: number,
-              leftX: number, topY: number, width: number, height: number,
-              blockLineThickness: number, isActive: boolean) {
-    super(leftX, topY, width, height, blockLineThickness, isActive);
-    this.healthChangeAmount = healthChangeAmount;
+  constructor(healthItemProps: IHealthItemProps) {
+    super(healthItemProps);
+    this.healthChangeAmount = healthItemProps.healthChangeAmount;
     this.fillColor = constants.HEALTH_ITEM_COLOR;
   }
 
@@ -44,7 +43,7 @@ export class HealthItem extends ACollectable {
 
   checkHandleContactWithPlayer(): void {
     if (this.contactWithPlayer()) {
-      platformer.getCurrentActivePlayer().changeHealth(this.healthChangeAmount);
+      platformer.getCurrentActivePlayer()?.changeHealth(this.healthChangeAmount);
       this.makeNotActive();
       platformer.getCurrentActiveLevelDrawableCollection().removeDrawable(this);
     }
