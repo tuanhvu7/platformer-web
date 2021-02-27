@@ -5,7 +5,7 @@ import { ResourceUtils } from "../../utils/resource-utils";
 import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
 import { ESongType } from "../../enums/song-type.enum";
 import { IBlockProps } from "./block-prop.interfaces";
-import { handleDefaultValue } from "../../utils/ccommon-utils";
+import { handleDefaultValue } from "../../utils/common-utils";
 
 /**
  * Block;

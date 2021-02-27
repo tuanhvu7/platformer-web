@@ -6,7 +6,7 @@ import { mainSketch } from '../../../main';
 import { IMouseControllable } from '../../mouse-controllable.interface';
 import { platformer } from '../../../platformer';
 import { IAPanelProps } from './panel-prop.interfaces';
-import { handleDefaultValue } from '../../../utils/ccommon-utils';
+import { handleDefaultValue } from '../../../utils/common-utils';
 /**
  * Common for panels
  */

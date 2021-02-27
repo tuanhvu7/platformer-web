@@ -5,7 +5,7 @@ import { mainSketch } from "../../main";
 import { constants } from "../../const/constants";
 import { ACharacter } from "../characters/character.abstract";
 import { IABoundaryProps } from "./boundary-prop.interfaces";
-import { handleDefaultValue } from "../../utils/ccommon-utils";
+import { handleDefaultValue } from "../../utils/common-utils";
 
 /**
  * Common for line boundaries

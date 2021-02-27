@@ -2,7 +2,7 @@ import { Enemy } from "./enemy";
 import { constants } from "../../const/constants";
 import { platformer } from '../../platformer';
 import { IFlyingEnemyProps } from './character-prop.interfaces';
-import { handleDefaultValue, isNumber } from '../../utils/ccommon-utils';
+import { handleDefaultValue, isNumber } from '../../utils/common-utils';
 
 /**
  * flying enemy

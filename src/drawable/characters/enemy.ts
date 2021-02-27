@@ -5,7 +5,7 @@ import { mainSketch } from '../../main';
 import { ResourceUtils } from "../../utils/resource-utils";
 import { ESongType } from "../../enums/song-type.enum";
 import { IEnemyProps } from "./character-prop.interfaces";
-import { handleDefaultValue } from "../../utils/ccommon-utils";
+import { handleDefaultValue } from "../../utils/common-utils";
 
 /**
  * enemy

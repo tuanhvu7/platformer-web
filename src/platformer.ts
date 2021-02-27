@@ -12,7 +12,6 @@ import { ConfigurePlayerControlMenu } from './drawable/menus/configure-player-co
 import p5 from 'p5';
 import { ESongType } from './enums/song-type.enum';
 import { levelFactory } from './drawable/levels/level.factory';
-import { mainSketch } from './main';
 
 /**
  * Contains controls for running app
@@ -38,36 +37,41 @@ class Platformer {
   private allKeyControllables: Set < IKeyControllable > = new Set();
   private allMouseControllables: Set < IMouseControllable > = new Set();
 
+  // for using p5.js APIs
+  private p5Input!: p5;
+
   /**
    * For p5.js
    */
-  public sketch = (mainSketch: p5): void => {
-    mainSketch.preload = () => {
+  public sketch = (p5Input: p5): void => {
+    this.p5Input = p5Input;
+
+    this.p5Input.preload = () => {
       ResourceUtils.fetchImages();
     }
 
-    mainSketch.setup = async () => {
+    this.p5Input.setup = async () => {
       await ResourceUtils.fetchSongs();
       constants.setVectorProperties();
-      mainSketch.createCanvas(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT);
+      this.p5Input.createCanvas(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT);
       ResourceUtils.loopSong(ESongType.OUT_OF_LEVEL_MENU);
       this.levelSelectMenu = new LevelSelectMenu(true);
       this.configurePlayerControlMenu = new ConfigurePlayerControlMenu(false);
     };
 
-    mainSketch.draw = () => {
+    this.p5Input.draw = () => {
       this.allDrawables.forEach((curDrawable: IDrawable) => {
         curDrawable.draw();
       });
     }
 
-    mainSketch.keyPressed = () => {
+    this.p5Input.keyPressed = () => {
       this.allKeyControllables.forEach((curKeyControllable: IKeyControllable) => {
         curKeyControllable.keyPressed();
       });
     }
 
-    mainSketch.keyReleased = () => {
+    this.p5Input.keyReleased = () => {
       this.allKeyControllables.forEach((curKeyControllable: IKeyControllable) => {
         if (curKeyControllable.keyReleased) {
           curKeyControllable.keyReleased();
@@ -75,7 +79,7 @@ class Platformer {
       });
     }
 
-    mainSketch.mouseClicked = (event: MouseEvent) => {
+    this.p5Input.mouseClicked = (event: MouseEvent) => {
       this.allMouseControllables.forEach((curMouseControllable: IMouseControllable) => {
         curMouseControllable.mouseClicked(event);
       });
@@ -118,7 +122,7 @@ class Platformer {
 
     this.getCurrentActiveLevel().setHandlingLevelComplete(true);
     curPlayer.resetControlPressed();
-    curPlayer.setVel(mainSketch.createVector(constants.PLAYER_LEVEL_COMPLETE_SPEED, 0));
+    curPlayer.setVel(this.p5Input.createVector(constants.PLAYER_LEVEL_COMPLETE_SPEED, 0));
     // disconnect this keyEvent() from main keyEvent()
     this.deleteFromAllKeyControllables(curPlayer);
 

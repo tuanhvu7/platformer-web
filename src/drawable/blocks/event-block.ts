@@ -4,7 +4,7 @@ import { platformer } from '../../platformer';
 import { EventBlockTopBoundary } from "../boundaries/event-block-top-boundary";
 import { EventTriggerHorizontalBoundary } from "../boundaries/event-trigger-horizontal-boundary";
 import { IEventBlockProps } from "./block-prop.interfaces";
-import { handleDefaultValue } from "../../utils/ccommon-utils";
+import { handleDefaultValue } from "../../utils/common-utils";
 
 /**
  * event block;

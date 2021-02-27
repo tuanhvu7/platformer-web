@@ -4,7 +4,7 @@ import { HorizontalBoundary } from "../boundaries/horizontal-boundary";
 import { VerticalBoundary } from "../boundaries/vertical-boundary";
 import { IABlockProps } from "./block-prop.interfaces";
 import { constants } from "../../const/constants";
-import { handleDefaultValue } from "../../utils/ccommon-utils";
+import { handleDefaultValue } from "../../utils/common-utils";
 
 /**
  * common for blocks
